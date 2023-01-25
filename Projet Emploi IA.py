@@ -132,11 +132,15 @@ df["Salaire_minimun"] = df["Salaire"].apply(salaire_min)
 df["Salaire_maximun"] = df["Salaire"].apply(salaire_max)
 df=df.drop(["Salaire"],axis=1)
 
+#join les éléments dans chaque liste de compétences en les changeant en string 
+df['competences'] = [', '.join(map(str, l)) for l in df['competences']]
+
+#retire les retours à la ligne des compétences 
+def retour_a_la_ligne(value):
+    return ''.join(value.splitlines())
 
 
-
-
-
+df["competences"] = df["competences"].apply(retour_a_la_ligne)
 
 
 df.to_csv("test.csv")
