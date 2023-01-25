@@ -7,18 +7,15 @@
 # import librairies
 import pandas as pd
 import numpy as np
+from datetime import timedelta
+from sklearn.feature_extraction.text import CountVectorizer
+
 
 # Ouverture dataset
 df = pd.read_json("https://raw.githubusercontent.com/SylvineDurand/Projet-emploi-IA-Cl-mentine-Matthieu-Sylvine/main/data.json")
 
 
 # I. NETTOYAGE DONNEES
-# Exploration du type de données
-type(df.iloc[[0],[0]]) # est un df 
-type(df.iloc[[0],[0]].values[0]) # np.ndarray
-type(df.iloc[[0],[0]].values[0][0]) # list
-type(df.iloc[[0],[0]].values[0][0][0]) # str
-
 # 1. Création de la colonne Intitule
 # Liste d'éléments à retirer notamment au milieu des strings
 to_remove = ["[","]","'","(",")", 
@@ -109,10 +106,99 @@ type(df.Type_poste)  # series
 df['Type_poste'] = df['Type_poste'].apply(lambda x : x.strip("\n",).lower())
 
 
-# Nettoyage modification des intitulés de poste au cas par cas
-    # a voir plus tard si j'ai la foi
+# 3. Creation colonne date
+#fonction pour la date et l'apply avec 
+def date(df):
+    df = df.strip("").strip("\n")
+    df = df.split(" ")
+    if df[-1] == "hier" or df[-1] == "heures":
+        df = pd.to_datetime("2023/01/14")
+    else:
+        df = df[-2:]
+        if df[-1] == "mois":
+            x= int(df[-2])
+            temps=x*31
+            df = pd.to_datetime("2023/01/15")-timedelta(days=temps)
+        else:
+            temps=int(df[-2])
+            df = pd.to_datetime("2023/01/15")-timedelta(days=temps)
+    
+        
+    return df
 
-# retirer des lignes non pertinentes?
-    # - 185 Assistant comptable???
+df["Date de publication"] = df["Date de publication"].apply(date)
+
+# 4. Creation colonne Société
+#fonction pour mise en miniscule pour les noms de sociétés
+def nom(df):
+    df = df[2].lower()
+    
+    return df
+
+df["Type de poste"] = df["Type de poste"].apply(nom)
 
 
+# 5. Creation colonnes salaire
+#fonction de salaire qui garde le salaire 
+def salaire(df):
+    if len(df) == 2:
+        df = df[1]
+        df = df.split("/ an")[0]
+        df = df.split("/an")[0]
+        df = df.replace("€","").replace(".","").replace(",00","")
+          
+    else:
+        df = "NaN"
+    
+    return df
+
+df["Salaire"] = df["lieu"].apply(salaire)
+
+
+#fonctions qui font le salaire max et min en integer
+def salaire_min(df):
+    df = df.split("-")[0]
+    if df != "NaN":
+        df = int(df)
+    return df
+def salaire_max(df):
+    df = df.split("-")[-1]
+    if df != "NaN":
+        df = int(df)
+    return df
+
+df["Salaire_minimum"] = df["Salaire"].apply(salaire_min)
+df["Salaire_maximum"] = df["Salaire"].apply(salaire_max)
+df=df.drop(["Salaire"],axis=1)
+
+# 6. Creation colonne compétences
+#join les éléments dans chaque liste de compétences en les changeant en string 
+df['competences'] = [', '.join(map(str, l)) for l in df['competences']]
+
+
+#retire les retours à la ligne des compétences 
+def retour_a_la_ligne(value):
+    return ''.join(value.splitlines())
+
+df["competences"] = df["competences"].apply(retour_a_la_ligne)
+
+# II. Préprocessing des données
+# 1. Count vectorize compétences
+#count-vectorize pour les compétences qui tranforme le nombre de mots en 1 utiliser dans un array
+vectorizer = CountVectorizer()
+X = vectorizer.fit_transform(df["competences"])
+vectorizer.get_feature_names_out()
+
+
+# III. Analyse exploratoire
+# 1. Entreprises qui embauchent le plus
+#compte le nombre de valeurs d'entreprise dans la colonne type de poste
+pd.Series(df["Type de poste"]).value_counts()
+
+
+
+print(pd.Series(X).value_counts())
+
+
+
+df.to_csv("test.csv")
