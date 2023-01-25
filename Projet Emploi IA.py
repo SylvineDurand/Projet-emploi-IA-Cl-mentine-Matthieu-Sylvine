@@ -7,6 +7,9 @@
 # import librairies
 import pandas as pd
 from datetime import timedelta
+from sklearn.feature_extraction.text import CountVectorizer
+
+
 # Ouverture dataset
 df = pd.read_json("https://raw.githubusercontent.com/SylvineDurand/Projet-emploi-IA-Cl-mentine-Matthieu-Sylvine/main/data.json")
 
@@ -85,7 +88,6 @@ def date(df):
 df["Date de publication"] = df["Date de publication"].apply(date)
 
 #fonction pour mise en miniscule pour les noms de sociétés
-
 def nom(df):
     df = df[2].lower()
     
@@ -96,7 +98,6 @@ df["Type de poste"] = df["Type de poste"].apply(nom)
 
 
 #fonction de salaire qui garde le salaire 
-
 def salaire(df):
     if len(df) == 2:
         df = df[1]
@@ -109,19 +110,15 @@ def salaire(df):
     
     return df
 
-
-
-
 df["Salaire"] = df["lieu"].apply(salaire)
 
-#fonctions qui font le salaire max et min en integer
 
+#fonctions qui font le salaire max et min en integer
 def salaire_min(df):
     df = df.split("-")[0]
     if df != "NaN":
         df = int(df)
     return df
-
 def salaire_max(df):
     df = df.split("-")[-1]
     if df != "NaN":
@@ -132,15 +129,28 @@ df["Salaire_minimun"] = df["Salaire"].apply(salaire_min)
 df["Salaire_maximun"] = df["Salaire"].apply(salaire_max)
 df=df.drop(["Salaire"],axis=1)
 
+
 #join les éléments dans chaque liste de compétences en les changeant en string 
 df['competences'] = [', '.join(map(str, l)) for l in df['competences']]
+
 
 #retire les retours à la ligne des compétences 
 def retour_a_la_ligne(value):
     return ''.join(value.splitlines())
 
-
 df["competences"] = df["competences"].apply(retour_a_la_ligne)
+
+
+#count-vectorize pour les compétences qui tranforme le nombre de mots en 1 utiliser dans un array
+vectorizer = CountVectorizer()
+X = vectorizer.fit_transform(df["competences"])
+vectorizer.get_feature_names_out()
+
+#compte le nombre de valeurs d'entreprise dans la colonne type de poste
+pd.Series(df["Type de poste"]).value_counts()
+
+
+print(pd.Series(df["competences"]).value_counts())
 
 
 df.to_csv("test.csv")
