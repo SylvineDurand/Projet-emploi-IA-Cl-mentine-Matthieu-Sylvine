@@ -6,63 +6,113 @@
 
 # import librairies
 import pandas as pd
+import numpy as np
 
 # Ouverture dataset
 df = pd.read_json("https://raw.githubusercontent.com/SylvineDurand/Projet-emploi-IA-Cl-mentine-Matthieu-Sylvine/main/data.json")
 
 
-# NETTOYAGE DONNEES
+# I. NETTOYAGE DONNEES
+# Exploration du type de données
 type(df.iloc[[0],[0]]) # est un df 
 type(df.iloc[[0],[0]].values[0]) # np.ndarray
 type(df.iloc[[0],[0]].values[0][0]) # list
 type(df.iloc[[0],[0]].values[0][0][0]) # str
 
-# Création de la colonne Intitulé
-# pour test sur 1 seul élément
-test = df.iloc[[0],[0]].values[0][0][0]
-type(test)
-test
-
-# Liste de caractères �  enlever
+# 1. Création de la colonne Intitule
+# Liste d'éléments à retirer notamment au milieu des strings
 to_remove = ["[","]","'","(",")", 
-             "H/F","F/H","h/f","f/h"
-             ]
+             "H/F","F/H","h/f","f/h"]
 
-# pour test sur 1 seul élément
-test = df.iloc[[0],[0]].values[0][0][0]
-type(test)
-test  
+# Liste d'éléments à retirer au début des strings
+debut_to_remove = ["2019-moa-data-30912",
+                   "2018-788",
+                   "2016-433"]
 
-for i in to_remove:
-    test = test.replace(i,"")
-# on split sur le tiret
-test = test.split(" - ")[0]
-# on strip espace et antislash n
-test.strip("").strip("\n")    
+contract = ["stage",
+            "stagiaire",
+            "cdi",
+            "apprenti",
+            "alternant",
+            "alternance"]               
 
-# Fonction �  appliquer sur la colonne "intitulé de poste" pour nettoyer
-def func_intitule(x):
+## Première fonction enlève les caractères sans utilité
+def f1(x):
     x = x[0]
+    x = x.lower()
+    for i in to_remove:
+        x = x.replace(i,"")    
+    for i in debut_to_remove:
+        x = x.replace(i,"")      
+    x = x.strip(" \n-")
+    return x
+
+# créer colonne intermediaire
+df["Int1"] = df["Intitulé du poste"].apply(f1)  
+
+# 2e fonction récup l'info alternance pour utilisation ultérieure
+def f2(x):
+    y = ""
+    for i in contract:
+        if x.startswith(i):
+            y =  y + i
+    return y   
+
+# créer colonne intermediaire, sera utilisée plus tard
+df["Int2"] = df["Int1"].apply(f2)  
+
+# 3e fonction enlève info stage etc, enleve caractères restant au début, récup première partie
+def f3(x):
+    for i in contract:
+        x = x.replace(i,"") 
+    x = x.strip(" -–:e")
     x = x.split(" - ")[0]
     x = x.split(" – ")[0]
     x = x.split(" / ")[0]
-    for i in to_remove:
-        x = x.replace(i,"")    
-    x = x.strip("").strip("\n").strip("-")
     return x
-    
-func_intitule(test)
-    
-df["Intitule"] = df["Intitulé du poste"].apply(func_intitule)    
-    
-# reste �  faire: 
-    # - index 13 = alternant en CDI?
-    # - 34 alternance (contrat pro ok)
-    # - 49 stage chargé projet en CDI
-    # - 55 commence par chiffre
-    # - 139 2019 moa data etc*
+
+# Créer colonne finale    
+df["Intitule"] = df["Int1"].apply(f3)  
+
+
+# 2. Creation colonne Type_poste
+def type_contrat(x):
+    y = "raté"
+    if x[0] == '':
+        y = x[1][-1].split(" - ")[0],
+    elif x[0] == 'stage':
+        y = "Stage"
+    elif x[0] == 'stagiaire':
+        y = "Stage"
+    elif x[0] == 'alternant':
+        y = "Alternance"
+    elif x[0] == 'alternance':
+        y = "Alternance"
+    elif x[0] == 'apprenti':
+        y = "Apprentissage"
+    elif x[0] == 'cdi':
+        y = "cdi"
+    return y
+
+df['Type_poste'] = df[["Int2","Type de poste"]].apply(lambda x : type_contrat(x), axis = 1)
+type(df.Type_poste[0]) # est un tuple, il faut le convertir
+
+# Conversion des tuples en str
+def convertTuple(tup):
+    st = ''.join(map(str, tup))
+    return st
+ 
+df['Type_poste'] = df['Type_poste'].apply(lambda x : convertTuple(x))
+type(df.Type_poste)  # series
+
+# remove les \n
+df['Type_poste'] = df['Type_poste'].apply(lambda x : x.strip("\n",).lower())
+
+
+# Nettoyage modification des intitulés de poste au cas par cas
+    # a voir plus tard si j'ai la foi
+
+# retirer des lignes non pertinentes?
     # - 185 Assistant comptable???
 
-
-    
 
