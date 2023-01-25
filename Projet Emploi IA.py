@@ -150,8 +150,8 @@ vectorizer.get_feature_names_out()
 pd.Series(df["Type de poste"]).value_counts()
 
 
-print(X)
 
+print(pd.Series(X).value_counts())
 
 
 df.to_csv("test.csv")
