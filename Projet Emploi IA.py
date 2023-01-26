@@ -137,6 +137,15 @@ def nom(df):
 
 df["Type de poste"] = df["Type de poste"].apply(nom)
 
+data = df['lieu']
+Lieu=[]
+for i in data:
+    list_lieu=[]
+    for c in i[0] :
+      list_lieu.append(c.replace('\n', ''))
+    Lieu.append(' '.join(list_lieu))
+
+df['lieu'] = Lieu
 
 # 5. Creation colonnes salaire
 #fonction de salaire qui garde le salaire 
