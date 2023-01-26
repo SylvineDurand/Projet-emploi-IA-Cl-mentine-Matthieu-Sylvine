@@ -10,7 +10,9 @@ import pandas as pd
 import numpy as np
 from datetime import timedelta
 from sklearn.feature_extraction.text import CountVectorizer
-
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import r2_score
 
 # Ouverture dataset
 df = pd.read_json("https://raw.githubusercontent.com/SylvineDurand/Projet-emploi-IA-Cl-mentine-Matthieu-Sylvine/main/data.json")
@@ -146,7 +148,27 @@ for i in data:
       list_lieu.append(c.replace('\n', ''))
     Lieu.append(' '.join(list_lieu))
 
-df['lieu'] = Lieu
+data = Lieu
+Lieu2 = []
+for i in data :
+     Lieu2.append(i.replace(" ", "")) 
+
+data = Lieu2
+LIEU = []
+for i in data:
+   LIEU.append(i.upper())
+
+data = LIEU
+LIEU2 = []
+for i in data :
+     LIEU2.append(i.replace("PARIS,", "").replace("Î", "I")
+                  .replace(",FR", "").replace("É", "E")
+                  .replace("(78)FACEGAREDESTQUENTINENYVELINE", "").replace("(92)-ILEDEFRANCE", "")
+                  .replace("9ÈME(75)", "").replace("PARAYVIEILLEPOSTE", "PARAY-VIEILLE-POSTE")
+                  .replace("09(75)", "").replace("20RUEHECTORMALOT(75-HEC)", "")
+                  .replace("ILEDEFRANCE", "ILE-DE-FRANCE").replace(",ILE-DE-FRANCE","")
+                  .replace("RUEILMALMAISON", "RUEIL-MALMAISON").replace("LADEFENSE", "LA-DEFENSE"))
+df['lieu'] = LIEU2
 
 # 5. Creation colonnes salaire
 #fonction de salaire qui garde le salaire 
@@ -206,9 +228,12 @@ vectorizer.get_feature_names_out()
 pd.Series(df["Type de poste"]).value_counts()
 
 
-print(X)
+
+
+df_clean = pd.DataFrame(list(zip(df["Date de publication"],df["Intitule"], df["competences"],df['lieu'],df["Salaire_minimum"],df["Salaire_maximum"],df['Type_poste'],df["Type de poste"])),columns =['Date_de_publication', 'Intitule',"Competences","Lieu","Salaire_minimum","Salaire_maximum","Type_poste","Société"])
 
 
 
 
-df.to_csv("test.csv")
+
+df_clean.to_csv("df_clean.csv")
