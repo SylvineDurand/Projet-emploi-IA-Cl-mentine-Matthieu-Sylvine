@@ -1,3 +1,4 @@
+# -- coding: utf-8 --
 # Projet emploi IA
 # Clémentine, Matthieu, Sylvine
 
