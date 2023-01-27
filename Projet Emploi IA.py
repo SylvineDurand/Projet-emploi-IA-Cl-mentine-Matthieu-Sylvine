@@ -5,12 +5,26 @@
 
 
 
-# import librairies
+# Import librairies
+# pour nettoyage data
 import pandas as pd
-import numpy as np
 from datetime import timedelta
-from sklearn.feature_extraction.text import CountVectorizer
+import numpy as np
 
+# pour preprocessing
+from sklearn.impute import SimpleImputer
+from sklearn.compose import ColumnTransformer
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.preprocessing import OneHotEncoder
+
+# Pipeline and model
+from sklearn.pipeline import Pipeline
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor # a garder? Matthieu qu'en penses tu?
+
+# Score of models
+from sklearn.metrics import r2_score
 
 # Ouverture dataset
 df = pd.read_json("https://raw.githubusercontent.com/SylvineDurand/Projet-emploi-IA-Cl-mentine-Matthieu-Sylvine/main/data.json")
@@ -146,7 +160,27 @@ for i in data:
       list_lieu.append(c.replace('\n', ''))
     Lieu.append(' '.join(list_lieu))
 
-df['lieu'] = Lieu
+data = Lieu
+Lieu2 = []
+for i in data :
+     Lieu2.append(i.replace(" ", "")) 
+
+data = Lieu2
+LIEU = []
+for i in data:
+   LIEU.append(i.upper())
+
+data = LIEU
+LIEU2 = []
+for i in data :
+     LIEU2.append(i.replace("PARIS,", "").replace("Î", "I")
+                  .replace(",FR", "").replace("É", "E")
+                  .replace("(78)FACEGAREDESTQUENTINENYVELINE", "").replace("(92)-ILEDEFRANCE", "")
+                  .replace("9ÈME(75)", "").replace("PARAYVIEILLEPOSTE", "PARAY-VIEILLE-POSTE")
+                  .replace("09(75)", "").replace("20RUEHECTORMALOT(75-HEC)", "")
+                  .replace("ILEDEFRANCE", "ILE-DE-FRANCE").replace(",ILE-DE-FRANCE","")
+                  .replace("RUEILMALMAISON", "RUEIL-MALMAISON").replace("LADEFENSE", "LA-DEFENSE"))
+df['Lieu'] = LIEU2
 
 # 5. Creation colonnes salaire
 #fonction de salaire qui garde le salaire 
@@ -155,11 +189,10 @@ def salaire(df):
         df = df[1]
         df = df.split("/ an")[0]
         df = df.split("/an")[0]
-        df = df.replace("€","").replace(".","").replace(",00","")
+        df = df.replace("€","").replace(".","").replace(",00","").replace("\n","")
           
     else:
-        df = "NaN"
-    
+        df = np.nan
     return df
 
 df["Salaire"] = df["lieu"].apply(salaire)
@@ -167,19 +200,24 @@ df["Salaire"] = df["lieu"].apply(salaire)
 
 #fonctions qui font le salaire max et min en integer
 def salaire_min(df):
+    if not df :
+        df = df
+    else:
+        df = str(df)
     df = df.split("-")[0]
-    if df != "NaN":
-        df = int(df)
     return df
 def salaire_max(df):
+    if not df :
+        df = df
+    else:
+        df = str(df)
     df = df.split("-")[-1]
-    if df != "NaN":
-        df = int(df)
     return df
 
 df["Salaire_minimum"] = df["Salaire"].apply(salaire_min)
 df["Salaire_maximum"] = df["Salaire"].apply(salaire_max)
 df=df.drop(["Salaire"],axis=1)
+
 
 # 6. Creation colonne compétences
 #join les éléments dans chaque liste de compétences en les changeant en string 
@@ -206,9 +244,188 @@ vectorizer.get_feature_names_out()
 pd.Series(df["Type de poste"]).value_counts()
 
 
-print(X)
+
+
+df_clean = pd.DataFrame(list(zip(df["Date de publication"],df["Intitule"], df["competences"],df['Lieu'],df["Salaire_minimum"],df["Salaire_maximum"],df['Type_poste'],df["Type de poste"])),columns =['Date_de_publication', 'Intitule',"Competences","Lieu","Salaire_minimum","Salaire_maximum","Type_poste","Société"])
+
+
+df_clean.to_csv("df_clean.csv")
+
+############################################################
+# Creation de la pipeline
+
+
+# exploration du df_clean juste pour Sylvine qui le découvre =)
+type(df_clean)
+df_clean.shape
+
+df_clean.columns
+df_clean.Salaire_minimum.describe() 
+# Les salaires sont des objets!!!! il faudrait les convertir en autre chose, a voir plus tard ?
+
+
+# 1. Drop les salaires NaN
+'''
+df_test = df_clean.dropna()
+df_test.shape #230 ne marche pas, à régler !!!
+df_test['Salaire_minimum']
+
+df_test.dropna().describe()
+df_test.dropna().Salaire_minimum.describe()
+# ne marche paaaaaas, je pense que ça vient du fait que les colonnes salaire sont des objets
+
+'''
+
+#gros probleme pour drop na sur le df_clean, je travaille en réimportant le csv qui, lui , est propre!
+df_model = pd.read_csv("df_clean.csv").dropna()
+df_model.describe()
+df_model.Salaire_minimum.describe() # salaire est bien un float, ouf
+
+
+# 2. Définition des y et x 
+y = df_model['Salaire_minimum']
+#y = df_model['Salaire_maximum']
+X = df_model.drop(columns=['Date_de_publication','Unnamed: 0','Salaire_minimum','Salaire_maximum'])
+X.head()
+
+
+# 3. Selection des variables categoriques sur lesquelles appliquer OneHot
+column_cat = X.select_dtypes(include=['object']).columns.drop(['Competences'])
+
+
+# 4. Creation des pipelines pour chaque type de variable
+transfo_cat = Pipeline(steps=[
+    ('', SimpleImputer(strategy='most_frequent')),
+    ('onehot', OneHotEncoder(handle_unknown='ignore', sparse = False))
+])
+     
+transfo_text = Pipeline(steps=[
+    ('bow', CountVectorizer())
+])
+      
+ 
+# 5. Class ColumnTransformer: appliquer chacune des pipelines sur les bonnes colonnes en nommant chaque étape
+preparation = ColumnTransformer(
+    transformers=[
+        ('data_cat', transfo_cat , column_cat),
+        #('data_artist', transfo_text , 'artist_name'),
+        ('data_track', transfo_text , 'Competences')
+    ])
+
+
+# 6. Creation du modèle
+# modele choisi = reg lineaire car target est quantitative
+model = LinearRegression()
+
+
+# Creation de la pipeline complète intégrant le modèle
+pipe_model = Pipeline(steps=[('preparation', preparation),
+                        ('model',model)])
+pipe_model
+
+# display le diagramme de la pipeline dans spyder
+from sklearn import set_config
+set_config(display='diagram') 
+pipe_model # j'arrive pas à le display dans spyder
+
+# Train test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+X_train # 34 lignes pour 5 colonnes
+X_train.columns
+
+# fit le model 
+pipe_model.fit(X_train, y_train)
+
+# predictions pour le model pré entrainé
+y_pred = pipe_model.predict(X_test)
+     
+# Evaluer le modele
+print("MAE:", r2_score(y_test, y_pred))
+
+# OK j'ai un MAE ridicule mais au moins ça tourne ! 
+# Il va falloir affiner et choisir un meileur modèle
+
+
+# Observation de y pour savoir quel modèle appliquer
+import matplotlib.pyplot as plt
+plt.hist(y) # quelle distribution merdique
+
+
+#########################################
+# creation d'une fonction pour automatiser les tests de modèle, 
+# avec possibilité de changer de seed, model, y (min ou max)
+
+#|--------------------------------------------------------------------
+#TOUT CA A LANCER AVANT LA FONCTION ---------------
+# 2. Définition des x 
+X = df_model.drop(columns=['Date_de_publication','Unnamed: 0','Salaire_minimum','Salaire_maximum'])
+# 3. Selection des variables categoriques sur lesquelles appliquer OneHot
+column_cat = X.select_dtypes(include=['object']).columns.drop(['Competences'])
+
+# 4. Creation des pipelines pour chaque type de variable
+transfo_cat = Pipeline(steps=[
+    ('', SimpleImputer(strategy='most_frequent')),
+    ('onehot', OneHotEncoder(handle_unknown='ignore', sparse = False))
+])
+     
+transfo_text = Pipeline(steps=[
+    ('bow', CountVectorizer())
+])
+        
+# 5. Class ColumnTransformer: appliquer chacune des pipelines sur les bonnes colonnes en nommant chaque étape
+preparation = ColumnTransformer(
+    transformers=[
+        ('data_cat', transfo_cat , column_cat),
+        #('data_artist', transfo_text , 'artist_name'),
+        ('data_track', transfo_text , 'Competences')
+    ])
+#--------------------------------------------------------------
+
+def test_modele(target = "Minimum", seed = 42, modele = LinearRegression(), est = r2_score):
+    if target == "Minimum":
+        y = df_model['Salaire_minimum']
+    elif target == "Maximum":
+        y = df_model['Salaire_maximum']
+    # else:
+    #     print("la target n'est pas le salaire min ou max")
+    #     exit()
+
+    
+    # Creation de la pipeline complète intégrant le modèle
+    pipe_model = Pipeline(steps=[('preparation', preparation),
+                            ('model',modele)])
+    print(pipe_model)
+
+    # Train test split
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=seed)
+
+    # fit le model 
+    pipe_model.fit(X_train, y_train)
+
+    # predictions pour le model pré entrainé
+    y_pred = pipe_model.predict(X_test)
+         
+    # Evaluer le modele
+    print(f"target = {target}, modèle = {modele}, estimateur {est}: {est(y_test, y_pred)}")
+
+# Appliquer la fonction pour différents types de modèles
+# reg lineaire classique
+test_modele()
+test_modele("Maximum")
+
+
+#reg regularisée
+# Ridge
+
+#Lasso
+
+#ElasticNet
 
 
 
+test_modele(modele = RandomForestRegressor())
 
-df.to_csv("test.csv")
+
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor 
