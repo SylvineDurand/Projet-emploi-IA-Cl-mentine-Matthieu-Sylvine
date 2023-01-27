@@ -168,7 +168,7 @@ for i in data :
                   .replace("09(75)", "").replace("20RUEHECTORMALOT(75-HEC)", "")
                   .replace("ILEDEFRANCE", "ILE-DE-FRANCE").replace(",ILE-DE-FRANCE","")
                   .replace("RUEILMALMAISON", "RUEIL-MALMAISON").replace("LADEFENSE", "LA-DEFENSE"))
-df['lieu'] = LIEU2
+df['Lieu'] = LIEU2
 
 # 5. Creation colonnes salaire
 #fonction de salaire qui garde le salaire 
@@ -177,11 +177,10 @@ def salaire(df):
         df = df[1]
         df = df.split("/ an")[0]
         df = df.split("/an")[0]
-        df = df.replace("€","").replace(".","").replace(",00","")
+        df = df.replace("€","").replace(".","").replace(",00","").replace("\n","")
           
     else:
-        df = "NaN"
-    
+        df = np.nan
     return df
 
 df["Salaire"] = df["lieu"].apply(salaire)
@@ -189,19 +188,25 @@ df["Salaire"] = df["lieu"].apply(salaire)
 
 #fonctions qui font le salaire max et min en integer
 def salaire_min(df):
-    df = df.split("-")[0]
-    if df != "NaN":
-        df = int(df)
+    if not df :
+        df = df
+    else:
+        df = str(df)
+        df = df.split("-")[0]
     return df
 def salaire_max(df):
-    df = df.split("-")[-1]
-    if df != "NaN":
-        df = int(df)
+    if not df :
+        df = df
+    else:
+        df = str(df)
+        df = df.split("-")[-1]
     return df
 
 df["Salaire_minimum"] = df["Salaire"].apply(salaire_min)
 df["Salaire_maximum"] = df["Salaire"].apply(salaire_max)
 df=df.drop(["Salaire"],axis=1)
+
+
 
 # 6. Creation colonne compétences
 #join les éléments dans chaque liste de compétences en les changeant en string 
@@ -230,10 +235,16 @@ pd.Series(df["Type de poste"]).value_counts()
 
 
 
-df_clean = pd.DataFrame(list(zip(df["Date de publication"],df["Intitule"], df["competences"],df['lieu'],df["Salaire_minimum"],df["Salaire_maximum"],df['Type_poste'],df["Type de poste"])),columns =['Date_de_publication', 'Intitule',"Competences","Lieu","Salaire_minimum","Salaire_maximum","Type_poste","Société"])
 
 
 
 
 
-df_clean.to_csv("df_clean.csv")
+#IV Machine Learning 
+#1 premier model
+
+df_clean = pd.DataFrame(list(zip(df["Date de publication"],df["Intitule"], df["competences"],df['Lieu'],df["Salaire_minimum"],df["Salaire_maximum"],df['Type_poste'],df["Type de poste"])),columns =['Date_de_publication', 'Intitule',"Competences","Lieu","Salaire_minimum","Salaire_maximum","Type_poste","Société"])
+
+
+
+
