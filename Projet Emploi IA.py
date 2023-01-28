@@ -20,11 +20,11 @@ from sklearn.preprocessing import OneHotEncoder
 # Pipeline and model
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.ensemble import RandomForestRegressor # a garder? Matthieu qu'en penses tu?
+from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet
+from sklearn.ensemble import RandomForestRegressor 
 
 # Score of models
-from sklearn.metrics import r2_score
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 
 # Ouverture dataset
 df = pd.read_json("https://raw.githubusercontent.com/SylvineDurand/Projet-emploi-IA-Cl-mentine-Matthieu-Sylvine/main/data.json")
@@ -49,7 +49,7 @@ contract = ["stage",
             "alternance"]               
 
 ## Première fonction enlève les caractères sans utilité
-def f1(x):
+def Intitule_1(x):
     x = x[0]
     x = x.lower()
     for i in to_remove:
@@ -60,10 +60,10 @@ def f1(x):
     return x
 
 # créer colonne intermediaire
-df["Int1"] = df["Intitulé du poste"].apply(f1)  
+df["Int1"] = df["Intitulé du poste"].apply(Intitule_1)  
 
 # 2e fonction récup l'info alternance pour utilisation ultérieure
-def f2(x):
+def Intitule_2(x):
     y = ""
     for i in contract:
         if x.startswith(i):
@@ -71,10 +71,10 @@ def f2(x):
     return y   
 
 # créer colonne intermediaire, sera utilisée plus tard
-df["Int2"] = df["Int1"].apply(f2)  
+df["Int2"] = df["Int1"].apply(Intitule_2)  
 
 # 3e fonction enlève info stage etc, enleve caractères restant au début, récup première partie
-def f3(x):
+def Intitule_3(x):
     for i in contract:
         x = x.replace(i,"") 
     x = x.strip(" -–:e")
@@ -84,7 +84,7 @@ def f3(x):
     return x
 
 # Créer colonne finale    
-df["Intitule"] = df["Int1"].apply(f3)  
+df["Intitule"] = df["Int1"].apply(Intitule_3)  
 
 
 # 2. Creation colonne Type_poste
@@ -233,9 +233,18 @@ df["competences"] = df["competences"].apply(retour_a_la_ligne)
 # II. Préprocessing des données
 # 1. Count vectorize compétences
 #count-vectorize pour les compétences qui tranforme le nombre de mots en 1 utiliser dans un array
-vectorizer = CountVectorizer()
+# vectorizer = CountVectorizer()
+# X = vectorizer.fit_transform(df["competences"])
+# vectorizer.get_feature_names_out()
+
+vectorizer = CountVectorizer(tokenizer=lambda x: x.split(',')) 
 X = vectorizer.fit_transform(df["competences"])
 vectorizer.get_feature_names_out()
+# est meilleur car: regroupe ensemble les "data intelligence" 
+# au lieu d'avoir "data" et "intelligence" séparés
+# Permet aussi de garder c, c3 et c++ alors que tout ce qui était c a disparu
+# (peut etre considérés comme des stop words vu qu'une seule lettre?)
+
 
 
 # III. Analyse exploratoire
@@ -244,19 +253,20 @@ vectorizer.get_feature_names_out()
 pd.Series(df["Type de poste"]).value_counts()
 
 
-
-
 df_clean = pd.DataFrame(list(zip(df["Date de publication"],df["Intitule"], df["competences"],df['Lieu'],df["Salaire_minimum"],df["Salaire_maximum"],df['Type_poste'],df["Type de poste"])),columns =['Date_de_publication', 'Intitule',"Competences","Lieu","Salaire_minimum","Salaire_maximum","Type_poste","Société"])
 
 
 df_clean.to_csv("df_clean.csv")
 
 ############################################################
-# Creation de la pipeline
+# IV. Creation de la pipeline et application des modèles
 
 
 # exploration du df_clean juste pour Sylvine qui le découvre =)
 type(df_clean)
+vectorizer = CountVectorizer(tokenizer=lambda x: x.split(',')) 
+X = vectorizer.fit_transform(df["competences"])
+vectorizer.get_feature_names_out()
 df_clean.shape
 
 df_clean.columns
@@ -309,7 +319,7 @@ preparation = ColumnTransformer(
     transformers=[
         ('data_cat', transfo_cat , column_cat),
         #('data_artist', transfo_text , 'artist_name'),
-        ('data_track', transfo_text , 'Competences')
+        ('data_text', transfo_text , 'Competences')
     ])
 
 
@@ -334,6 +344,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 X_train # 34 lignes pour 5 colonnes
 X_train.columns
 
+
 # fit le model 
 pipe_model.fit(X_train, y_train)
 
@@ -341,10 +352,10 @@ pipe_model.fit(X_train, y_train)
 y_pred = pipe_model.predict(X_test)
      
 # Evaluer le modele
-print("MAE:", r2_score(y_test, y_pred))
+print("r2:", r2_score(y_test, y_pred))
+print("rmse:", mean_squared_error(y_test, y_pred))
 
-# OK j'ai un MAE ridicule mais au moins ça tourne ! 
-# Il va falloir affiner et choisir un meileur modèle
+# Les estimateurs sont aberrants
 
 
 # Observation de y pour savoir quel modèle appliquer
@@ -352,8 +363,27 @@ import matplotlib.pyplot as plt
 plt.hist(y) # quelle distribution merdique
 
 
+#--------------------
+# Je tente sur un sous-modele comme remi a fait, juste sur les competences
+X1 = vectorizer.fit_transform(df_model['Competences'])
+print(vectorizer.get_feature_names_out())
+print(X1.toarray())
+y
+
+
+X_train, X_test, y_train, y_test = train_test_split(X1, y, test_size=0.2, random_state=42)
+model = RandomForestRegressor()
+model.fit(X_train, y_train)
+model.score(X_train, y_train) 
+y_pred = model.predict(X_test)
+r2_score(y_test, y_pred)
+# encore un estimateur mauvais, Remi avait mieux sur le meme modele. 
+
+
+
+
 #########################################
-# creation d'une fonction pour automatiser les tests de modèle, 
+# Creation d'une fonction pour automatiser les tests de modèle, 
 # avec possibilité de changer de seed, model, y (min ou max)
 
 #|--------------------------------------------------------------------
@@ -362,6 +392,7 @@ plt.hist(y) # quelle distribution merdique
 X = df_model.drop(columns=['Date_de_publication','Unnamed: 0','Salaire_minimum','Salaire_maximum'])
 # 3. Selection des variables categoriques sur lesquelles appliquer OneHot
 column_cat = X.select_dtypes(include=['object']).columns.drop(['Competences'])
+column_cat
 
 # 4. Creation des pipelines pour chaque type de variable
 transfo_cat = Pipeline(steps=[
@@ -370,7 +401,7 @@ transfo_cat = Pipeline(steps=[
 ])
      
 transfo_text = Pipeline(steps=[
-    ('bow', CountVectorizer())
+    ('bow', CountVectorizer(tokenizer=lambda x: x.split(',')) )
 ])
         
 # 5. Class ColumnTransformer: appliquer chacune des pipelines sur les bonnes colonnes en nommant chaque étape
@@ -378,10 +409,10 @@ preparation = ColumnTransformer(
     transformers=[
         ('data_cat', transfo_cat , column_cat),
         #('data_artist', transfo_text , 'artist_name'),
-        ('data_track', transfo_text , 'Competences')
+        ('data_text', transfo_text , 'Competences')
     ])
-#--------------------------------------------------------------
 
+#--------------------------------------------------------------
 def test_modele(target = "Minimum", seed = 42, modele = LinearRegression(), est = r2_score):
     if target == "Minimum":
         y = df_model['Salaire_minimum']
@@ -395,7 +426,6 @@ def test_modele(target = "Minimum", seed = 42, modele = LinearRegression(), est 
     # Creation de la pipeline complète intégrant le modèle
     pipe_model = Pipeline(steps=[('preparation', preparation),
                             ('model',modele)])
-    print(pipe_model)
 
     # Train test split
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=seed)
@@ -407,25 +437,91 @@ def test_modele(target = "Minimum", seed = 42, modele = LinearRegression(), est 
     y_pred = pipe_model.predict(X_test)
          
     # Evaluer le modele
-    print(f"target = {target}, modèle = {modele}, estimateur {est}: {est(y_test, y_pred)}")
+    print(f"Target = Salaire {target}, modèle = {modele}, seed = {seed}")
+    print(f"Score du modèle sur le training: {pipe_model.score(X_train, y_train)}") 
+    print(f"Estimateur {est}: {est(y_test, y_pred)}")
+    
+    return pipe_model
 
 # Appliquer la fonction pour différents types de modèles
 # reg lineaire classique
 test_modele()
 test_modele("Maximum")
+test_modele(est = mean_squared_error)
+test_modele("Maximum", est = mean_squared_error)
 
-
-#reg regularisée
+# reg regularisée
 # Ridge
+test_modele(modele = Ridge())
+test_modele(modele = Ridge(), est = mean_squared_error)
+test_modele("Maximum", modele = Ridge(), seed = 10)
+test_modele("Maximum", modele = Ridge(), est = mean_squared_error, seed = 42)
 
 #Lasso
+test_modele(modele = Lasso(max_iter=10000))
+test_modele("Maximum",modele = Lasso(max_iter=10000))
 
 #ElasticNet
+test_modele(modele = ElasticNet()) 
+test_modele("Maximum", modele = ElasticNet()) 
 
-
-
+# Random forest
 test_modele(modele = RandomForestRegressor())
+test_modele("Maximum", modele = RandomForestRegressor())
+
+##
+# Intégrer façon de prédire le salaire en fonction de données entrées par l'utilisateur
 
 
-from sklearn.linear_model import LinearRegression
-from sklearn.ensemble import RandomForestRegressor 
+Input = ['data analyst','support, si', 'PARIS', 'cdi', 'selescope']
+
+df_input = pd.DataFrame(np.array([Input]),
+                   columns=['Intitule', 'Competences', 'Lieu', 'Type_poste', 'Société'])
+df_input 
+
+input_pred = pipe_model.predict(df_input)
+input_pred # me prédit bien le salaire minimum!! Youpi =)
+
+
+#------------------------------------------------------------------------------
+# V. Prediction salaire min et max avec des inputs de l'utilisateur
+
+# 1. Recuperation d'un input depuis l'utilisateur pour chaque feature du modele
+Input_intitule = 'data analyst'
+Input_competences = 'support, si' #une string avec compétences séparées par virgules
+Input_lieu = 'PARIS'
+Input_contrat = 'cdi'
+Input_societe = 'selescope'
+
+Input = [Input_intitule, Input_competences, Input_lieu, Input_contrat, Input_societe]
+
+# Fonction de prédiction
+def prediction_avec_input(input = ['','', '', '', ''], modele = RandomForestRegressor(), seed = 42, est = r2_score):
+    df_input = pd.DataFrame(np.array([input]),
+                       columns=['Intitule', 'Competences', 'Lieu', 'Type_poste', 'Société'])
+    modele_min = test_modele("Minimum", modele = modele, seed = seed, est = est)
+    print(modele_min.score(X_train, y_train))
+    minimum_predit = modele_min.predict(df_input)[0]
+    print("---------------------")
+
+    modele_max = test_modele("Maximum", modele = modele, seed = seed, est = est)
+    maximum_predit = modele_max.predict(df_input)[0]
+    print(maximum_predit.score(X_train, y_train))
+    print("---------------------")
+    
+    print(f"Pour les caractéristiques suivantes : {Input}")
+    print(f"Le salaire sera compris entre {round(minimum_predit,2)} € et {round(maximum_predit, 2)} €") 
+    
+    
+prediction_avec_input()
+# donne resultats differents a chaque lancement
+prediction_avec_input(input = Input)   
+
+
+
+
+
+
+# si on poursuit la démarche sur du clustering, il suffit de modifier la pipeline pour que 
+# le modele s'entraine juste sur des features
+# difficulté sera surtout de comprendre où sont les variables dedans. 
