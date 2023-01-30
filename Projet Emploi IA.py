@@ -469,10 +469,13 @@ test_modele("Maximum", modele = ElasticNet())
 test_modele(modele = RandomForestRegressor())
 test_modele("Maximum", modele = RandomForestRegressor())
 
-##
-# Intégrer façon de prédire le salaire en fonction de données entrées par l'utilisateur
 
 
+
+#------------------------------------------------------------------------------
+# V. Prediction salaire min et max avec des inputs de l'utilisateur
+
+# 0. A la main, a effacer plus tard
 Input = ['data analyst','support, si', 'PARIS', 'cdi', 'selescope']
 
 df_input = pd.DataFrame(np.array([Input]),
@@ -482,10 +485,6 @@ df_input
 input_pred = pipe_model.predict(df_input)
 input_pred # me prédit bien le salaire minimum!! Youpi =)
 
-
-#------------------------------------------------------------------------------
-# V. Prediction salaire min et max avec des inputs de l'utilisateur
-
 # 1. Recuperation d'un input depuis l'utilisateur pour chaque feature du modele
 Input_intitule = 'data analyst'
 Input_competences = 'support, si' #une string avec compétences séparées par virgules
@@ -493,29 +492,30 @@ Input_lieu = 'PARIS'
 Input_contrat = 'cdi'
 Input_societe = 'selescope'
 
+# concaténation en une liste
 Input = [Input_intitule, Input_competences, Input_lieu, Input_contrat, Input_societe]
 
 # Fonction de prédiction
-def prediction_avec_input(input = ['','', '', '', ''], modele = RandomForestRegressor(), seed = 42, est = r2_score):
+def prediction_avec_input(input = ['','', '', '', ''], modele = LinearRegression(), seed = 42, est = r2_score):
     df_input = pd.DataFrame(np.array([input]),
                        columns=['Intitule', 'Competences', 'Lieu', 'Type_poste', 'Société'])
     modele_min = test_modele("Minimum", modele = modele, seed = seed, est = est)
-    print(modele_min.score(X_train, y_train))
     minimum_predit = modele_min.predict(df_input)[0]
     print("---------------------")
 
     modele_max = test_modele("Maximum", modele = modele, seed = seed, est = est)
     maximum_predit = modele_max.predict(df_input)[0]
-    print(maximum_predit.score(X_train, y_train))
     print("---------------------")
     
-    print(f"Pour les caractéristiques suivantes : {Input}")
+    print(f"Pour les caractéristiques suivantes : {input}")
     print(f"Le salaire sera compris entre {round(minimum_predit,2)} € et {round(maximum_predit, 2)} €") 
     
-    
-prediction_avec_input()
-# donne resultats differents a chaque lancement
+# lancement de la fonction de prediction    
+prediction_avec_input() # 
 prediction_avec_input(input = Input)   
+
+
+
 
 
 
@@ -525,3 +525,44 @@ prediction_avec_input(input = Input)
 # si on poursuit la démarche sur du clustering, il suffit de modifier la pipeline pour que 
 # le modele s'entraine juste sur des features
 # difficulté sera surtout de comprendre où sont les variables dedans. 
+
+
+
+#############################################
+# Bonus nuage de mots pour illustration
+# CHANTIER EN COURS !!!
+
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+import numpy as np
+from PIL import Image
+
+vectorizer = CountVectorizer(tokenizer=lambda x: x.split(','))
+X = vectorizer.fit_transform(df["competences"])
+vectorizer.get_feature_names_out() 
+
+corpus = " ".join([ligne for ligne in vectorizer.get_feature_names_out()])
+
+
+
+wordcloud = WordCloud(background_color = 'white', max_words = 50).generate(corpus)
+plt.imshow(wordcloud)
+plt.axis("off")
+plt.show();
+
+
+# bonne source pour corriger ça? a creuser
+# https://github.com/rachelrakov/Intro_to_Machine_Learning/blob/master/sections/word_cloud.md
+
+words = np.array(vectorizer.get_feature_names())
+
+# vectorizer_mat = vectorizer.toarray()
+# docs = vectorizer_mat[(vectorizer_mat>10).any(axis=1)]
+
+doc = vectorizer[1] 
+idx = (doc>0)
+doc_words = words[idx]
+doc_counts = doc[doc>0]
+
+frequencies = dict(zip(doc_words, doc_counts))
+frequencies
