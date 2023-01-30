@@ -183,7 +183,7 @@ for i in data :
 df['Lieu'] = LIEU2
 
 # 5. Creation colonnes salaire
-#fonction de salaire qui garde le salaire 
+# fonction de salaire qui garde le salaire 
 def salaire(df):
     if len(df) == 2:
         df = df[1]
@@ -230,23 +230,17 @@ def retour_a_la_ligne(value):
 
 df["competences"] = df["competences"].apply(retour_a_la_ligne)
 
+
+############################################################
 # II. Préprocessing des données
 # 1. Count vectorize compétences
 #count-vectorize pour les compétences qui tranforme le nombre de mots en 1 utiliser dans un array
-# vectorizer = CountVectorizer()
-# X = vectorizer.fit_transform(df["competences"])
-# vectorizer.get_feature_names_out()
-
 vectorizer = CountVectorizer(tokenizer=lambda x: x.split(',')) 
 X = vectorizer.fit_transform(df["competences"])
 vectorizer.get_feature_names_out()
-# est meilleur car: regroupe ensemble les "data intelligence" 
-# au lieu d'avoir "data" et "intelligence" séparés
-# Permet aussi de garder c, c3 et c++ alors que tout ce qui était c a disparu
-# (peut etre considérés comme des stop words vu qu'une seule lettre?)
 
 
-
+############################################################
 # III. Analyse exploratoire
 # 1. Entreprises qui embauchent le plus
 #compte le nombre de valeurs d'entreprise dans la colonne type de poste
@@ -258,136 +252,16 @@ df_clean = pd.DataFrame(list(zip(df["Date de publication"],df["Intitule"], df["c
 
 df_clean.to_csv("df_clean.csv")
 
+
 ############################################################
 # IV. Creation de la pipeline et application des modèles
 
-
-# exploration du df_clean juste pour Sylvine qui le découvre =)
-type(df_clean)
-vectorizer = CountVectorizer(tokenizer=lambda x: x.split(',')) 
-X = vectorizer.fit_transform(df["competences"])
-vectorizer.get_feature_names_out()
-df_clean.shape
-
-df_clean.columns
-df_clean.Salaire_minimum.describe() 
-# Les salaires sont des objets!!!! il faudrait les convertir en autre chose, a voir plus tard ?
-
-
 # 1. Drop les salaires NaN
-'''
-df_test = df_clean.dropna()
-df_test.shape #230 ne marche pas, à régler !!!
-df_test['Salaire_minimum']
-
-df_test.dropna().describe()
-df_test.dropna().Salaire_minimum.describe()
-# ne marche paaaaaas, je pense que ça vient du fait que les colonnes salaire sont des objets
-
-'''
-
 #gros probleme pour drop na sur le df_clean, je travaille en réimportant le csv qui, lui , est propre!
 df_model = pd.read_csv("df_clean.csv").dropna()
 df_model.describe()
 df_model.Salaire_minimum.describe() # salaire est bien un float, ouf
 
-
-# 2. Définition des y et x 
-y = df_model['Salaire_minimum']
-#y = df_model['Salaire_maximum']
-X = df_model.drop(columns=['Date_de_publication','Unnamed: 0','Salaire_minimum','Salaire_maximum'])
-X.head()
-
-
-# 3. Selection des variables categoriques sur lesquelles appliquer OneHot
-column_cat = X.select_dtypes(include=['object']).columns.drop(['Competences'])
-
-
-# 4. Creation des pipelines pour chaque type de variable
-transfo_cat = Pipeline(steps=[
-    ('', SimpleImputer(strategy='most_frequent')),
-    ('onehot', OneHotEncoder(handle_unknown='ignore', sparse = False))
-])
-     
-transfo_text = Pipeline(steps=[
-    ('bow', CountVectorizer())
-])
-      
- 
-# 5. Class ColumnTransformer: appliquer chacune des pipelines sur les bonnes colonnes en nommant chaque étape
-preparation = ColumnTransformer(
-    transformers=[
-        ('data_cat', transfo_cat , column_cat),
-        #('data_artist', transfo_text , 'artist_name'),
-        ('data_text', transfo_text , 'Competences')
-    ])
-
-
-# 6. Creation du modèle
-# modele choisi = reg lineaire car target est quantitative
-model = LinearRegression()
-
-
-# Creation de la pipeline complète intégrant le modèle
-pipe_model = Pipeline(steps=[('preparation', preparation),
-                        ('model',model)])
-pipe_model
-
-# display le diagramme de la pipeline dans spyder
-from sklearn import set_config
-set_config(display='diagram') 
-pipe_model # j'arrive pas à le display dans spyder
-
-# Train test split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-X_train # 34 lignes pour 5 colonnes
-X_train.columns
-
-
-# fit le model 
-pipe_model.fit(X_train, y_train)
-
-# predictions pour le model pré entrainé
-y_pred = pipe_model.predict(X_test)
-     
-# Evaluer le modele
-print("r2:", r2_score(y_test, y_pred))
-print("rmse:", mean_squared_error(y_test, y_pred))
-
-# Les estimateurs sont aberrants
-
-
-# Observation de y pour savoir quel modèle appliquer
-import matplotlib.pyplot as plt
-plt.hist(y) # quelle distribution merdique
-
-
-#--------------------
-# Je tente sur un sous-modele comme remi a fait, juste sur les competences
-X1 = vectorizer.fit_transform(df_model['Competences'])
-print(vectorizer.get_feature_names_out())
-print(X1.toarray())
-y
-
-
-X_train, X_test, y_train, y_test = train_test_split(X1, y, test_size=0.2, random_state=42)
-model = RandomForestRegressor()
-model.fit(X_train, y_train)
-model.score(X_train, y_train) 
-y_pred = model.predict(X_test)
-r2_score(y_test, y_pred)
-# encore un estimateur mauvais, Remi avait mieux sur le meme modele. 
-
-
-
-
-#########################################
-# Creation d'une fonction pour automatiser les tests de modèle, 
-# avec possibilité de changer de seed, model, y (min ou max)
-
-#|--------------------------------------------------------------------
-#TOUT CA A LANCER AVANT LA FONCTION ---------------
 # 2. Définition des x 
 X = df_model.drop(columns=['Date_de_publication','Unnamed: 0','Salaire_minimum','Salaire_maximum'])
 # 3. Selection des variables categoriques sur lesquelles appliquer OneHot
@@ -412,7 +286,8 @@ preparation = ColumnTransformer(
         ('data_text', transfo_text , 'Competences')
     ])
 
-#--------------------------------------------------------------
+# Creation d'une fonction pour automatiser les tests de modèle
+# avec possibilité de changer de seed, model, y (min ou max)
 def test_modele(target = "Minimum", seed = 42, modele = LinearRegression(), est = r2_score):
     if target == "Minimum":
         y = df_model['Salaire_minimum']
@@ -468,22 +343,11 @@ test_modele("Maximum", modele = ElasticNet())
 # Random forest
 test_modele(modele = RandomForestRegressor())
 test_modele("Maximum", modele = RandomForestRegressor())
+# Resultats dependent du hasard avec ce type de modèle, pas robuste du tout quand peu de données
 
 
-
-
-#------------------------------------------------------------------------------
+############################################################
 # V. Prediction salaire min et max avec des inputs de l'utilisateur
-
-# 0. A la main, a effacer plus tard
-Input = ['data analyst','support, si', 'PARIS', 'cdi', 'selescope']
-
-df_input = pd.DataFrame(np.array([Input]),
-                   columns=['Intitule', 'Competences', 'Lieu', 'Type_poste', 'Société'])
-df_input 
-
-input_pred = pipe_model.predict(df_input)
-input_pred # me prédit bien le salaire minimum!! Youpi =)
 
 # 1. Recuperation d'un input depuis l'utilisateur pour chaque feature du modele
 Input_intitule = 'data analyst'
@@ -492,7 +356,7 @@ Input_lieu = 'PARIS'
 Input_contrat = 'cdi'
 Input_societe = 'selescope'
 
-# concaténation en une liste
+# 2. concaténation en une liste
 Input = [Input_intitule, Input_competences, Input_lieu, Input_contrat, Input_societe]
 
 # Fonction de prédiction
@@ -510,26 +374,23 @@ def prediction_avec_input(input = ['','', '', '', ''], modele = LinearRegression
     print(f"Pour les caractéristiques suivantes : {input}")
     print(f"Le salaire sera compris entre {round(minimum_predit,2)} € et {round(maximum_predit, 2)} €") 
     
-# lancement de la fonction de prediction    
-prediction_avec_input() # 
+# 3. lancement de la fonction de prediction    
+print("PREDICTIONS#########################")
+prediction_avec_input() # si pas d'input de l'utilisateur
 prediction_avec_input(input = Input)   
 
 
 
 
-
-
-
-
-
+# notes de fin:
 # si on poursuit la démarche sur du clustering, il suffit de modifier la pipeline pour que 
 # le modele s'entraine juste sur des features
 # difficulté sera surtout de comprendre où sont les variables dedans. 
 
-
+exit()
 
 #############################################
-# Bonus nuage de mots pour illustration
+# 6. Bonus nuage de mots pour illustration
 # CHANTIER EN COURS !!!
 
 from wordcloud import WordCloud
