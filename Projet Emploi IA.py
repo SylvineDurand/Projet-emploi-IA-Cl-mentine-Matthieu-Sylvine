@@ -257,16 +257,16 @@ df_clean.to_csv("df_clean.csv")
 # IV. Creation de la pipeline et application des modèles
 
 # 1. Drop les salaires NaN
-#gros probleme pour drop na sur le df_clean, je travaille en réimportant le csv qui, lui , est propre!
+# probleme pour drop na sur le df_clean, on travaille en réimportant le csv
 df_model = pd.read_csv("df_clean.csv").dropna()
 df_model.describe()
-df_model.Salaire_minimum.describe() # salaire est bien un float, ouf
+df_model.Salaire_minimum.describe() # salaire est bien un float
 
 # 2. Définition des x 
 X = df_model.drop(columns=['Date_de_publication','Unnamed: 0','Salaire_minimum','Salaire_maximum'])
+
 # 3. Selection des variables categoriques sur lesquelles appliquer OneHot
 column_cat = X.select_dtypes(include=['object']).columns.drop(['Competences'])
-column_cat
 
 # 4. Creation des pipelines pour chaque type de variable
 transfo_cat = Pipeline(steps=[
@@ -293,10 +293,6 @@ def test_modele(target = "Minimum", seed = 42, modele = LinearRegression(), est 
         y = df_model['Salaire_minimum']
     elif target == "Maximum":
         y = df_model['Salaire_maximum']
-    # else:
-    #     print("la target n'est pas le salaire min ou max")
-    #     exit()
-
     
     # Creation de la pipeline complète intégrant le modèle
     pipe_model = Pipeline(steps=[('preparation', preparation),
@@ -356,7 +352,7 @@ Input_lieu = 'PARIS'
 Input_contrat = 'cdi'
 Input_societe = 'selescope'
 
-# 2. concaténation en une liste
+# 2. Concaténation en une liste
 Input = [Input_intitule, Input_competences, Input_lieu, Input_contrat, Input_societe]
 
 # Fonction de prédiction
@@ -374,8 +370,7 @@ def prediction_avec_input(input = ['','', '', '', ''], modele = LinearRegression
     print(f"Pour les caractéristiques suivantes : {input}")
     print(f"Le salaire sera compris entre {round(minimum_predit,2)} € et {round(maximum_predit, 2)} €") 
     
-# 3. lancement de la fonction de prediction    
-print("PREDICTIONS#########################")
+# 3. Lancement de la fonction de prediction    
 prediction_avec_input() # si pas d'input de l'utilisateur
 prediction_avec_input(input = Input)   
 
