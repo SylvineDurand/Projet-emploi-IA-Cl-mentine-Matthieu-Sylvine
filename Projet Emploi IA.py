@@ -24,7 +24,7 @@ from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet
 from sklearn.ensemble import RandomForestRegressor 
 
 # Score of models
-from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
+from sklearn.metrics import r2_score, mean_squared_error
 
 # Ouverture dataset
 df = pd.read_json("https://raw.githubusercontent.com/SylvineDurand/Projet-emploi-IA-Cl-mentine-Matthieu-Sylvine/main/data.json")
@@ -256,35 +256,40 @@ df_clean.to_csv("df_clean.csv")
 ############################################################
 # IV. Creation de la pipeline et application des modèles
 
-# 1. Drop les salaires NaN
-# probleme pour drop na sur le df_clean, on travaille en réimportant le csv
-df_model = pd.read_csv("df_clean.csv").dropna()
-df_model.describe()
-df_model.Salaire_minimum.describe() # salaire est bien un float
-
-# 2. Définition des x 
-X = df_model.drop(columns=['Date_de_publication','Unnamed: 0','Salaire_minimum','Salaire_maximum'])
-
-# 3. Selection des variables categoriques sur lesquelles appliquer OneHot
-column_cat = X.select_dtypes(include=['object']).columns.drop(['Competences'])
-
-# 4. Creation des pipelines pour chaque type de variable
-transfo_cat = Pipeline(steps=[
-    ('', SimpleImputer(strategy='most_frequent')),
-    ('onehot', OneHotEncoder(handle_unknown='ignore', sparse = False))
-])
-     
-transfo_text = Pipeline(steps=[
-    ('bow', CountVectorizer(tokenizer=lambda x: x.split(',')) )
-])
-        
-# 5. Class ColumnTransformer: appliquer chacune des pipelines sur les bonnes colonnes en nommant chaque étape
-preparation = ColumnTransformer(
-    transformers=[
-        ('data_cat', transfo_cat , column_cat),
-        #('data_artist', transfo_text , 'artist_name'),
-        ('data_text', transfo_text , 'Competences')
+#Creation fonction pour préparer le modèle 
+def prepa_modele():
+    # 1. Drop les salaires NaN
+    # probleme pour drop na sur le df_clean, on travaille en réimportant le csv
+    global df_model
+    df_model = pd.read_csv("df_clean.csv").dropna()
+    
+    # 2. Définition des x 
+    global X
+    X = df_model.drop(columns=['Date_de_publication','Unnamed: 0','Salaire_minimum','Salaire_maximum'])
+    
+    # 3. Selection des variables categoriques sur lesquelles appliquer OneHot
+    column_cat = X.select_dtypes(include=['object']).columns.drop(['Competences'])
+    
+    # 4. Creation des pipelines pour chaque type de variable
+    transfo_cat = Pipeline(steps=[
+        ('', SimpleImputer(strategy='most_frequent')),
+        ('onehot', OneHotEncoder(handle_unknown='ignore', sparse = False))
     ])
+         
+    transfo_text = Pipeline(steps=[
+        ('bow', CountVectorizer(tokenizer=lambda x: x.split(',')) )
+    ])
+    
+    # 5. Class ColumnTransformer: appliquer chacune des pipelines sur les bonnes colonnes en nommant chaque étape
+    global preparation
+    preparation = ColumnTransformer(
+        transformers=[
+            ('data_cat', transfo_cat , column_cat),
+            #('data_artist', transfo_text , 'artist_name'),
+            ('data_text', transfo_text , 'Competences')
+        ])
+
+prepa_modele()
 
 # Creation d'une fonction pour automatiser les tests de modèle
 # avec possibilité de changer de seed, model, y (min ou max)
@@ -325,20 +330,26 @@ test_modele("Maximum", est = mean_squared_error)
 # Ridge
 test_modele(modele = Ridge())
 test_modele(modele = Ridge(), est = mean_squared_error)
-test_modele("Maximum", modele = Ridge(), seed = 10)
-test_modele("Maximum", modele = Ridge(), est = mean_squared_error, seed = 42)
+test_modele("Maximum", modele = Ridge())
+test_modele("Maximum", modele = Ridge(), est = mean_squared_error)
 
 #Lasso
 test_modele(modele = Lasso(max_iter=10000))
+test_modele(modele = Lasso(max_iter=10000),est = mean_squared_error)
 test_modele("Maximum",modele = Lasso(max_iter=10000))
+test_modele("Maximum",modele = Lasso(max_iter=10000),est = mean_squared_error)
 
 #ElasticNet
 test_modele(modele = ElasticNet()) 
+test_modele(modele = ElasticNet(),est = mean_squared_error) 
 test_modele("Maximum", modele = ElasticNet()) 
+test_modele("Maximum", modele = ElasticNet(),est = mean_squared_error) 
 
 # Random forest
 test_modele(modele = RandomForestRegressor())
+test_modele(modele = RandomForestRegressor(),est = mean_squared_error)
 test_modele("Maximum", modele = RandomForestRegressor())
+test_modele("Maximum", modele = RandomForestRegressor(),est = mean_squared_error)
 # Resultats dependent du hasard avec ce type de modèle, pas robuste du tout quand peu de données
 
 
@@ -370,10 +381,15 @@ def prediction_avec_input(input = ['','', '', '', ''], modele = LinearRegression
     print(f"Pour les caractéristiques suivantes : {input}")
     print(f"Le salaire sera compris entre {round(minimum_predit,2)} € et {round(maximum_predit, 2)} €") 
     
+    predicted_min_sal = round(minimum_predit,2)
+    predicted_max_sal = round(maximum_predit,2)
+    return predicted_min_sal, predicted_max_sal
+    
 # 3. Lancement de la fonction de prediction    
 prediction_avec_input() # si pas d'input de l'utilisateur
 prediction_avec_input(input = Input)   
 
+predicted_min_sal, predicted_max_sal = prediction_avec_input(input = Input)   
 
 
 
@@ -397,11 +413,12 @@ vectorizer = CountVectorizer(tokenizer=lambda x: x.split(','))
 X = vectorizer.fit_transform(df["competences"])
 vectorizer.get_feature_names_out() 
 
+
 corpus = " ".join([ligne for ligne in vectorizer.get_feature_names_out()])
 
 
 
-wordcloud = WordCloud(background_color = 'white', max_words = 50).generate(corpus)
+wordcloud = WordCloud(background_color = 'white', max_words = 50).generate(X)
 plt.imshow(wordcloud)
 plt.axis("off")
 plt.show();
@@ -415,10 +432,11 @@ words = np.array(vectorizer.get_feature_names())
 # vectorizer_mat = vectorizer.toarray()
 # docs = vectorizer_mat[(vectorizer_mat>10).any(axis=1)]
 
-doc = vectorizer[1] 
-idx = (doc>0)
-doc_words = words[idx]
-doc_counts = doc[doc>0]
 
-frequencies = dict(zip(doc_words, doc_counts))
-frequencies
+# cv = CountVectorizer(min_df=0, charset_error="ignore",                                               
+#                          stop_words="english", max_features=200)
+counts = vectorizer.fit_transform(df["competences"]).toarray().ravel()                                                  
+words = np.array(vectorizer.get_feature_names()) 
+# normalize                                                                                                                                             
+counts = counts / float(counts.max())
+
