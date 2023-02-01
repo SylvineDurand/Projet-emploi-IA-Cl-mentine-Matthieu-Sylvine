@@ -1,11 +1,17 @@
 import streamlit as st
-import pandas as pd
-import pandas_profiling
-from streamlit_pandas_profiling import st_profile_report
 
-st.header('`streamlit_pandas_profiling`')
+st.title('Customizing the theme of Streamlit apps')
 
-df = pd.read_csv('https://raw.githubusercontent.com/dataprofessor/data/master/penguins_cleaned.csv')
+st.write('Contents of the `.streamlit/config.toml` file of this app')
 
-pr = df.profile_report()
-st_profile_report(pr)
+st.code("""
+
+primaryColor="#F39C12"
+backgroundColor="#2E86C1"
+secondaryBackgroundColor="#AED6F1"
+textColor="#FFFFFF"
+font="monospace"
+""")
+
+number = st.sidebar.slider('Select a number:', 0, 10, 5)
+st.write('Selected number from slider widget is:', number)
