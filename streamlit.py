@@ -28,9 +28,9 @@ from sklearn.feature_extraction.text import CountVectorizer
 # from sklearn.metrics import r2_score, mean_squared_error
 
 import streamlit as st
+import matplotlib.pyplot as plt
 
 from fonctions import prepa_modele, test_modele, prediction_avec_input
-# il va falloir changer le nom du script en un truc sans espaces
 # peut être d'autres libraires à importer, à voir au fur et à mesure
 
 
@@ -39,7 +39,7 @@ from fonctions import prepa_modele, test_modele, prediction_avec_input
 df_model = pd.read_csv("df_clean.csv").dropna()
 st.title("Notre appli du feu de dieu 🔥")
 
-# 
+
 #------------------------------------------------------------------------------
 # Analyses exploratoires: les super graphes de Clémentine
 
@@ -53,53 +53,86 @@ prepa_modele()
 #fonction integrant la pipeline complete avec options de target, modele, seed et est
 test_modele()
 
-# Partie où on récupère les inputs de l'utilisateur via menu déroulant, ou autre
-# A MODIFIER POUR ST
+# On récupère les inputs de l'utilisateur
 st.header("Prédiction de salaire")
 st.subheader("Veuillez sélectionner les paramètres")
 # A MODIFIER POUR INCLURE UN CHOIX VIDE
 #selectbox # A MODIFIER POUR INCLURE UN CHOIX VIDE
 Input_intitule = st.selectbox(
     'Quel intitulé de poste recherchez-vous ?',
-    (df_model["Intitule"].unique()))
+    ([""] + df_model["Intitule"].unique().tolist()))
+
 
 Input_lieu = st.selectbox(
     'Dans quelle ville souhaitez-vous rechercher un poste ?',
-    (df_model["Lieu"].unique()))
+    ([""] + df_model["Lieu"].unique().tolist()))
 
 Input_contrat = st.selectbox(
     'Quel type de contrat recherchez-vous ?',
-    (df_model["Type_poste"].unique()))
+    ([""] + df_model["Type_poste"].unique().tolist()))
 
 Input_societe = st.selectbox(
     'Dans quelle société souhaitez-vous travailler ?',
-    (df_model["Société"].unique()))
+    ([""] + df_model["Société"].unique().tolist()))
 
 #multiselect sur les compétences
-vectorizer = CountVectorizer(tokenizer=lambda x: x.split(',')) 
+vectorizer = CountVectorizer(tokenizer=lambda x: x.split(', ')) 
 vectorizer.fit_transform(df_model["Competences"])
-X = vectorizer.get_feature_names_out()
+liste_competences = vectorizer.get_feature_names_out()
+#st.write(liste_competences.tolist())
 
-Input_competences  = st.multiselect(
+Input_competences = st.multiselect(
     'Quelles compétences possédez-vous?',
-    X.tolist(),
-    [' agile',' bases de données'])
+    [""] + liste_competences.tolist(),
+    [""])
 Input_competences = ','.join(Input_competences)
+
 
 Input = [Input_intitule, Input_competences, Input_lieu, Input_contrat, Input_societe]
 
-# lacement de la prediction
+# lancement de la prediction
+st.subheader("Prédiction sur le salaire")
+
+#prediction pour salaire moyen = aucune donnée en entrée
+moyenne_minimum, moyenne_maximum = prediction_avec_input()  
+
+# On recupère salaires prédits
 predicted_min_sal, predicted_max_sal = prediction_avec_input(input = Input)   
-# On recupère deux variables qu'on pourra intégrer dans le code st pour les afficher à l'utilisateur
 
-st.subheader("Prédiction")
-st.text("Votre salaire sera compris entre")
-st.text(predicted_min_sal)
-st.text("et")
-st.text(predicted_max_sal )
-st.text("€")
+#calcul de la diff avec moyen
+diff_min = round(predicted_min_sal - moyenne_minimum, 2)
+diff_max = round(predicted_max_sal - moyenne_maximum, 2)
 
-# st.text("Votre salaire sera compris entre", predicted_min_sal ," et ", predicted_max_sal,"€")
+#transfo en string pour affichage
+predicted_min_sal_str = str(predicted_min_sal)+" €"
+predicted_max_sal_str = str(predicted_max_sal)+" €"
+diff_min = str(diff_min)+ " € par rapport au salaire moyen"
+diff_max = str(diff_max)+ " € par rapport au salaire moyen"
 
-# affichage du résultat sous forme user friendly
-# si c'était sous forme de graphique ça serait cool! Ca sera du bonus
+#display
+col1, col2 = st.columns(2)
+col1.metric("Salaire minimum", predicted_min_sal_str, diff_min)
+col2.metric("Salaire maximum", predicted_max_sal_str, diff_max)
+
+#histogrammes avec barre verticale marquant le salaire prédit
+fig, (ax1, ax2) = plt.subplots(1, 2)
+
+ax1.hist(df_model["Salaire_minimum"],  bins=20, color ="tomato" ) 
+ax1.axvline(predicted_min_sal, color='firebrick', linestyle='dashed', linewidth=1)
+ax1.title.set_text('Salaire minimum')
+ax1.tick_params(labelrotation=90)
+
+ax2.hist(df_model["Salaire_maximum"], bins=20, color ="tomato") 
+ax2.axvline(predicted_max_sal, color='firebrick', linestyle='dashed', linewidth=1)
+ax2.title.set_text('Salaire maximum')
+ax2.tick_params(labelrotation=90)
+
+st.pyplot(fig)
+
+
+
+
+
+
+
+

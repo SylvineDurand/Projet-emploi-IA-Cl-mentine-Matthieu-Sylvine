@@ -223,7 +223,6 @@ df=df.drop(["Salaire"],axis=1)
 #join les éléments dans chaque liste de compétences en les changeant en string 
 df['competences'] = [', '.join(map(str, l)) for l in df['competences']]
 
-
 #retire les retours à la ligne des compétences 
 def retour_a_la_ligne(value):
     return ''.join(value.splitlines())
@@ -235,7 +234,7 @@ df["competences"] = df["competences"].apply(retour_a_la_ligne)
 # II. Préprocessing des données
 # 1. Count vectorize compétences
 #count-vectorize pour les compétences qui tranforme le nombre de mots en 1 utiliser dans un array
-vectorizer = CountVectorizer(tokenizer=lambda x: x.split(',')) 
+vectorizer = CountVectorizer(tokenizer=lambda x: x.split(', ')) 
 X = vectorizer.fit_transform(df["competences"])
 vectorizer.get_feature_names_out()
 
@@ -250,7 +249,7 @@ pd.Series(df["Type de poste"]).value_counts()
 df_clean = pd.DataFrame(list(zip(df["Date de publication"],df["Intitule"], df["competences"],df['Lieu'],df["Salaire_minimum"],df["Salaire_maximum"],df['Type_poste'],df["Type de poste"])),columns =['Date_de_publication', 'Intitule',"Competences","Lieu","Salaire_minimum","Salaire_maximum","Type_poste","Société"])
 
 
-df_clean.to_csv("df_clean.csv")
+df_clean.to_csv("df_clean.csv", index = None)
 
 
 ############################################################
@@ -265,7 +264,7 @@ def prepa_modele():
     
     # 2. Définition des x 
     global X
-    X = df_model.drop(columns=['Date_de_publication','Unnamed: 0','Salaire_minimum','Salaire_maximum'])
+    X = df_model.drop(columns=['Date_de_publication', 'Salaire_minimum','Salaire_maximum'])
     
     # 3. Selection des variables categoriques sur lesquelles appliquer OneHot
     column_cat = X.select_dtypes(include=['object']).columns.drop(['Competences'])
@@ -277,7 +276,7 @@ def prepa_modele():
     ])
          
     transfo_text = Pipeline(steps=[
-        ('bow', CountVectorizer(tokenizer=lambda x: x.split(',')) )
+        ('bow', CountVectorizer(tokenizer=lambda x: x.split(', ')) )
     ])
     
     # 5. Class ColumnTransformer: appliquer chacune des pipelines sur les bonnes colonnes en nommant chaque étape
@@ -358,7 +357,7 @@ test_modele("Maximum", modele = RandomForestRegressor(),est = mean_squared_error
 
 # 1. Recuperation d'un input depuis l'utilisateur pour chaque feature du modele
 Input_intitule = 'data analyst'
-Input_competences = 'support, si' #une string avec compétences séparées par virgules
+Input_competences = 'support,si' #une string avec compétences séparées par virgules
 Input_lieu = 'PARIS'
 Input_contrat = 'cdi'
 Input_societe = 'selescope'
@@ -398,45 +397,45 @@ predicted_min_sal, predicted_max_sal = prediction_avec_input(input = Input)
 # le modele s'entraine juste sur des features
 # difficulté sera surtout de comprendre où sont les variables dedans. 
 
-exit()
+quit()
 
 #############################################
 # 6. Bonus nuage de mots pour illustration
 # CHANTIER EN COURS !!!
 
-from wordcloud import WordCloud
-import matplotlib.pyplot as plt
-import numpy as np
-from PIL import Image
+# from wordcloud import WordCloud
+# import matplotlib.pyplot as plt
+# import numpy as np
+# from PIL import Image
 
-vectorizer = CountVectorizer(tokenizer=lambda x: x.split(','))
-X = vectorizer.fit_transform(df["competences"])
-vectorizer.get_feature_names_out() 
-
-
-corpus = " ".join([ligne for ligne in vectorizer.get_feature_names_out()])
+# vectorizer = CountVectorizer(tokenizer=lambda x: x.split(','))
+# X = vectorizer.fit_transform(df["competences"])
+# vectorizer.get_feature_names_out() 
 
 
-
-wordcloud = WordCloud(background_color = 'white', max_words = 50).generate(X)
-plt.imshow(wordcloud)
-plt.axis("off")
-plt.show();
+# corpus = " ".join([ligne for ligne in vectorizer.get_feature_names_out()])
 
 
-# bonne source pour corriger ça? a creuser
-# https://github.com/rachelrakov/Intro_to_Machine_Learning/blob/master/sections/word_cloud.md
 
-words = np.array(vectorizer.get_feature_names())
-
-# vectorizer_mat = vectorizer.toarray()
-# docs = vectorizer_mat[(vectorizer_mat>10).any(axis=1)]
+# wordcloud = WordCloud(background_color = 'white', max_words = 50).generate(X)
+# plt.imshow(wordcloud)
+# plt.axis("off")
+# plt.show();
 
 
-# cv = CountVectorizer(min_df=0, charset_error="ignore",                                               
-#                          stop_words="english", max_features=200)
-counts = vectorizer.fit_transform(df["competences"]).toarray().ravel()                                                  
-words = np.array(vectorizer.get_feature_names()) 
-# normalize                                                                                                                                             
-counts = counts / float(counts.max())
+# # bonne source pour corriger ça? a creuser
+# # https://github.com/rachelrakov/Intro_to_Machine_Learning/blob/master/sections/word_cloud.md
+
+# words = np.array(vectorizer.get_feature_names())
+
+# # vectorizer_mat = vectorizer.toarray()
+# # docs = vectorizer_mat[(vectorizer_mat>10).any(axis=1)]
+
+
+# # cv = CountVectorizer(min_df=0, charset_error="ignore",                                               
+# #                          stop_words="english", max_features=200)
+# counts = vectorizer.fit_transform(df["competences"]).toarray().ravel()                                                  
+# words = np.array(vectorizer.get_feature_names()) 
+# # normalize                                                                                                                                             
+# counts = counts / float(counts.max())
 

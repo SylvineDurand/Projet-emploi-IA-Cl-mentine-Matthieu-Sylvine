@@ -36,7 +36,7 @@ def prepa_modele():
     
     # 2. Définition des x 
     global X
-    X = df_model.drop(columns=['Date_de_publication','Unnamed: 0','Salaire_minimum','Salaire_maximum'])
+    X = df_model.drop(columns=['Date_de_publication', 'Salaire_minimum','Salaire_maximum'])
     
     # 3. Selection des variables categoriques sur lesquelles appliquer OneHot
     column_cat = X.select_dtypes(include=['object']).columns.drop(['Competences'])
@@ -48,7 +48,7 @@ def prepa_modele():
     ])
          
     transfo_text = Pipeline(steps=[
-        ('bow', CountVectorizer(tokenizer=lambda x: x.split(',')) )
+        ('bow', CountVectorizer(tokenizer=lambda x: x.split(', ')) )
     ])
     
     # 5. Class ColumnTransformer: appliquer chacune des pipelines sur les bonnes colonnes en nommant chaque étape
