@@ -249,8 +249,117 @@ pd.Series(df["Type de poste"]).value_counts()
 
 df_clean = pd.DataFrame(list(zip(df["Date de publication"],df["Intitule"], df["competences"],df['Lieu'],df["Salaire_minimum"],df["Salaire_maximum"],df['Type_poste'],df["Type de poste"])),columns =['Date_de_publication', 'Intitule',"Competences","Lieu","Salaire_minimum","Salaire_maximum","Type_poste","Société"])
 
+# III. Analyse exploratoire
+# 1. Les compétences les plus recherchées
+#tableau des occurences de chaque competence à partir de la vectorisation
+count_array = X.toarray()
+df_competences = pd.DataFrame(data=count_array, columns = vectorizer.get_feature_names())
+print(df_competences)
+df_competences.shape
+#Selection de la somme des occurences pour chaque competence & sort des plus demandées
+df_competences2=df_competences.append(df_competences.sum(), ignore_index=True)
+print(df_competences2)
+df_competences3=df_competences2.loc[[230]].T
+df_competences3.reset_index(inplace=True)
+df_competences3.columns =['competences','number of occurences']
+df_competences3.sort_values(by='number of occurences', ascending=False, inplace=True)
+#Selection des competence qui aparaissent plus de 20 fois
+df_competencesfinal = df_competences3.loc[df_competences3['number of occurences'] > 20]
+df_competencesfinal.shape
+#creation du plot pour les competences demandées plus de 10 fois
+import matplotlib.pyplot as plt
+x = df_competencesfinal['competences']
+y = df_competencesfinal['number of occurences']
+xlabel = df_competencesfinal['competences']
 
+plt.bar(x, y, width = 0.6)
+plt.xticks(xlabel, rotation=90)
+plt.xlabel('Competence')
+plt.ylabel('Number of occurence')
+plt.title('Competences recherchées')
+plt.show()
+
+# 2. Les entreprises qui recrutent le plus
+#nettoyage de la colonne entreprise
+df_societe=pd.read_csv('df_clean.csv') 
+data = df_societe['Société']
+societe=[]
+for i in data:
+       societe.append(i.replace(' ', '_').replace(' ', '').replace("é", "e")
+                      .replace('-','_').replace('&','_').upper())
+data = societe
+SOCIETE = []
+for i in data:
+   SOCIETE.append(i.upper())
+
+df_societe2 = pd.DataFrame(SOCIETE, columns = ['societe'])
+
+#recurrence des sociéte dans le dataset
+df_societe_count = df_societe2.value_counts(ascending=False)
+df_societefinal = df_societe_count.to_frame().reset_index()
+df_societefinal.columns = ['societe', 'number of occurence']
+
+
+#creation du nombre d'occurence
+df_societefinal2 = df_societefinal.loc[df_societefinal['number of occurence'] > 5]
+df_societefinal2.shape
+
+#creation du plot pour les competences demandées plus de 5 fois
+
+x_societe = df_societefinal2['societe']
+y_societe = df_societefinal2['number of occurence']
+xlabel = df_societefinal2['societe'] 
+
+plt.bar(x_societe, y_societe, width = 0.6)
+plt.xticks(xlabel, rotation=90)
+plt.xlabel('societe')
+plt.ylabel('Number of occurence')
+plt.title('Sociétés recrutant le plus')
+plt.show()
+
+  
+# 3. Les postes les mieux payés
+df_poste=pd.read_csv('df_clean.csv') 
+df_poste.columns
+df_poste2 = df_poste.drop(['Unnamed: 0'], axis=1).dropna().groupby(['Intitule']).median()
+df_poste2.sort_values('Salaire_minimum', ascending=False, inplace=True)
+df_poste2
+
+
+
+
+# 4. Les compétences les mieux payés
+df_competence=pd.read_csv('df_clean.csv') 
+df_competence.columns
+df_competence2 = df_competence.drop(['Unnamed: 0'], axis=1).dropna()
+Test = df_competence2["Competences"].str.split(", ", n = -1, expand = True)
+df_competence2bis = pd.concat([Test, df_competence2.reindex(Test.index)], axis=1)
+df_competence2bis.rename(columns={0: "a", 1: "b", 2: "c", 3: "d", 4: "e"}, inplace=True)
+df_competence2bis.columns
+df_competence2bis2 = df_competence2bis.drop(['Date_de_publication', 'Intitule', 'Competences', 'Lieu', 'Type_poste', 'Société'], axis=1)
+df_c0 = df_competence2bis2.drop(['b', 'c', 'd', 'e'], axis=1)
+df_c1 = df_competence2bis2.drop(['a', 'c', 'd', 'e'], axis=1).rename(columns = {"b": "a"})
+df_c2 = df_competence2bis2.drop(['a', 'b', 'd', 'e'], axis=1).rename(columns = {"c": "a"})
+df_c3 = df_competence2bis2.drop(['a', 'b', 'c', 'e'], axis=1).rename(columns = {"d": "a"})
+df_c4 = df_competence2bis2.drop(['a', 'b', 'c', 'd'], axis=1).rename(columns = {"e": "a"})
+frames = [df_c0, df_c1, df_c2, df_c3, df_c4]
+df_cfinal = pd.concat(frames)
+df_cfinal.shape
+df_cfinal.drop_duplicates(inplace=True)
+df_cfinal.shape
+df_cfinal.dropna(inplace=True)
+
+df_cresults = df_cfinal.groupby(['a']).median().reset_index()
+df_cresults.sort_values('Salaire_minimum', ascending=False, inplace=True)
+df_cresults.rename(columns = {"a": "Competence"}, inplace=True)
+
+
+# 5. Le salaire moyen par compétence
+dfcresults_mean = df_cresults.mean(axis=1)
+dfcresults_mean2=dfcresults_mean.to_frame(name = 'Salaire moyen') 
+df_salairemoyen = pd.concat([df_cresults, dfcresults_mean2.reindex(df_cresults.index)], axis=1)
 df_clean.to_csv("df_clean.csv")
+
 
 
 ############################################################
