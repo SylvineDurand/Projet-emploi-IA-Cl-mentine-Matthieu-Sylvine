@@ -223,12 +223,15 @@ df=df.drop(["Salaire"],axis=1)
 #join les éléments dans chaque liste de compétences en les changeant en string 
 df['competences'] = [', '.join(map(str, l)) for l in df['competences']]
 
+
+
 #retire les retours à la ligne des compétences 
 def retour_a_la_ligne(value):
     return ''.join(value.splitlines())
 
 df["competences"] = df["competences"].apply(retour_a_la_ligne)
 
+df['competences'] = df['competences'].apply([lambda row: row.replace("é","e")]) 
 
 ############################################################
 # II. Préprocessing des données
@@ -314,41 +317,46 @@ def test_modele(target = "Minimum", seed = 42, modele = LinearRegression(), est 
     # Evaluer le modele
     print(f"Target = Salaire {target}, modèle = {modele}, seed = {seed}")
     print(f"Score du modèle sur le training: {pipe_model.score(X_train, y_train)}") 
-    print(f"Estimateur {est}: {est(y_test, y_pred)}")
+    if est == mean_squared_error:
+        print(f"Estimateur {est}: {est(y_test, y_pred,squared = False)}")
+    else:
+        print(f"Estimateur {est}: {est(y_test, y_pred)}")
     
     return pipe_model
+
 
 # Appliquer la fonction pour différents types de modèles
 # reg lineaire classique
 test_modele()
+test_modele(est = mean_squared_error, seed=1753)
 test_modele("Maximum")
-test_modele(est = mean_squared_error)
-test_modele("Maximum", est = mean_squared_error)
+test_modele("Maximum", est = mean_squared_error, seed=1753)
+
 
 # reg regularisée
 # Ridge
 test_modele(modele = Ridge())
-test_modele(modele = Ridge(), est = mean_squared_error)
+test_modele(modele = Ridge(), est = mean_squared_error, seed=1753)
 test_modele("Maximum", modele = Ridge())
-test_modele("Maximum", modele = Ridge(), est = mean_squared_error)
+test_modele("Maximum", modele = Ridge(), est = mean_squared_error, seed=1753)
 
 #Lasso
 test_modele(modele = Lasso(max_iter=10000))
-test_modele(modele = Lasso(max_iter=10000),est = mean_squared_error)
+test_modele(modele = Lasso(max_iter=10000),est = mean_squared_error, seed=1753)
 test_modele("Maximum",modele = Lasso(max_iter=10000))
-test_modele("Maximum",modele = Lasso(max_iter=10000),est = mean_squared_error)
+test_modele("Maximum",modele = Lasso(max_iter=10000),est = mean_squared_error, seed=1753)
 
 #ElasticNet
 test_modele(modele = ElasticNet()) 
-test_modele(modele = ElasticNet(),est = mean_squared_error) 
+test_modele(modele = ElasticNet(),est = mean_squared_error, seed=1753) 
 test_modele("Maximum", modele = ElasticNet()) 
-test_modele("Maximum", modele = ElasticNet(),est = mean_squared_error) 
+test_modele("Maximum", modele = ElasticNet(),est = mean_squared_error, seed=1753) 
 
 # Random forest
 test_modele(modele = RandomForestRegressor())
-test_modele(modele = RandomForestRegressor(),est = mean_squared_error)
+test_modele(modele = RandomForestRegressor(),est = mean_squared_error, seed=1753)
 test_modele("Maximum", modele = RandomForestRegressor())
-test_modele("Maximum", modele = RandomForestRegressor(),est = mean_squared_error)
+test_modele("Maximum", modele = RandomForestRegressor(),est = mean_squared_error, seed=1753)
 # Resultats dependent du hasard avec ce type de modèle, pas robuste du tout quand peu de données
 
 
@@ -397,7 +405,6 @@ predicted_min_sal, predicted_max_sal = prediction_avec_input(input = Input)
 # le modele s'entraine juste sur des features
 # difficulté sera surtout de comprendre où sont les variables dedans. 
 
-quit()
 
 #############################################
 # 6. Bonus nuage de mots pour illustration

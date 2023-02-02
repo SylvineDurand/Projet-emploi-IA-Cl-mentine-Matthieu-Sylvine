@@ -109,23 +109,26 @@ predicted_max_sal_str = str(predicted_max_sal)+" €"
 diff_min = str(diff_min)+ " € par rapport au salaire moyen"
 diff_max = str(diff_max)+ " € par rapport au salaire moyen"
 
-#display
+# affichage
 col1, col2 = st.columns(2)
 col1.metric("Salaire minimum", predicted_min_sal_str, diff_min)
 col2.metric("Salaire maximum", predicted_max_sal_str, diff_max)
 
 #histogrammes avec barre verticale marquant le salaire prédit
 fig, (ax1, ax2) = plt.subplots(1, 2)
+fig.suptitle('Positionnement des salaires prédits par rapport aux salaires observés') 
 
 ax1.hist(df_model["Salaire_minimum"],  bins=20, color ="tomato" ) 
 ax1.axvline(predicted_min_sal, color='firebrick', linestyle='dashed', linewidth=1)
 ax1.title.set_text('Salaire minimum')
 ax1.tick_params(labelrotation=90)
+ax1.axis(ymin=0, ymax=14.5, xmin=29000, xmax=101000)
 
 ax2.hist(df_model["Salaire_maximum"], bins=20, color ="tomato") 
 ax2.axvline(predicted_max_sal, color='firebrick', linestyle='dashed', linewidth=1)
 ax2.title.set_text('Salaire maximum')
 ax2.tick_params(labelrotation=90)
+ax2.axis(ymin=0, ymax=14.5, xmin=29000, xmax=101000)
 
 st.pyplot(fig)
 
