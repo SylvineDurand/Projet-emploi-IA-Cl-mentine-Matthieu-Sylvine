@@ -35,20 +35,49 @@ from fonctions import prepa_modele, test_modele, prediction_avec_input
 
 #------------------------------------------------------------------------------
 # Importer le df clean
+df_complet = pd.read_csv("df_clean.csv")
+df_complet_sans_dup = pd.read_csv("df_clean.csv").drop_duplicates()
 df_model = pd.read_csv("df_clean.csv").dropna()
+df_model_sans_dup = pd.read_csv("df_clean.csv").dropna().drop_duplicates()
 st.title("Notre appli du feu de dieu 🔥")
 
 #------------------------------------------------------------------------------
 # Analyses exploratoires: les super graphes de Clémentine
 
+st.header('Choisissez sur quel jeu de données vous voulez voir les analyses')
 
-st.header('`Streamlit profile report`')
-pr = df_model.profile_report()
-st_profile_report(pr)
-df_compet = pd.read_csv("df_poste2.csv")
+st.write ('Veux-tu toutes les données ou seulement les données non vides des salaires')
+
+données = st.radio(
+    "Sélectionnez les données dont vous voulez les analyses",
+    ('Données complètes', 'Données complètes sans duplicat', 'Données non vides','Données non vides sans duplicats'))
+
+
+st.subheader('`Streamlit profile report`')
+
+if données == 'Données complètes' :
+    pr = df_model.profile_report()
+    st_profile_report(pr)
+
+if données == 'Données non vides' : 
+    pr = df_complet.profile_report()
+    st_profile_report(pr)
+
+if données == 'Données complètes sans duplicat' :
+    pr = df_complet_sans_dup.profile_report()
+    st_profile_report(pr)
+
+if données == 'Données non vides sans duplicats' : 
+    pr = df_model_sans_dup.profile_report()
+    st_profile_report(pr)
+
+
+
+
+'''df_compet = pd.read_csv("df_poste2.csv")
 a=df_compet["Intitule"]
 b=df_compet["Salaire_minimum"]
-st.bar_chart(x=a,y=b)
+st.bar_chart(x=a,y=b)'''
 
 
 #------------------------------------------------------------------------------
