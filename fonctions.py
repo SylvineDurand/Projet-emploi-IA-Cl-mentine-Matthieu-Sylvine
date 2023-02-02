@@ -48,7 +48,7 @@ def prepa_modele():
     ])
          
     transfo_text = Pipeline(steps=[
-        ('bow', CountVectorizer(tokenizer=lambda x: x.split(',')) )
+        ('bow', CountVectorizer(tokenizer=lambda x: x.split(', ')) )
     ])
     
     # 5. Class ColumnTransformer: appliquer chacune des pipelines sur les bonnes colonnes en nommant chaque étape
@@ -83,6 +83,9 @@ def test_modele(target = "Minimum", seed = 42, modele = LinearRegression(), est 
     # Evaluer le modele
     print(f"Target = Salaire {target}, modèle = {modele}, seed = {seed}")
     print(f"Score du modèle sur le training: {pipe_model.score(X_train, y_train)}") 
+    if est == mean_squared_error:
+        print(f"Estimateur {est}: {est(y_test, y_pred,squared = False)}")
+    else:
     print(f"Estimateur {est}: {est(y_test, y_pred)}")
     
     return pipe_model

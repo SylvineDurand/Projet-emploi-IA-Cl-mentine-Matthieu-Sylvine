@@ -235,7 +235,7 @@ df['competences'] = df['competences'].apply([lambda row: row.replace("é","e")])
 # II. Préprocessing des données
 # 1. Count vectorize compétences
 #count-vectorize pour les compétences qui tranforme le nombre de mots en 1 utiliser dans un array
-vectorizer = CountVectorizer(tokenizer=lambda x: x.split(',')) 
+vectorizer = CountVectorizer(tokenizer=lambda x: x.split(', ')) 
 X = vectorizer.fit_transform(df["competences"])
 vectorizer.get_feature_names_out()
 
@@ -420,7 +420,7 @@ def prepa_modele():
     ])
          
     transfo_text = Pipeline(steps=[
-        ('bow', CountVectorizer(tokenizer=lambda x: x.split(',')) )
+        ('bow', CountVectorizer(tokenizer=lambda x: x.split(', ')) )
     ])
     
     # 5. Class ColumnTransformer: appliquer chacune des pipelines sur les bonnes colonnes en nommant chaque étape
@@ -458,41 +458,45 @@ def test_modele(target = "Minimum", seed = 42, modele = LinearRegression(), est 
     # Evaluer le modele
     print(f"Target = Salaire {target}, modèle = {modele}, seed = {seed}")
     print(f"Score du modèle sur le training: {pipe_model.score(X_train, y_train)}") 
-    print(f"Estimateur {est}: {est(y_test, y_pred)}")
+    if est == mean_squared_error:
+        print(f"Estimateur {est}: {est(y_test, y_pred,squared = False)}")
+    else:
+        print(f"Estimateur {est}: {est(y_test, y_pred)}")
     
     return pipe_model
 
 # Appliquer la fonction pour différents types de modèles
 # reg lineaire classique
 test_modele()
+test_modele(est = mean_squared_error, seed=1753)
 test_modele("Maximum")
-test_modele(est = mean_squared_error)
-test_modele("Maximum", est = mean_squared_error)
+test_modele("Maximum", est = mean_squared_error, seed=1753)
+
 
 # reg regularisée
 # Ridge
 test_modele(modele = Ridge())
-test_modele(modele = Ridge(), est = mean_squared_error)
+test_modele(modele = Ridge(), est = mean_squared_error, seed=1753)
 test_modele("Maximum", modele = Ridge())
-test_modele("Maximum", modele = Ridge(), est = mean_squared_error)
+test_modele("Maximum", modele = Ridge(), est = mean_squared_error, seed=1753)
 
 #Lasso
 test_modele(modele = Lasso(max_iter=10000))
-test_modele(modele = Lasso(max_iter=10000),est = mean_squared_error)
+test_modele(modele = Lasso(max_iter=10000),est = mean_squared_error, seed=1753)
 test_modele("Maximum",modele = Lasso(max_iter=10000))
-test_modele("Maximum",modele = Lasso(max_iter=10000),est = mean_squared_error)
+test_modele("Maximum",modele = Lasso(max_iter=10000),est = mean_squared_error, seed=1753)
 
 #ElasticNet
 test_modele(modele = ElasticNet()) 
-test_modele(modele = ElasticNet(),est = mean_squared_error) 
+test_modele(modele = ElasticNet(),est = mean_squared_error, seed=1753) 
 test_modele("Maximum", modele = ElasticNet()) 
-test_modele("Maximum", modele = ElasticNet(),est = mean_squared_error) 
+test_modele("Maximum", modele = ElasticNet(),est = mean_squared_error, seed=1753) 
 
 # Random forest
 test_modele(modele = RandomForestRegressor())
-test_modele(modele = RandomForestRegressor(),est = mean_squared_error)
+test_modele(modele = RandomForestRegressor(),est = mean_squared_error, seed=1753)
 test_modele("Maximum", modele = RandomForestRegressor())
-test_modele("Maximum", modele = RandomForestRegressor(),est = mean_squared_error)
+test_modele("Maximum", modele = RandomForestRegressor(),est = mean_squared_error, seed=1753)
 # Resultats dependent du hasard avec ce type de modèle, pas robuste du tout quand peu de données
 
 
@@ -501,7 +505,7 @@ test_modele("Maximum", modele = RandomForestRegressor(),est = mean_squared_error
 
 # 1. Recuperation d'un input depuis l'utilisateur pour chaque feature du modele
 Input_intitule = 'data analyst'
-Input_competences = 'support, si' #une string avec compétences séparées par virgules
+Input_competences = 'support,si' #une string avec compétences séparées par virgules
 Input_lieu = 'PARIS'
 Input_contrat = 'cdi'
 Input_societe = 'selescope'
@@ -541,45 +545,44 @@ predicted_min_sal, predicted_max_sal = prediction_avec_input(input = Input)
 # le modele s'entraine juste sur des features
 # difficulté sera surtout de comprendre où sont les variables dedans. 
 
-exit()
 
 #############################################
 # 6. Bonus nuage de mots pour illustration
 # CHANTIER EN COURS !!!
 
-from wordcloud import WordCloud
-import matplotlib.pyplot as plt
-import numpy as np
-from PIL import Image
+# from wordcloud import WordCloud
+# import matplotlib.pyplot as plt
+# import numpy as np
+# from PIL import Image
 
-vectorizer = CountVectorizer(tokenizer=lambda x: x.split(','))
-X = vectorizer.fit_transform(df["competences"])
-vectorizer.get_feature_names_out() 
-
-
-corpus = " ".join([ligne for ligne in vectorizer.get_feature_names_out()])
+# vectorizer = CountVectorizer(tokenizer=lambda x: x.split(','))
+# X = vectorizer.fit_transform(df["competences"])
+# vectorizer.get_feature_names_out() 
 
 
-
-wordcloud = WordCloud(background_color = 'white', max_words = 50).generate(X)
-plt.imshow(wordcloud)
-plt.axis("off")
-plt.show();
+# corpus = " ".join([ligne for ligne in vectorizer.get_feature_names_out()])
 
 
-# bonne source pour corriger ça? a creuser
-# https://github.com/rachelrakov/Intro_to_Machine_Learning/blob/master/sections/word_cloud.md
 
-words = np.array(vectorizer.get_feature_names())
-
-# vectorizer_mat = vectorizer.toarray()
-# docs = vectorizer_mat[(vectorizer_mat>10).any(axis=1)]
+# wordcloud = WordCloud(background_color = 'white', max_words = 50).generate(X)
+# plt.imshow(wordcloud)
+# plt.axis("off")
+# plt.show();
 
 
-# cv = CountVectorizer(min_df=0, charset_error="ignore",                                               
-#                          stop_words="english", max_features=200)
-counts = vectorizer.fit_transform(df["competences"]).toarray().ravel()                                                  
-words = np.array(vectorizer.get_feature_names()) 
-# normalize                                                                                                                                             
-counts = counts / float(counts.max())
+# # bonne source pour corriger ça? a creuser
+# # https://github.com/rachelrakov/Intro_to_Machine_Learning/blob/master/sections/word_cloud.md
+
+# words = np.array(vectorizer.get_feature_names())
+
+# # vectorizer_mat = vectorizer.toarray()
+# # docs = vectorizer_mat[(vectorizer_mat>10).any(axis=1)]
+
+
+# # cv = CountVectorizer(min_df=0, charset_error="ignore",                                               
+# #                          stop_words="english", max_features=200)
+# counts = vectorizer.fit_transform(df["competences"]).toarray().ravel()                                                  
+# words = np.array(vectorizer.get_feature_names()) 
+# # normalize                                                                                                                                             
+# counts = counts / float(counts.max())
 
