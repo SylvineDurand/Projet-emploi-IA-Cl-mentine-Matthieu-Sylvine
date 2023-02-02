@@ -56,11 +56,11 @@ données = st.radio(
 st.subheader('`Streamlit profile report`')
 
 if données == 'Données complètes' :
-    pr = df_model.profile_report()
+    pr = df_complet.profile_report()
     st_profile_report(pr)
 
 if données == 'Données non vides' : 
-    pr = df_complet.profile_report()
+    pr = df_model.profile_report()
     st_profile_report(pr)
 
 if données == 'Données complètes sans duplicat' :
@@ -72,13 +72,23 @@ if données == 'Données non vides sans duplicats' :
     st_profile_report(pr)
 
 
+df_intitule_salaire = pd.read_csv("df_poste2.csv")
 
 
-'''df_compet = pd.read_csv("df_poste2.csv")
-a=df_compet["Intitule"]
-b=df_compet["Salaire_minimum"]
-st.bar_chart(x=a,y=b)'''
+data_intitule_min = pd.DataFrame({
+    'index': df_intitule_salaire["Intitule"],
+    'Salaire_minimum': df_intitule_salaire['Salaire_minimum'],
+}).set_index('index')
 
+st.bar_chart(data_intitule_min)
+
+
+data_intitule_max = pd.DataFrame({
+    'index': df_intitule_salaire["Intitule"],
+    'Salaire_maximum': df_intitule_salaire['Salaire_maximum'],
+}).set_index('index')
+
+st.bar_chart(data_intitule_max)
 
 #------------------------------------------------------------------------------
 # Prédiction de salaire selon input de l'utilisateur

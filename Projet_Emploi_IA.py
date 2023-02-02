@@ -355,11 +355,13 @@ df_cresults = df_cfinal.groupby(['a']).median().reset_index()
 df_cresults.sort_values('Salaire_minimum', ascending=False, inplace=True)
 df_cresults.rename(columns = {"a": "Competence"}, inplace=True)
 
+df_cresults.to_csv("df_cresults.csv")
 
 # 5. Le salaire moyen par compétence
 dfcresults_mean = df_cresults.mean(axis=1)
 dfcresults_mean2=dfcresults_mean.to_frame(name = 'Salaire moyen') 
 df_salairemoyen = pd.concat([df_cresults, dfcresults_mean2.reindex(df_cresults.index)], axis=1)
+df_salairemoyen.to_csv("df_salaire_moyen.csv")
 
 # 6. Les types de contrat
 df_contrat=pd.read_csv('df_clean.csv')
@@ -391,6 +393,7 @@ plt.ylabel('Number of occurence')
 plt.title('differents type de postes')
 plt.show()
 
+df_contrat4.to_csv("df_contrat.csv")
 
 
 ############################################################
