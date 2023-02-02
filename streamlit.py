@@ -90,6 +90,44 @@ data_intitule_max = pd.DataFrame({
 
 st.bar_chart(data_intitule_max)
 
+df_cresults = pd.read_csv("df_cresults.csv")
+
+data_df_cresults_min = pd.DataFrame({
+    'index': df_cresults["Competence"],
+    'Salaire_minimum': df_intitule_salaire['Salaire_minimum'],
+}).set_index('index')
+
+st.bar_chart(data_df_cresults_min)
+
+data_df_cresults_max = pd.DataFrame({
+    'index': df_cresults["Competence"],
+    'Salaire_maximun': df_intitule_salaire['Salaire_maximum'],
+}).set_index('index')
+
+st.bar_chart(data_df_cresults_max)
+
+df_salaire_moyen_par_competences = pd.read_csv("df_salaire_moyen.csv")
+
+data_salaire_moyen_par_competences = pd.DataFrame({
+    'index': df_salaire_moyen_par_competences["Competence"],
+    'Salaire_moyen': df_salaire_moyen_par_competences['Salaire moyen'],
+}).set_index('index')
+
+st.bar_chart(data_salaire_moyen_par_competences)
+
+df_contrat = pd.read_csv("df_contrat.csv")
+
+data_contrat = pd.DataFrame({
+    'index': df_contrat["Type_poste"],
+    'Occurences': df_contrat['number of occurences'],
+}).set_index('index')
+
+st.bar_chart(data_contrat)
+
+
+
+
+
 #------------------------------------------------------------------------------
 # Prédiction de salaire selon input de l'utilisateur
 df_model = pd.read_csv("df_clean.csv").dropna()

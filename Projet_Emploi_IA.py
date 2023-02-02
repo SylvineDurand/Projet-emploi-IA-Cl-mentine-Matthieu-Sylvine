@@ -229,7 +229,7 @@ def retour_a_la_ligne(value):
     return ''.join(value.splitlines())
 
 df["competences"] = df["competences"].apply(retour_a_la_ligne)
-
+df['competences'] = df['competences'].apply([lambda row: row.replace("é","e")])
 
 ############################################################
 # II. Préprocessing des données
