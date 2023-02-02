@@ -10,7 +10,8 @@ Created on Wed Feb  1 09:40:36 2023
 import pandas as pd
 # from datetime import timedelta
 # import numpy as np
-
+import pandas_profiling
+from streamlit_pandas_profiling import st_profile_report
 # # pour preprocessing
 # from sklearn.impute import SimpleImputer
 # from sklearn.compose import ColumnTransformer
@@ -27,7 +28,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 # from sklearn.metrics import r2_score, mean_squared_error
 
 import streamlit as st
-
 from fonctions import prepa_modele, test_modele, prediction_avec_input
 # il va falloir changer le nom du script en un truc sans espaces
 # peut être d'autres libraires à importer, à voir au fur et à mesure
@@ -38,9 +38,17 @@ from fonctions import prepa_modele, test_modele, prediction_avec_input
 df_model = pd.read_csv("df_clean.csv").dropna()
 st.title("Notre appli du feu de dieu 🔥")
 
-# 
 #------------------------------------------------------------------------------
 # Analyses exploratoires: les super graphes de Clémentine
+
+
+st.header('`Streamlit profile report`')
+pr = df_model.profile_report()
+st_profile_report(pr)
+df_compet = pd.read_csv("df_poste2.csv")
+a=df_compet["Intitule"]
+b=df_compet["Salaire_minimum"]
+st.bar_chart(x=a,y=b)
 
 
 #------------------------------------------------------------------------------

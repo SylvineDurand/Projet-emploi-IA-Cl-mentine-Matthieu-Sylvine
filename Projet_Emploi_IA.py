@@ -248,6 +248,7 @@ pd.Series(df["Type de poste"]).value_counts()
 
 
 df_clean = pd.DataFrame(list(zip(df["Date de publication"],df["Intitule"], df["competences"],df['Lieu'],df["Salaire_minimum"],df["Salaire_maximum"],df['Type_poste'],df["Type de poste"])),columns =['Date_de_publication', 'Intitule',"Competences","Lieu","Salaire_minimum","Salaire_maximum","Type_poste","Société"])
+df_clean.to_csv("df_clean.csv" , index=None)
 
 # III. Analyse exploratoire
 # 1. Les compétences les plus recherchées
@@ -321,17 +322,18 @@ plt.show()
 # 3. Les postes les mieux payés
 df_poste=pd.read_csv('df_clean.csv') 
 df_poste.columns
-df_poste2 = df_poste.drop(['Unnamed: 0'], axis=1).dropna().groupby(['Intitule']).median()
+df_poste2 = df_poste.dropna().groupby(['Intitule']).median()
 df_poste2.sort_values('Salaire_minimum', ascending=False, inplace=True)
 df_poste2
 
+df_poste2.to_csv("df_poste2.csv")
 
 
 
 # 4. Les compétences les mieux payés
 df_competence=pd.read_csv('df_clean.csv') 
 df_competence.columns
-df_competence2 = df_competence.drop(['Unnamed: 0'], axis=1).dropna()
+df_competence2 = df_competence.dropna()
 Test = df_competence2["Competences"].str.split(", ", n = -1, expand = True)
 df_competence2bis = pd.concat([Test, df_competence2.reindex(Test.index)], axis=1)
 df_competence2bis.rename(columns={0: "a", 1: "b", 2: "c", 3: "d", 4: "e"}, inplace=True)
@@ -358,7 +360,36 @@ df_cresults.rename(columns = {"a": "Competence"}, inplace=True)
 dfcresults_mean = df_cresults.mean(axis=1)
 dfcresults_mean2=dfcresults_mean.to_frame(name = 'Salaire moyen') 
 df_salairemoyen = pd.concat([df_cresults, dfcresults_mean2.reindex(df_cresults.index)], axis=1)
-df_clean.to_csv("df_clean.csv")
+
+# 6. Les types de contrat
+df_contrat=pd.read_csv('df_clean.csv')
+
+vectorizer = CountVectorizer(tokenizer=lambda x: x.split('/'))
+X = vectorizer.fit_transform(df_contrat["Type_poste"])
+vectorizer.get_feature_names_out()
+print(X)
+print(vectorizer.get_feature_names_out())
+
+count_array = X.toarray()
+df_contrat2 = pd.DataFrame(data=count_array, columns = vectorizer.get_feature_names())
+print(df_contrat2)
+df_contrat2.shape
+df_contrat3 = df_contrat2.append(df_contrat2.sum(), ignore_index=True)
+df_contrat4=df_contrat3.loc[[230]].T
+df_contrat4.reset_index(inplace=True)
+df_contrat4.columns =['Type_poste','number of occurences']
+df_contrat4.sort_values(by='number of occurences', ascending=False, inplace=True)
+
+x = df_contrat4['Type_poste']
+y = df_contrat4['number of occurences']
+xlabel = df_contrat4['Type_poste']
+
+plt.bar(x, y, width = 0.6)
+plt.xticks(xlabel, rotation=90)
+plt.xlabel('Type_poste')
+plt.ylabel('Number of occurence')
+plt.title('differents type de postes')
+plt.show()
 
 
 
@@ -374,7 +405,7 @@ def prepa_modele():
     
     # 2. Définition des x 
     global X
-    X = df_model.drop(columns=['Date_de_publication','Unnamed: 0','Salaire_minimum','Salaire_maximum'])
+    X = df_model.drop(columns=['Date_de_publication','Salaire_minimum','Salaire_maximum'])
     
     # 3. Selection des variables categoriques sur lesquelles appliquer OneHot
     column_cat = X.select_dtypes(include=['object']).columns.drop(['Competences'])

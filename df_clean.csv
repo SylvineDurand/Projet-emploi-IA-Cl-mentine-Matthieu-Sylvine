@@ -1,233 +1,233 @@
-,Date_de_publication,Intitule,Competences,Lieu,Salaire_minimum,Salaire_maximum,Type_poste,Société
-0,2022-12-25,data analyst,"sql, t-sql, outils",PARIS,nan,nan,cdi,sept lieues sas
-1,2022-12-15,data analyst,"support, outils, agile, design, big data",LA-DEFENSE,nan,nan,cdi,edf france
-2,2022-12-19,customer data analyst,"crm, data quality, sql, sas, python",PARIS,nan,nan,cdi,hermès
-3,2022-12-25,master data analyst,"si, support, sap",MOUSSY-LE-VIEUX,nan,nan,cdi,tereos
-4,2023-01-12,portfolio data analyst,"outils, support, decisionnel, sql, test",FRANCE,nan,nan,cdi,safran-group
-5,2022-12-31,data analyst bo/qlick sens,"support, sql, data management, business objects, t-sql",MAISONSALFORT,45000  , 50000  ,cdd/intérim,fed it
-6,2022-12-18,product data analyst,"cloud, paas, qlik, iaas, support",PARIS,nan,nan,cdi,cegid
-7,2022-12-15,data analyst,"data management, business intelligence, bases de données",PARIS,60000  , 62000  ,cdi,fed it
-8,2023-01-14,business analyst senior data crm,"crm, agile, decisionnel, réseaux, réseau",PARIS,nan,nan,cdi,credit agricole
-9,2023-01-02,data scientist,"big data, scrum, intelligence artificielle, electronique, maintenance",RUEIL-MALMAISON,nan,nan,stage,vinci
-10,2023-01-02,data analyst ,"mobile, marketing, outils, t-sql, sql",PARIS,nan,nan,cdi,paris&co
-11,2023-01-01,responsable analyses et data relation clients assurances dommages,"sas, téléphonie, serveur, communication",LA-DEFENSE,nan,nan,cdi,société générale
-12,2023-01-12,data ingenieur,"digital, outils, cloud, webmarketing, marketing",SURESNES,nan,nan,cdi,fyte
-13,2023-01-01,data analyst,"outils, marketing, digital, machine learning, python",SAINT-OUEN,nan,nan,alternance,groupe engie
-14,2022-12-18,data scientist,"marketing, data management, support",RUEIL-MALMAISON,60000  , 65000  ,cdi,fed it
-15,2023-01-06,ingénieur mco cybersoc,"sécurité, securité, si, réseau, outils",PUTEAUX,nan,nan,cdi,i-tracing
-16,2023-01-13,consultant data,"big data, oracle, cloud, sap, python",PARIS,60000  , 70000  ,cdi,selescope
-17,2023-01-13,data engineer big data,"big data, python, support, intelligence artificielle, hadoop",PARIS,nan,nan,cdi,banque de france
-18,2023-01-01,data quality manager,"data quality, marketing",FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
-19,2023-01-10,chef de projets data,"marketing, outils, digital, ux, mobile",GENNEVILLIERS,60000  , 70000  ,cdi,hays france
-20,2022-12-24,senior data engineer,"scala, data quality, edge, python, big data",PARIS,nan,nan,cdi,paris&co
-21,2023-01-14,responsable etudes et projets si,"si, data management, data quality, méthodologie, outils",BOULOGNE-BILLANCOURT,55000  , 60000  ,cdi,michael page
-22,2022-12-21,ingénieur bi & big data,"big data, bases de données, nosql, système, decisionnel",SAINT-GERMAIN-EN-LAYE,nan,nan,stage,trimane
-23,2022-12-25,bi & big data #3,"big data, business intelligence, machine learning, outils, nosql",SAINT-GERMAIN-EN-LAYE,nan,nan,stage,trimane
-24,2022-12-17,ingénieur d’affaires,"business intelligence, crm, intelligence artificielle, système, réseau",SURESNES,70000  , 100000  ,cdi,selescope
-25,2022-12-27,business developer,"intelligence artificielle, business intelligence, crm, système, réseau",SURESNES,70000  , 100000  ,cdi,selescope
-26,2023-01-14,business analyst,"si, multimédia, acquisition, télécoms",LA-DEFENSE,nan,nan,cdi,modis
-27,2022-12-15,data engineer,"outils, big data, python, devops, agile",LA-DEFENSE,nan,nan,cdi,edf france
-28,2023-01-14,business analyst,"business intelligence, marketing, intelligence artificielle",RUEIL-MALMAISON,35000  , 45000  ,cdi,fed it
-29,2023-01-10,ingénieur big data/ intelligence artificiell,"big data, intelligence artificielle, nosql, python, hadoop",ILE-DE-FRANCE,nan,nan,stage,direct energie
-30,2023-01-01,global technical seo manager,"seo, communication, network, access, rails",PARIS,nan,nan,cdi,careerbuilder.com
-31,2023-01-02,technicien support informatiqu,"support, wan, windows, outils, exchange",ILE-DE-FRANCE,nan,nan,cdi,umanis
-32,2023-01-06,investor relations professional,"communication, support, database, crm, access",RUEIL-MALMAISON,nan,nan,cdi,société générale
-33,2022-12-24,agile business analyst,"agile, si, support, devops, sql",ILE-DE-FRANCE,nan,nan,cdi,societe generale
-34,2022-12-25,analyse de sensibilité des données métier et mise en oeuvre du référentiel data/big data,"outils, big data, si, réseau, securité",LA-DEFENSE,nan,nan,alternance,edf france
-35,2023-01-06,data scientist,"hadoop, machine learning, outils, bases de données, sql",VAL-DE-MARNE,nan,nan,cdi,societe generale
-36,2022-12-24,junior data scientist,"sql, python, scala, t-sql, edge",PARIS,nan,nan,cdi,paris&co
-37,2022-12-24,senior data scientist,"sql, python, scala, t-sql, edge",PARIS,nan,nan,cdi,paris&co
-38,2022-12-17,data scientist,"machine learning, méthodologie, agile",PARIS,45000  , 70000  ,cdi,key consulting
-39,2023-01-14,data analyst,"outils, perl, vba, test, data management",LA-DEFENSE,nan,nan,stage,société générale
-40,2023-01-08,digital analyst ecommerc,"digital, outils, e-commerce, marketing, internet",MASSY,nan,nan,cdi,carrefour
-41,2022-12-24,data quality coordination manager,"data quality, big data, devops, flex, decisionnel",FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
-42,2023-01-13,ingénieur cybersécurité,"sécurité, securité, blockchain, devops, design",PARIS,nan,nan,cdi,cap fi technology
-43,2022-12-29,business analyst data,"recette, si, big data, intelligence artificielle",PARIS,50000  , 80000  ,cdi,mr search
-44,2023-01-13,adjoint au responsable des solutions business intelligenc,"sap, sas, informatica, business intelligence, microsoft",NOISIEL,nan,nan,cdi,banque de france
-45,2022-12-25,consultant cognos,"cognos, etl, ibm, framework, outils",ILE-DE-FRANCE,nan,nan,cdi,trimane
-46,2022-12-24,chief data scientist,"python, framework, tensorflow, agile, intelligence artificielle",LA-DEFENSE,nan,nan,cdi,société générale
-47,2023-01-06,data science engineer,"big data, java, data management, support, javascript",SAINT-OUEN,nan,nan,cdi,danone
-48,2022-12-24,analyste fonctionnel bi microsoft,"microsoft, outils, sql server, sql, securité",ILE-DE-FRANCE,nan,nan,cdi,engie
-49,2022-12-31,chargé de projet data référentiel clients,"si, data management, digital",COLOMBES,nan,nan,stage,société générale
-50,2022-12-15,data manager,sas,LEVALLOIS-PERRET,nan,nan,cdi,uti group
-51,2022-12-31,xpert data protection & data privacy management,"data management, si, securité, outils, sécurité",HAUTS-DE-SEINE,nan,nan,cdi,societe generale
-52,2022-12-26,xpert data protection & data privacy management,"data management, si, securité, outils, big data",LA-DEFENSE,nan,nan,cdi,société générale
-53,2022-12-25,chef de projet data,agile,PARIS,30000  , 60000  ,cdi,nexton consulting
-54,2022-12-26,responsable protection des données personnelles pour le data office group,"data management, si, securité, outils, big data",LA-DEFENSE,nan,nan,cdi,société générale
-55,2022-12-18,data engineer,"marketing, hadoop, crm, java, python",PARIS,nan,nan,cdi,seloger
-56,2022-12-26,data scientist,"vba, système",COURBEVOIE,nan,nan,cdi,groupe engie
-57,2022-12-24,ingénieur de test,"test, big data, recette, outils, communication",MASSY,nan,nan,stage,carrefour
-58,2022-12-22,architecte logiciel,"si, web, salesforce, infrastructure, cloud",LEVALLOIS-PERRET,nan,nan,cdi,edifixio
-59,2022-12-15,chef de projet web analyses,"web, recette, digital, marketing, data management",BOULOGNE-BILLANCOURT,nan,nan,cdi,federation francaise de tennis
-60,2022-12-25,data analyst,"sql, t-sql, outils",PARIS,nan,nan,cdi,sept lieues sas
-61,2022-12-15,data analyst,"support, outils, agile, design, big data",LA-DEFENSE,nan,nan,cdi,edf france
-62,2022-12-19,customer data analyst,"crm, data quality, sql, sas, python",PARIS,nan,nan,cdi,hermès
-63,2022-12-25,master data analyst,"si, support, sap",MOUSSY-LE-VIEUX,nan,nan,cdi,tereos
-64,2023-01-12,portfolio data analyst,"outils, support, decisionnel, sql, test",FRANCE,nan,nan,cdi,safran-group
-65,2022-12-31,data analyst bo/qlick sens,"support, sql, data management, business objects, t-sql",MAISONSALFORT,45000  , 50000  ,cdd/intérim,fed it
-66,2022-12-18,product data analyst,"cloud, paas, qlik, iaas, support",PARIS,nan,nan,cdi,cegid
-67,2022-12-15,data analyst,"data management, business intelligence, bases de données",PARIS,60000  , 62000  ,cdi,fed it
-68,2023-01-14,business analyst senior data crm,"crm, agile, decisionnel, réseaux, réseau",PARIS,nan,nan,cdi,credit agricole
-69,2023-01-02,data scientist,"big data, scrum, intelligence artificielle, electronique, maintenance",RUEIL-MALMAISON,nan,nan,stage,vinci
-70,2023-01-02,data analyst ,"mobile, marketing, outils, t-sql, sql",PARIS,nan,nan,cdi,paris&co
-71,2023-01-01,responsable analyses et data relation clients assurances dommages,"sas, téléphonie, serveur, communication",LA-DEFENSE,nan,nan,cdi,société générale
-72,2023-01-12,data ingenieur,"digital, outils, cloud, webmarketing, marketing",SURESNES,nan,nan,cdi,fyte
-73,2023-01-01,data analyst,"outils, marketing, digital, machine learning, python",SAINT-OUEN,nan,nan,alternance,groupe engie
-74,2022-12-18,data scientist,"marketing, data management, support",RUEIL-MALMAISON,60000  , 65000  ,cdi,fed it
-75,2023-01-06,ingénieur mco cybersoc,"sécurité, securité, si, réseau, outils",PUTEAUX,nan,nan,cdi,i-tracing
-76,2023-01-13,consultant data,"big data, oracle, cloud, sap, python",PARIS,60000  , 70000  ,cdi,selescope
-77,2023-01-13,data engineer big data,"big data, python, support, intelligence artificielle, hadoop",PARIS,nan,nan,cdi,banque de france
-78,2023-01-01,data quality manager,"data quality, marketing",FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
-79,2023-01-10,chef de projets data,"marketing, outils, digital, ux, mobile",GENNEVILLIERS,60000  , 70000  ,cdi,hays france
-80,2023-01-06,ingénieur sécurité cloud,"securité, sécurité, cloud, si, iaas",PUTEAUX,nan,nan,cdi,i-tracing
-81,2023-01-14,contrôleur data quality,"data quality, sas, système, méthodologie, support",PARIS,nan,nan,cdi,banque de france
-82,2022-12-24,full stack web data viz,"web, javascript, open source, d3, angularjs",FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
-83,2023-01-06,architecte sécurité cloud,"securité, sécurité, cloud, si, iaas",PUTEAUX,nan,nan,cdi,i-tracing
-84,2022-12-22,developpeur junior,"si, web, infrastructure, cloud, salesforce",LEVALLOIS-PERRET,nan,nan,cdi,edifixio
-85,2022-12-22,consultant technico,"si, cloud, salesforce, web, infrastructure",LEVALLOIS-PERRET,nan,nan,cdi,edifixio
-86,2023-01-11,chef de projet informatique fonctionnel bi,"t-sql, recette, sql, database, maintenance",GENTILLY,nan,nan,cdi,chronopost sas
-87,2023-01-09,assistante décisionnel business intelligence/big data,"big data, decisionnel, système, support, business intelligence",TREMBLAY-EN-FRANCE,nan,nan,apprentissage,air france
-88,2023-01-13,data et monétisation,"digital, support, sql, outils, marketing",NEUILLY-SUR-SEINE,nan,nan,stage,groupe m6
-89,2022-12-22,développeur full stack,"si, web, salesforce, infrastructure, html5",FRANCE,nan,nan,cdi,edifixio
-90,2023-01-08,technicien de maintenance et support utilisateurs,"maintenance, support, securité, réseaux, cloud",GUYANCOURT,nan,nan,cdi,spie ics
-91,2022-12-25,it expert solutions mdm,"si, talend, data management, support, test",MOUSSY-LE-VIEUX,nan,nan,cdi,tereos
-92,2022-12-15,bi analyste ,"outils, support, video, decisionnel, data management",SAINT-OUEN,nan,nan,stage,danone
-93,2022-12-29,senior data scientist,"sql, data lab, machine learning, support, big data",ILE-DE-FRANCE,nan,nan,cdi,safran-group
-94,2023-01-04,model builder,"internet, support, support applicatif, design, moe",PARIS,nan,nan,cdi,criteo
-95,2023-01-14,ingénieur réseau/sécurité,"sécurité, securité, réseaux, lan, support",PARIS,45000  , 60000  ,cdi,uniware global services
-96,2022-12-24,manager leader,"agile, scrum, moa, progiciel, système",ILE-DE-FRANCE,nan,nan,cdi,natixis
-97,2023-01-14,ingénieur docker/kubernetes/jenkins/ansibl,"devops, jenkins, outils, linux, infrastructure",NEUILLYSURSEINE,42000  , 60000  ,cdi,uniware global services
-98,2023-01-14,ingénieur virtualisation,"support, vmware, python, javascript, securité",NEUILLYSURSEINE,40000  , 55000  ,cdi,uniware global services
-99,2023-01-10,ingénieur etudes et développement qlik,"qlik, agile, qlikview, sql, support",ILE-DE-FRANCE,nan,nan,cdi,direct energie
-100,2022-12-19,post-doctorant ia/big data,"digital, big data, machine learning, intelligence artificielle, bases de données",PARIS,nan,nan,cdi,business & decision
-101,2023-01-08,responsable développement supply chain,"support, communication, big data, cloud, hadoop",LISSES,57000  , 62000  ,cdi,fed it
-102,2023-01-14,ingénieur système vmwar,"vmware, support, windows, microsoft, système",NEUILLYSURSEINE,40000  , 55000  ,cdi,uniware global services
-103,2022-12-15,consultant bi junior,"business intelligence, big data, java, outils, sql",SAINT-GERMAIN-EN-LAYE,nan,nan,cdi,trimane
-104,2023-01-14,ingénieur cloud opensourc,"cloud, saas, paas, iaas, infrastructure",PARIS,40000  , 60000  ,cdi,uniware global services
-105,2022-12-30,application engineer,"lattice, python, aix, design",LEPLESSIS-ROBINSON,nan,nan,cdi,cs communication & systèmes
-106,2022-12-26,chargé dintégration de nouvelles sources de données dans le datalake et transformation en pyspark,"outils, si, langage, big data, python",FONTENAY-SOUS-BOIS,nan,nan,stage,société générale
-107,2023-01-02,agile business analyst,"agile, data quality, big data, data management, méthodologie",FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
-108,2023-01-14,ingénieur de production $u,"windows, unix, cft, réseaux, outils",PARIS,40000  , 60000  ,cdi,uniware global services
-109,2023-01-14,ingénieur réseau cisco,"réseau, cisco, réseaux, sécurité, securité",PARIS,40000  , 60000  ,cdi,uniware global services
-110,2023-01-14,conultant/analyste décisionnel etl qlikview & talend,"sap, qlikview, etl, talend, qlik",FRANCE-ANTONY,nan,nan,cdi,"
+Date_de_publication,Intitule,Competences,Lieu,Salaire_minimum,Salaire_maximum,Type_poste,Société
+2022-12-25,data analyst,"sql, t-sql, outils",PARIS,nan,nan,cdi,sept lieues sas
+2022-12-15,data analyst,"support, outils, agile, design, big data",LA-DEFENSE,nan,nan,cdi,edf france
+2022-12-19,customer data analyst,"crm, data quality, sql, sas, python",PARIS,nan,nan,cdi,hermès
+2022-12-25,master data analyst,"si, support, sap",MOUSSY-LE-VIEUX,nan,nan,cdi,tereos
+2023-01-12,portfolio data analyst,"outils, support, decisionnel, sql, test",FRANCE,nan,nan,cdi,safran-group
+2022-12-31,data analyst bo/qlick sens,"support, sql, data management, business objects, t-sql",MAISONSALFORT,45000  , 50000  ,cdd/intérim,fed it
+2022-12-18,product data analyst,"cloud, paas, qlik, iaas, support",PARIS,nan,nan,cdi,cegid
+2022-12-15,data analyst,"data management, business intelligence, bases de données",PARIS,60000  , 62000  ,cdi,fed it
+2023-01-14,business analyst senior data crm,"crm, agile, decisionnel, réseaux, réseau",PARIS,nan,nan,cdi,credit agricole
+2023-01-02,data scientist,"big data, scrum, intelligence artificielle, electronique, maintenance",RUEIL-MALMAISON,nan,nan,stage,vinci
+2023-01-02,data analyst ,"mobile, marketing, outils, t-sql, sql",PARIS,nan,nan,cdi,paris&co
+2023-01-01,responsable analyses et data relation clients assurances dommages,"sas, téléphonie, serveur, communication",LA-DEFENSE,nan,nan,cdi,société générale
+2023-01-12,data ingenieur,"digital, outils, cloud, webmarketing, marketing",SURESNES,nan,nan,cdi,fyte
+2023-01-01,data analyst,"outils, marketing, digital, machine learning, python",SAINT-OUEN,nan,nan,alternance,groupe engie
+2022-12-18,data scientist,"marketing, data management, support",RUEIL-MALMAISON,60000  , 65000  ,cdi,fed it
+2023-01-06,ingénieur mco cybersoc,"sécurité, securité, si, réseau, outils",PUTEAUX,nan,nan,cdi,i-tracing
+2023-01-13,consultant data,"big data, oracle, cloud, sap, python",PARIS,60000  , 70000  ,cdi,selescope
+2023-01-13,data engineer big data,"big data, python, support, intelligence artificielle, hadoop",PARIS,nan,nan,cdi,banque de france
+2023-01-01,data quality manager,"data quality, marketing",FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
+2023-01-10,chef de projets data,"marketing, outils, digital, ux, mobile",GENNEVILLIERS,60000  , 70000  ,cdi,hays france
+2022-12-24,senior data engineer,"scala, data quality, edge, python, big data",PARIS,nan,nan,cdi,paris&co
+2023-01-14,responsable etudes et projets si,"si, data management, data quality, méthodologie, outils",BOULOGNE-BILLANCOURT,55000  , 60000  ,cdi,michael page
+2022-12-21,ingénieur bi & big data,"big data, bases de données, nosql, système, decisionnel",SAINT-GERMAIN-EN-LAYE,nan,nan,stage,trimane
+2022-12-25,bi & big data #3,"big data, business intelligence, machine learning, outils, nosql",SAINT-GERMAIN-EN-LAYE,nan,nan,stage,trimane
+2022-12-17,ingénieur d’affaires,"business intelligence, crm, intelligence artificielle, système, réseau",SURESNES,70000  , 100000  ,cdi,selescope
+2022-12-27,business developer,"intelligence artificielle, business intelligence, crm, système, réseau",SURESNES,70000  , 100000  ,cdi,selescope
+2023-01-14,business analyst,"si, multimédia, acquisition, télécoms",LA-DEFENSE,nan,nan,cdi,modis
+2022-12-15,data engineer,"outils, big data, python, devops, agile",LA-DEFENSE,nan,nan,cdi,edf france
+2023-01-14,business analyst,"business intelligence, marketing, intelligence artificielle",RUEIL-MALMAISON,35000  , 45000  ,cdi,fed it
+2023-01-10,ingénieur big data/ intelligence artificiell,"big data, intelligence artificielle, nosql, python, hadoop",ILE-DE-FRANCE,nan,nan,stage,direct energie
+2023-01-01,global technical seo manager,"seo, communication, network, access, rails",PARIS,nan,nan,cdi,careerbuilder.com
+2023-01-02,technicien support informatiqu,"support, wan, windows, outils, exchange",ILE-DE-FRANCE,nan,nan,cdi,umanis
+2023-01-06,investor relations professional,"communication, support, database, crm, access",RUEIL-MALMAISON,nan,nan,cdi,société générale
+2022-12-24,agile business analyst,"agile, si, support, devops, sql",ILE-DE-FRANCE,nan,nan,cdi,societe generale
+2022-12-25,analyse de sensibilité des données métier et mise en oeuvre du référentiel data/big data,"outils, big data, si, réseau, securité",LA-DEFENSE,nan,nan,alternance,edf france
+2023-01-06,data scientist,"hadoop, machine learning, outils, bases de données, sql",VAL-DE-MARNE,nan,nan,cdi,societe generale
+2022-12-24,junior data scientist,"sql, python, scala, t-sql, edge",PARIS,nan,nan,cdi,paris&co
+2022-12-24,senior data scientist,"sql, python, scala, t-sql, edge",PARIS,nan,nan,cdi,paris&co
+2022-12-17,data scientist,"machine learning, méthodologie, agile",PARIS,45000  , 70000  ,cdi,key consulting
+2023-01-14,data analyst,"outils, perl, vba, test, data management",LA-DEFENSE,nan,nan,stage,société générale
+2023-01-08,digital analyst ecommerc,"digital, outils, e-commerce, marketing, internet",MASSY,nan,nan,cdi,carrefour
+2022-12-24,data quality coordination manager,"data quality, big data, devops, flex, decisionnel",FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
+2023-01-13,ingénieur cybersécurité,"sécurité, securité, blockchain, devops, design",PARIS,nan,nan,cdi,cap fi technology
+2022-12-29,business analyst data,"recette, si, big data, intelligence artificielle",PARIS,50000  , 80000  ,cdi,mr search
+2023-01-13,adjoint au responsable des solutions business intelligenc,"sap, sas, informatica, business intelligence, microsoft",NOISIEL,nan,nan,cdi,banque de france
+2022-12-25,consultant cognos,"cognos, etl, ibm, framework, outils",ILE-DE-FRANCE,nan,nan,cdi,trimane
+2022-12-24,chief data scientist,"python, framework, tensorflow, agile, intelligence artificielle",LA-DEFENSE,nan,nan,cdi,société générale
+2023-01-06,data science engineer,"big data, java, data management, support, javascript",SAINT-OUEN,nan,nan,cdi,danone
+2022-12-24,analyste fonctionnel bi microsoft,"microsoft, outils, sql server, sql, securité",ILE-DE-FRANCE,nan,nan,cdi,engie
+2022-12-31,chargé de projet data référentiel clients,"si, data management, digital",COLOMBES,nan,nan,stage,société générale
+2022-12-15,data manager,sas,LEVALLOIS-PERRET,nan,nan,cdi,uti group
+2022-12-31,xpert data protection & data privacy management,"data management, si, securité, outils, sécurité",HAUTS-DE-SEINE,nan,nan,cdi,societe generale
+2022-12-26,xpert data protection & data privacy management,"data management, si, securité, outils, big data",LA-DEFENSE,nan,nan,cdi,société générale
+2022-12-25,chef de projet data,agile,PARIS,30000  , 60000  ,cdi,nexton consulting
+2022-12-26,responsable protection des données personnelles pour le data office group,"data management, si, securité, outils, big data",LA-DEFENSE,nan,nan,cdi,société générale
+2022-12-18,data engineer,"marketing, hadoop, crm, java, python",PARIS,nan,nan,cdi,seloger
+2022-12-26,data scientist,"vba, système",COURBEVOIE,nan,nan,cdi,groupe engie
+2022-12-24,ingénieur de test,"test, big data, recette, outils, communication",MASSY,nan,nan,stage,carrefour
+2022-12-22,architecte logiciel,"si, web, salesforce, infrastructure, cloud",LEVALLOIS-PERRET,nan,nan,cdi,edifixio
+2022-12-15,chef de projet web analyses,"web, recette, digital, marketing, data management",BOULOGNE-BILLANCOURT,nan,nan,cdi,federation francaise de tennis
+2022-12-25,data analyst,"sql, t-sql, outils",PARIS,nan,nan,cdi,sept lieues sas
+2022-12-15,data analyst,"support, outils, agile, design, big data",LA-DEFENSE,nan,nan,cdi,edf france
+2022-12-19,customer data analyst,"crm, data quality, sql, sas, python",PARIS,nan,nan,cdi,hermès
+2022-12-25,master data analyst,"si, support, sap",MOUSSY-LE-VIEUX,nan,nan,cdi,tereos
+2023-01-12,portfolio data analyst,"outils, support, decisionnel, sql, test",FRANCE,nan,nan,cdi,safran-group
+2022-12-31,data analyst bo/qlick sens,"support, sql, data management, business objects, t-sql",MAISONSALFORT,45000  , 50000  ,cdd/intérim,fed it
+2022-12-18,product data analyst,"cloud, paas, qlik, iaas, support",PARIS,nan,nan,cdi,cegid
+2022-12-15,data analyst,"data management, business intelligence, bases de données",PARIS,60000  , 62000  ,cdi,fed it
+2023-01-14,business analyst senior data crm,"crm, agile, decisionnel, réseaux, réseau",PARIS,nan,nan,cdi,credit agricole
+2023-01-02,data scientist,"big data, scrum, intelligence artificielle, electronique, maintenance",RUEIL-MALMAISON,nan,nan,stage,vinci
+2023-01-02,data analyst ,"mobile, marketing, outils, t-sql, sql",PARIS,nan,nan,cdi,paris&co
+2023-01-01,responsable analyses et data relation clients assurances dommages,"sas, téléphonie, serveur, communication",LA-DEFENSE,nan,nan,cdi,société générale
+2023-01-12,data ingenieur,"digital, outils, cloud, webmarketing, marketing",SURESNES,nan,nan,cdi,fyte
+2023-01-01,data analyst,"outils, marketing, digital, machine learning, python",SAINT-OUEN,nan,nan,alternance,groupe engie
+2022-12-18,data scientist,"marketing, data management, support",RUEIL-MALMAISON,60000  , 65000  ,cdi,fed it
+2023-01-06,ingénieur mco cybersoc,"sécurité, securité, si, réseau, outils",PUTEAUX,nan,nan,cdi,i-tracing
+2023-01-13,consultant data,"big data, oracle, cloud, sap, python",PARIS,60000  , 70000  ,cdi,selescope
+2023-01-13,data engineer big data,"big data, python, support, intelligence artificielle, hadoop",PARIS,nan,nan,cdi,banque de france
+2023-01-01,data quality manager,"data quality, marketing",FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
+2023-01-10,chef de projets data,"marketing, outils, digital, ux, mobile",GENNEVILLIERS,60000  , 70000  ,cdi,hays france
+2023-01-06,ingénieur sécurité cloud,"securité, sécurité, cloud, si, iaas",PUTEAUX,nan,nan,cdi,i-tracing
+2023-01-14,contrôleur data quality,"data quality, sas, système, méthodologie, support",PARIS,nan,nan,cdi,banque de france
+2022-12-24,full stack web data viz,"web, javascript, open source, d3, angularjs",FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
+2023-01-06,architecte sécurité cloud,"securité, sécurité, cloud, si, iaas",PUTEAUX,nan,nan,cdi,i-tracing
+2022-12-22,developpeur junior,"si, web, infrastructure, cloud, salesforce",LEVALLOIS-PERRET,nan,nan,cdi,edifixio
+2022-12-22,consultant technico,"si, cloud, salesforce, web, infrastructure",LEVALLOIS-PERRET,nan,nan,cdi,edifixio
+2023-01-11,chef de projet informatique fonctionnel bi,"t-sql, recette, sql, database, maintenance",GENTILLY,nan,nan,cdi,chronopost sas
+2023-01-09,assistante décisionnel business intelligence/big data,"big data, decisionnel, système, support, business intelligence",TREMBLAY-EN-FRANCE,nan,nan,apprentissage,air france
+2023-01-13,data et monétisation,"digital, support, sql, outils, marketing",NEUILLY-SUR-SEINE,nan,nan,stage,groupe m6
+2022-12-22,développeur full stack,"si, web, salesforce, infrastructure, html5",FRANCE,nan,nan,cdi,edifixio
+2023-01-08,technicien de maintenance et support utilisateurs,"maintenance, support, securité, réseaux, cloud",GUYANCOURT,nan,nan,cdi,spie ics
+2022-12-25,it expert solutions mdm,"si, talend, data management, support, test",MOUSSY-LE-VIEUX,nan,nan,cdi,tereos
+2022-12-15,bi analyste ,"outils, support, video, decisionnel, data management",SAINT-OUEN,nan,nan,stage,danone
+2022-12-29,senior data scientist,"sql, data lab, machine learning, support, big data",ILE-DE-FRANCE,nan,nan,cdi,safran-group
+2023-01-04,model builder,"internet, support, support applicatif, design, moe",PARIS,nan,nan,cdi,criteo
+2023-01-14,ingénieur réseau/sécurité,"sécurité, securité, réseaux, lan, support",PARIS,45000  , 60000  ,cdi,uniware global services
+2022-12-24,manager leader,"agile, scrum, moa, progiciel, système",ILE-DE-FRANCE,nan,nan,cdi,natixis
+2023-01-14,ingénieur docker/kubernetes/jenkins/ansibl,"devops, jenkins, outils, linux, infrastructure",NEUILLYSURSEINE,42000  , 60000  ,cdi,uniware global services
+2023-01-14,ingénieur virtualisation,"support, vmware, python, javascript, securité",NEUILLYSURSEINE,40000  , 55000  ,cdi,uniware global services
+2023-01-10,ingénieur etudes et développement qlik,"qlik, agile, qlikview, sql, support",ILE-DE-FRANCE,nan,nan,cdi,direct energie
+2022-12-19,post-doctorant ia/big data,"digital, big data, machine learning, intelligence artificielle, bases de données",PARIS,nan,nan,cdi,business & decision
+2023-01-08,responsable développement supply chain,"support, communication, big data, cloud, hadoop",LISSES,57000  , 62000  ,cdi,fed it
+2023-01-14,ingénieur système vmwar,"vmware, support, windows, microsoft, système",NEUILLYSURSEINE,40000  , 55000  ,cdi,uniware global services
+2022-12-15,consultant bi junior,"business intelligence, big data, java, outils, sql",SAINT-GERMAIN-EN-LAYE,nan,nan,cdi,trimane
+2023-01-14,ingénieur cloud opensourc,"cloud, saas, paas, iaas, infrastructure",PARIS,40000  , 60000  ,cdi,uniware global services
+2022-12-30,application engineer,"lattice, python, aix, design",LEPLESSIS-ROBINSON,nan,nan,cdi,cs communication & systèmes
+2022-12-26,chargé dintégration de nouvelles sources de données dans le datalake et transformation en pyspark,"outils, si, langage, big data, python",FONTENAY-SOUS-BOIS,nan,nan,stage,société générale
+2023-01-02,agile business analyst,"agile, data quality, big data, data management, méthodologie",FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
+2023-01-14,ingénieur de production $u,"windows, unix, cft, réseaux, outils",PARIS,40000  , 60000  ,cdi,uniware global services
+2023-01-14,ingénieur réseau cisco,"réseau, cisco, réseaux, sécurité, securité",PARIS,40000  , 60000  ,cdi,uniware global services
+2023-01-14,conultant/analyste décisionnel etl qlikview & talend,"sap, qlikview, etl, talend, qlik",FRANCE-ANTONY,nan,nan,cdi,"
 "
-111,2022-12-15,chef de projet data moa,"si, moa, moe, agile, outils",PARIS,nan,nan,cdi,caisse des depots
-112,2023-01-12,data visualisation,"securité, sécurité, réseaux, communication, outils",VELIZY-VILLACOUBLAY,nan,nan,apprentissage,thales services s.a.s.
-113,2022-12-18,data scientist,"machine learning, less, big data, hadoop, exchange",PARIS,nan,nan,cdi,criteo
-114,2022-12-30,data project manager,"si, data management, méthodologie, outils, machine learning",FONTENAY-SOUS-BOIS,nan,nan,alternance,société générale
-115,2023-01-13,data scientist senior,"marketing, python, java, intelligence artificielle, système",POISSY,nan,nan,cdi,groupe psa
-116,2022-12-29,architecte technique big data,"big data, outils, système, hadoop, scala",ILE-DE-FRANCE,nan,nan,cdi,safran-group
-117,2022-12-29,senior data scientist,"sql, data lab, machine learning, big data, scala",ILE-DE-FRANCE,nan,nan,cdi,safran-group
-118,2022-12-15,consultant qliksens,"big data, qlik, outils, business intelligence",ILE-DE-FRANCE,nan,nan,cdi,trimane
-119,2022-12-15,dceo cluster manager,"maintenance, communication, infrastructure, design",PARIS,nan,nan,cdi,amazon
-120,2022-12-19,développeur vba,"vba, web, langage, t-sql, sql",PARIS,30000 , 50000 ,cdi,synchrone
-121,2022-12-15,business analyst it,"java, infrastructure, angularjs, devops, big data",COURBEVOIE,nan,nan,stage,"
+2022-12-15,chef de projet data moa,"si, moa, moe, agile, outils",PARIS,nan,nan,cdi,caisse des depots
+2023-01-12,data visualisation,"securité, sécurité, réseaux, communication, outils",VELIZY-VILLACOUBLAY,nan,nan,apprentissage,thales services s.a.s.
+2022-12-18,data scientist,"machine learning, less, big data, hadoop, exchange",PARIS,nan,nan,cdi,criteo
+2022-12-30,data project manager,"si, data management, méthodologie, outils, machine learning",FONTENAY-SOUS-BOIS,nan,nan,alternance,société générale
+2023-01-13,data scientist senior,"marketing, python, java, intelligence artificielle, système",POISSY,nan,nan,cdi,groupe psa
+2022-12-29,architecte technique big data,"big data, outils, système, hadoop, scala",ILE-DE-FRANCE,nan,nan,cdi,safran-group
+2022-12-29,senior data scientist,"sql, data lab, machine learning, big data, scala",ILE-DE-FRANCE,nan,nan,cdi,safran-group
+2022-12-15,consultant qliksens,"big data, qlik, outils, business intelligence",ILE-DE-FRANCE,nan,nan,cdi,trimane
+2022-12-15,dceo cluster manager,"maintenance, communication, infrastructure, design",PARIS,nan,nan,cdi,amazon
+2022-12-19,développeur vba,"vba, web, langage, t-sql, sql",PARIS,30000 , 50000 ,cdi,synchrone
+2022-12-15,business analyst it,"java, infrastructure, angularjs, devops, big data",COURBEVOIE,nan,nan,stage,"
 "
-122,2022-12-24,business analyst,"test, recette, validation, mobile, moa",ILE-DE-FRANCE,nan,nan,cdi,infotel
-123,2022-12-15,consultant confirmé talend,"talend, moa, recette, optimisation, outils",ILE-DE-FRANCE,nan,nan,cdi,trimane
-124,2022-12-24,ingénieur études et développement php,"php, php5, javascript, angularjs, symfony",PARIS,nan,nan,cdi,infotel
-125,2023-01-12,ingénieurs middlewar,"middleware, support, infrastructure, optimisation, python",PARIS,45000  , 60000  ,cdi,uniware global services
-126,2023-01-12,architecte infrastructure it,"infrastructure, support, si, système",PARIS,40000  , 60000  ,cdi,uniware global services
-127,2023-01-12,ingénieur cloud aws,"cloud, support, python, paas, securité",PARIS,38000  , 56000  ,cdi,uniware global services
-128,2023-01-05,product owner,"big data, marketing, méthodologie, communication",LA-DEFENSE,nan,nan,cdi,société générale
-129,2022-12-24,assistant maitrise douvrage bancaire qualité des données,"si, decisionnel, data quality",LA-DEFENSE,nan,nan,stage,société générale
-130,2022-12-29,data/software engineer,"bases de données, outils, linux, big data, python",ILE-DE-FRANCE,nan,nan,cdi,safran-group
-131,2022-12-15,consultant sénior cognos,"cognos, framework, etl, big data, outils",ILE-DE-FRANCE,nan,nan,cdi,trimane
-132,2023-01-01,xpert techniqu,"sécurité, securité, outils, windows, communication",PARAY-VIEILLE-POSTE,nan,nan,cdd/intérim,ergalis
-133,2022-12-29,analyses de données sur la durée de vie des freins carbon,"support, data management, big data, bases de données",ILE-DE-FRANCE,nan,nan,stage,safran-group
-134,2022-12-21,data manager,"outils, digital, plm, support, moa",PANTIN,nan,nan,cdi,hermès
-135,2022-12-29,ingénieur développement dalgorithmes danalyse de données de vol,"electronique, outils, validation, data management",ILE-DE-FRANCE,nan,nan,stage,safran-group
-136,2022-12-19,chef de projets moa data,"moa, si, crm, support, agile",PARIS,nan,nan,cdi,groupama
-137,2022-12-22,développeur big data,"python, maintenance, support, sécurité, big data",ILE-DE-FRANCE,nan,nan,cdi,engie
-138,2023-01-08,assistant marketing private market,"marketing, si, support, data management, réseau",COLOMBES,nan,nan,alternance,société générale
-139,2023-01-14,architecte poste de travail,"poste de travail, microsoft, support, cloud, infrastructure",PARIS,50000  , 70000  ,cdi,uniware global services
-140,2023-01-12,ingénieur de production cloud,"cloud, securité, devops, sécurité, si",PARIS,50000  , 60000  ,cdi,uniware global services
-141,2023-01-12,ingénieur réseaux et sécurité,"réseaux, sécurité, securité, infrastructure, wan",PARIS,38000  , 55000  ,cdi,uniware global services
-142,2022-12-15,ingénieur qa,"digital, devops, web, android, open source",PARIS,nan,nan,cdi,kisio
-143,2023-01-01,ingénieur développement dalgorithmes danalyse de données de vol,"electronique, outils, validation, data management",ILE-DE-FRANCE,nan,nan,stage,safran-group
-144,2023-01-12,ingénieurs de production unix/linux/windows,"linux, unix, windows, hp, infrastructure",PARIS,38000  , 55000  ,cdi,uniware global services
-145,2022-12-19,networking cloud support engineer aws,"support, cloud, network, linux, windows",COURBEVOIE,nan,nan,cdi,amazon
-146,2023-01-12,ingénieur systèmes linux,"linux, devops, infrastructure, mongodb, apache",PARIS,nan,nan,cdi,uniware global services
-147,2022-12-26,ingénieur devops,"devops, outils, linux, infrastructure, jenkins",PARIS,40000  , 60000  ,cdi,uniware global services
-148,2022-12-15,bigdata datascienc,"réseau, si, infrastructure, réseaux, big data",PALAISEAU,nan,nan,alternance,edf france
-149,2023-01-14,ingénieur de production cloud,"cloud, devops, sécurité, securité, sql server",NEUILLY-SUR-SEINE,45000  , 60000  ,cdi,uniware global services
-150,2022-12-25,ingénieur/développeur en ia,"intelligence artificielle, outils, réseaux, machine learning, big data",PARIS,nan,nan,cdi,iliad-free
-151,2022-12-19,consultante web analyst,"digital, web, outils, javascript, recette",PARIS,nan,nan,cdi,business & decision
-152,2022-12-26,chef de projet crm,"crm, web, marketing, design, pack office",SEINE-SAINT-DENIS,nan,nan,cdi,printemps
-153,2022-12-25,développeur java,"java, j2ee, web, jboss, sécurité",PARIS,45000  , 65000  ,cdi,synchrone
-154,2022-12-29,ingénierie linguistique : détection de similarité sémantiqu,"outils, python, langage, si, git",PALAISEAU,nan,nan,stage,edf france
-155,2023-01-06,développeur cloud interne dorange franc,"cloud, si, iaas, windows, saas",CHATILLON,nan,nan,cdi,orange
-156,2023-01-14,ingénieur cloud azur,"cloud, web, devops, python, infrastructure",NEUILLYSURSEINE,40000  , 60000  ,cdi,uniware global services
-157,2022-12-15,chef de projet bi,"outils, decisionnel, support, business objects, business intelligence",PARIS,nan,nan,cdi,tf1
-158,2022-12-25,développeur angular ,"angularjs, agile, web, framework, outils",PARIS,30000  , 50000  ,cdi,synchrone
-159,2023-01-14,assistant chef de projet social media paris sportifs,"réseaux sociaux, réseaux, outils, acquisition, jquery",BOULOGNE-BILLANCOURT,nan,nan,stage,francaise des jeux
-160,2022-12-30,ingénieur etude et développement,"si, java, support, angularjs, outils",FONTENAY-SOUS-BOIS,nan,nan,alternance,société générale
-161,2022-12-15,développeur ios,"digital, ios, android, swift, web",PARIS,nan,nan,cdi,kisio
-162,2022-12-15,développeur backend c++/python,"digital, c++, devops, python, web",PARIS,nan,nan,cdi,kisio
-163,2023-01-14,xpert middlewar,"middleware, weblogic, unix, support, tomcat",PARIS,40000  , 60000  ,cdi,uniware global services
-164,2022-12-22,xpert protection des données personnelles et digitales,"si, sécurité, data management, securité, réseau",ILE-DE-FRANCE,nan,nan,cdi,grtgaz
-165,2022-12-19,consultante confirmé sas,"sas, digital, dataiku",PARIS,nan,nan,cdi,business & decision
-166,2022-12-29,data engineer,"support, python, sql, hadoop, big data",ILE-DE-FRANCE,nan,nan,stage,safran-group
-167,2023-01-08,modélisation de bus numériques dans loutil plm 3dexperienc,"plm, outils, système, cloud, communication",ILE-DE-FRANCE,nan,nan,stage,dassault aviation
-168,2022-12-15,architecte technique senior,"outils, swift, android, si, unix",PARIS,nan,nan,cdi,paris&co
-169,2022-12-21,is analyst customer service danone is/it for sales applications,"support, sap, cloud, agile, middleware",SAINT-OUEN,nan,nan,cdi,danone
-170,2022-12-18,marketing/statistique sur le pricing de nos produits,"marketing, iaas, paas, saas",PARIS,nan,nan,stage,cegid
-171,2023-01-05,technical leader senior hadoop,"hadoop, agile, maintenance, scala, système",FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
-172,2023-01-02,consultant avant-vente sauvegard,"cloud, unix, aix, ux, support",ILE-DE-FRANCE,nan,nan,cdi,vinci
-173,2023-01-14,chef de projets it digitaux,"marketing, optimisation, c, exchange, digital",PARIS,nan,nan,cdi,cdiscount
-174,2023-01-12,ingénieur système unix/linux,"linux, unix, système, infrastructure, support",PARIS,38000  , 55000  ,cdi,uniware global services
-175,2022-12-29,ingénieur développement logiciel embarqué,"test, linux, windows, sécurité, securité",ILE-DE-FRANCE,nan,nan,cdi,safran-group
-176,2022-12-15,ingénieur support applicatif,"digital, support, devops, web, android",PARIS,nan,nan,cdi,kisio
-177,2022-12-24,correspondante à la protection des données personnelles,"communication, outils, digital",LA-DEFENSE,nan,nan,cdi,société générale
-178,2023-01-09,business analyst amoa information management office,"marketing, digital, agile, outils, database",PARIS,nan,nan,apprentissage,air france
-179,2022-12-29,ingénieur traitements de données,"outils, qt, c++, linux, windows",ILE-DE-FRANCE,nan,nan,cdi,safran-group
-180,2022-12-15,responsable technique web,"web, spring, si, sécurité, digital",PARIS,65000  , 70000  ,cdi,mr search
-181,2023-01-01,ingénieur logiciel,"java, support, outils, c++, système",BAGNEUX,nan,nan,cdi,naval group
-182,2022-12-18,datascientist junior,"réseau, machine learning, outils, sas, big data",NANTERRE,nan,nan,alternance,edf france
-183,2022-12-25,ingénieur etudes et développement bi,"java, outils, decisionnel, t-sql, sql",SAINT-GERMAIN-EN-LAYE,nan,nan,stage,trimane
-184,2023-01-02,analyste fonctionnel sap sd,"sap, communication, outils, business intelligence, système",ILE-DE-FRANCE,nan,nan,cdi,vinci
-185,2023-01-09,assistante comptabl,,FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
-186,2023-01-05,spécialiste modélisation dynamique de la performance atelier montag,"outils, système",VELIZY-VILLACOUBLAY,nan,nan,cdi,groupe psa
-187,2022-12-29,référente conformité regulatory expertise oversight,"digital, communication, support, réseau",LA-DEFENSE,nan,nan,cdi,société générale
-188,2022-12-18,ingénieur daffaires it grands comptes paris,"iaas, paas, saas, système, progiciel",PARIS,nan,nan,cdi,cegid
-189,2022-12-29,tableau de bord data centric pour le pilotage activités de vérification,"test, support",ILE-DE-FRANCE,nan,nan,stage,safran-group
-190,2023-01-07,ingénieur cyber-sécurité produit,"sécurité, securité, c++, réseaux, validation",ILE-DE-FRANCE,nan,nan,cdi,safran-group
-191,2023-01-01,concepteur logiciel,"java, système, serveur, outils, uml",BAGNEUX,nan,nan,alternance,naval group
-192,2022-12-26,chef de projet recett,"recette, outils, e-commerce, support",ILE-DE-FRANCE,nan,nan,cdi,printemps
-193,2022-12-26,chef de projets recett,"recette, e-commerce, outils, marketing, support",PARIS,nan,nan,cdi,printemps
-194,2023-01-01,concepteur logiciel,"java, système",BAGNEUX,nan,nan,alternance,naval group
-195,2023-01-14,quity pricing library project manager,"support, outils, progiciel, si, sécurité",ILE-DE-FRANCE,nan,nan,cdi,natixis
-196,2023-01-02,ingénieur avant-vent,"communication, agile, si, réseau, securité",NANTERRE,nan,nan,cdi,vinci
-197,2023-01-02,technicien informatique,"support, sap, windows, communication, itil",SAINT-DENIS,nan,nan,cdi,vinci
-198,2023-01-05,assistant knowledge user experienc,"outils, design, si, marketing, illustrator",LA-DEFENSE,nan,nan,alternance,société générale
-199,2023-01-01,concepteur logiciel,"c++, c, java, système, support",BAGNEUX,nan,nan,cdi,naval group
-200,2023-01-13,chargé de sécurité et risque opérationnel infrastructure it reseau,"sécurité, securité, réseaux, infrastructure, firewall",FONTENAY-SOUS-BOIS,nan,nan,alternance,société générale
-201,2022-12-24,référent applicatif,"support, recette, sql, maintenance, outils",ILE-DE-FRANCE,nan,nan,cdi,natixis
-202,2022-12-30,developpeur agil,"agile, sql, support, python, bootstrap",COURBEVOIE,nan,nan,cdi,société générale
-203,2022-12-24,technical leader,"agile, sql, support, python, bootstrap",FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
-204,2022-12-25,auditeur interne,"sécurité, securité, communication, méthodologie",LA-DEFENSE,nan,nan,cdi,société générale
-205,2023-01-14,internship: root cause analysis in complex distributed systems,"cloud, réseaux, système, infrastructure, c++",NOZAY,nan,nan,cdi,nokia
-206,2023-01-02,developpeur agil,"agile, sql, support, python, bootstrap",LA-DEFENSE,nan,nan,cdi,société générale
-207,2022-12-24,developpeur agil,"agile, sql, support, python, bootstrap",LA-DEFENSE,nan,nan,cdi,société générale
-208,2022-12-15,ingénieur systèmes windows,"système, windows, microsoft, cloud, maintenance",NANTERRE,45000  , 55000  ,cdi,experteam
-209,2022-12-24,lead developer,"java, soa, json, si, git",ILE-DE-FRANCE,nan,nan,cdi,natixis
-210,2023-01-01,concepteur logiciel,"système, uml, outils, java, xml",BAGNEUX,nan,nan,alternance,naval group
-211,2022-12-24,concepteur développeur,"outils, .net, vba, c#, windows",ILE-DE-FRANCE,nan,nan,cdi,natixis
-212,2022-12-24,architecte techniqu,"si, securité, sécurité, big data, cloud",FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
-213,2022-12-25,chargé detudes et développement informatique java,"si, java, support, big data, agile",FONTENAY-SOUS-BOIS,nan,nan,alternance,société générale
-214,2022-12-23,consultant msbi,"sap, si, moa, informatica, maintenance",NANTERRE,nan,nan,cdd/intérim,aladium
-215,2023-01-01,architecte cybersécurité,"securité, sécurité, système, réseaux",BAGNEUX,nan,nan,cdi,naval group
-216,2022-12-24,développeur,"outils, web, si, sql, sql server",LA-DEFENSE,nan,nan,stage,société générale
-217,2023-01-01,concepteur logiciel,"c++, java, système, c, test",BAGNEUX,nan,nan,alternance,naval group
-218,2023-01-01,architecte logiciel,"système, support, validation, securité, outils",BAGNEUX,nan,nan,cdi,naval group
-219,2023-01-12,xpert infrastructures,"sécurité, si, support, securité, réseaux",FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
-220,2022-12-29,xpert infrastructures scheduling,"python, support, shell, sécurité, linux",LA-DEFENSE,nan,nan,cdi,société générale
-221,2022-12-29,référent applicatif business intelligence bi4,"sap, outils, système, si, business intelligence",ILE-DE-FRANCE,nan,nan,cdi,safran-group
-222,2023-01-01,concepteur logiciel,"système, outils, sécurité, support, securité",BAGNEUX,nan,nan,cdi,naval group
-223,2023-01-14,responsable de l’architecture & interopérabilité,"outils, si, sécurité, support, securité",PARIS,nan,nan,cdi,ramsay
-224,2023-01-02,chef de projet senior risque de crédit,"réseaux, securité, blockchain, sécurité, big data",ILE-DE-FRANCE,nan,nan,cdi,natixis
-225,2022-12-19,sap fiori developer,"sap, abap, progiciel, système, support",SAINT-OUEN,nan,nan,cdi,groupe engie
-226,2023-01-12,ngie digital,"digital, outils, securité, sécurité, t-sql",PARIS,nan,nan,cdi,groupe engie
-227,2023-01-14,quality assurance,"test, serveur, jquery, mobile, tdd",BOULOGNE-BILLANCOURT,nan,nan,cdi,francaise des jeux
-228,2022-12-30,data scientist,"nosql, unix, java, machine learning, linux",NEUILLYSURSEINE,38000  , 50000  ,cdi,beezen
-229,2023-01-12,datascientist,"big data, support, python, réseaux, securité",SAINT-OUEN,nan,nan,cdi,groupe engie
+2022-12-24,business analyst,"test, recette, validation, mobile, moa",ILE-DE-FRANCE,nan,nan,cdi,infotel
+2022-12-15,consultant confirmé talend,"talend, moa, recette, optimisation, outils",ILE-DE-FRANCE,nan,nan,cdi,trimane
+2022-12-24,ingénieur études et développement php,"php, php5, javascript, angularjs, symfony",PARIS,nan,nan,cdi,infotel
+2023-01-12,ingénieurs middlewar,"middleware, support, infrastructure, optimisation, python",PARIS,45000  , 60000  ,cdi,uniware global services
+2023-01-12,architecte infrastructure it,"infrastructure, support, si, système",PARIS,40000  , 60000  ,cdi,uniware global services
+2023-01-12,ingénieur cloud aws,"cloud, support, python, paas, securité",PARIS,38000  , 56000  ,cdi,uniware global services
+2023-01-05,product owner,"big data, marketing, méthodologie, communication",LA-DEFENSE,nan,nan,cdi,société générale
+2022-12-24,assistant maitrise douvrage bancaire qualité des données,"si, decisionnel, data quality",LA-DEFENSE,nan,nan,stage,société générale
+2022-12-29,data/software engineer,"bases de données, outils, linux, big data, python",ILE-DE-FRANCE,nan,nan,cdi,safran-group
+2022-12-15,consultant sénior cognos,"cognos, framework, etl, big data, outils",ILE-DE-FRANCE,nan,nan,cdi,trimane
+2023-01-01,xpert techniqu,"sécurité, securité, outils, windows, communication",PARAY-VIEILLE-POSTE,nan,nan,cdd/intérim,ergalis
+2022-12-29,analyses de données sur la durée de vie des freins carbon,"support, data management, big data, bases de données",ILE-DE-FRANCE,nan,nan,stage,safran-group
+2022-12-21,data manager,"outils, digital, plm, support, moa",PANTIN,nan,nan,cdi,hermès
+2022-12-29,ingénieur développement dalgorithmes danalyse de données de vol,"electronique, outils, validation, data management",ILE-DE-FRANCE,nan,nan,stage,safran-group
+2022-12-19,chef de projets moa data,"moa, si, crm, support, agile",PARIS,nan,nan,cdi,groupama
+2022-12-22,développeur big data,"python, maintenance, support, sécurité, big data",ILE-DE-FRANCE,nan,nan,cdi,engie
+2023-01-08,assistant marketing private market,"marketing, si, support, data management, réseau",COLOMBES,nan,nan,alternance,société générale
+2023-01-14,architecte poste de travail,"poste de travail, microsoft, support, cloud, infrastructure",PARIS,50000  , 70000  ,cdi,uniware global services
+2023-01-12,ingénieur de production cloud,"cloud, securité, devops, sécurité, si",PARIS,50000  , 60000  ,cdi,uniware global services
+2023-01-12,ingénieur réseaux et sécurité,"réseaux, sécurité, securité, infrastructure, wan",PARIS,38000  , 55000  ,cdi,uniware global services
+2022-12-15,ingénieur qa,"digital, devops, web, android, open source",PARIS,nan,nan,cdi,kisio
+2023-01-01,ingénieur développement dalgorithmes danalyse de données de vol,"electronique, outils, validation, data management",ILE-DE-FRANCE,nan,nan,stage,safran-group
+2023-01-12,ingénieurs de production unix/linux/windows,"linux, unix, windows, hp, infrastructure",PARIS,38000  , 55000  ,cdi,uniware global services
+2022-12-19,networking cloud support engineer aws,"support, cloud, network, linux, windows",COURBEVOIE,nan,nan,cdi,amazon
+2023-01-12,ingénieur systèmes linux,"linux, devops, infrastructure, mongodb, apache",PARIS,nan,nan,cdi,uniware global services
+2022-12-26,ingénieur devops,"devops, outils, linux, infrastructure, jenkins",PARIS,40000  , 60000  ,cdi,uniware global services
+2022-12-15,bigdata datascienc,"réseau, si, infrastructure, réseaux, big data",PALAISEAU,nan,nan,alternance,edf france
+2023-01-14,ingénieur de production cloud,"cloud, devops, sécurité, securité, sql server",NEUILLY-SUR-SEINE,45000  , 60000  ,cdi,uniware global services
+2022-12-25,ingénieur/développeur en ia,"intelligence artificielle, outils, réseaux, machine learning, big data",PARIS,nan,nan,cdi,iliad-free
+2022-12-19,consultante web analyst,"digital, web, outils, javascript, recette",PARIS,nan,nan,cdi,business & decision
+2022-12-26,chef de projet crm,"crm, web, marketing, design, pack office",SEINE-SAINT-DENIS,nan,nan,cdi,printemps
+2022-12-25,développeur java,"java, j2ee, web, jboss, sécurité",PARIS,45000  , 65000  ,cdi,synchrone
+2022-12-29,ingénierie linguistique : détection de similarité sémantiqu,"outils, python, langage, si, git",PALAISEAU,nan,nan,stage,edf france
+2023-01-06,développeur cloud interne dorange franc,"cloud, si, iaas, windows, saas",CHATILLON,nan,nan,cdi,orange
+2023-01-14,ingénieur cloud azur,"cloud, web, devops, python, infrastructure",NEUILLYSURSEINE,40000  , 60000  ,cdi,uniware global services
+2022-12-15,chef de projet bi,"outils, decisionnel, support, business objects, business intelligence",PARIS,nan,nan,cdi,tf1
+2022-12-25,développeur angular ,"angularjs, agile, web, framework, outils",PARIS,30000  , 50000  ,cdi,synchrone
+2023-01-14,assistant chef de projet social media paris sportifs,"réseaux sociaux, réseaux, outils, acquisition, jquery",BOULOGNE-BILLANCOURT,nan,nan,stage,francaise des jeux
+2022-12-30,ingénieur etude et développement,"si, java, support, angularjs, outils",FONTENAY-SOUS-BOIS,nan,nan,alternance,société générale
+2022-12-15,développeur ios,"digital, ios, android, swift, web",PARIS,nan,nan,cdi,kisio
+2022-12-15,développeur backend c++/python,"digital, c++, devops, python, web",PARIS,nan,nan,cdi,kisio
+2023-01-14,xpert middlewar,"middleware, weblogic, unix, support, tomcat",PARIS,40000  , 60000  ,cdi,uniware global services
+2022-12-22,xpert protection des données personnelles et digitales,"si, sécurité, data management, securité, réseau",ILE-DE-FRANCE,nan,nan,cdi,grtgaz
+2022-12-19,consultante confirmé sas,"sas, digital, dataiku",PARIS,nan,nan,cdi,business & decision
+2022-12-29,data engineer,"support, python, sql, hadoop, big data",ILE-DE-FRANCE,nan,nan,stage,safran-group
+2023-01-08,modélisation de bus numériques dans loutil plm 3dexperienc,"plm, outils, système, cloud, communication",ILE-DE-FRANCE,nan,nan,stage,dassault aviation
+2022-12-15,architecte technique senior,"outils, swift, android, si, unix",PARIS,nan,nan,cdi,paris&co
+2022-12-21,is analyst customer service danone is/it for sales applications,"support, sap, cloud, agile, middleware",SAINT-OUEN,nan,nan,cdi,danone
+2022-12-18,marketing/statistique sur le pricing de nos produits,"marketing, iaas, paas, saas",PARIS,nan,nan,stage,cegid
+2023-01-05,technical leader senior hadoop,"hadoop, agile, maintenance, scala, système",FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
+2023-01-02,consultant avant-vente sauvegard,"cloud, unix, aix, ux, support",ILE-DE-FRANCE,nan,nan,cdi,vinci
+2023-01-14,chef de projets it digitaux,"marketing, optimisation, c, exchange, digital",PARIS,nan,nan,cdi,cdiscount
+2023-01-12,ingénieur système unix/linux,"linux, unix, système, infrastructure, support",PARIS,38000  , 55000  ,cdi,uniware global services
+2022-12-29,ingénieur développement logiciel embarqué,"test, linux, windows, sécurité, securité",ILE-DE-FRANCE,nan,nan,cdi,safran-group
+2022-12-15,ingénieur support applicatif,"digital, support, devops, web, android",PARIS,nan,nan,cdi,kisio
+2022-12-24,correspondante à la protection des données personnelles,"communication, outils, digital",LA-DEFENSE,nan,nan,cdi,société générale
+2023-01-09,business analyst amoa information management office,"marketing, digital, agile, outils, database",PARIS,nan,nan,apprentissage,air france
+2022-12-29,ingénieur traitements de données,"outils, qt, c++, linux, windows",ILE-DE-FRANCE,nan,nan,cdi,safran-group
+2022-12-15,responsable technique web,"web, spring, si, sécurité, digital",PARIS,65000  , 70000  ,cdi,mr search
+2023-01-01,ingénieur logiciel,"java, support, outils, c++, système",BAGNEUX,nan,nan,cdi,naval group
+2022-12-18,datascientist junior,"réseau, machine learning, outils, sas, big data",NANTERRE,nan,nan,alternance,edf france
+2022-12-25,ingénieur etudes et développement bi,"java, outils, decisionnel, t-sql, sql",SAINT-GERMAIN-EN-LAYE,nan,nan,stage,trimane
+2023-01-02,analyste fonctionnel sap sd,"sap, communication, outils, business intelligence, système",ILE-DE-FRANCE,nan,nan,cdi,vinci
+2023-01-09,assistante comptabl,,FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
+2023-01-05,spécialiste modélisation dynamique de la performance atelier montag,"outils, système",VELIZY-VILLACOUBLAY,nan,nan,cdi,groupe psa
+2022-12-29,référente conformité regulatory expertise oversight,"digital, communication, support, réseau",LA-DEFENSE,nan,nan,cdi,société générale
+2022-12-18,ingénieur daffaires it grands comptes paris,"iaas, paas, saas, système, progiciel",PARIS,nan,nan,cdi,cegid
+2022-12-29,tableau de bord data centric pour le pilotage activités de vérification,"test, support",ILE-DE-FRANCE,nan,nan,stage,safran-group
+2023-01-07,ingénieur cyber-sécurité produit,"sécurité, securité, c++, réseaux, validation",ILE-DE-FRANCE,nan,nan,cdi,safran-group
+2023-01-01,concepteur logiciel,"java, système, serveur, outils, uml",BAGNEUX,nan,nan,alternance,naval group
+2022-12-26,chef de projet recett,"recette, outils, e-commerce, support",ILE-DE-FRANCE,nan,nan,cdi,printemps
+2022-12-26,chef de projets recett,"recette, e-commerce, outils, marketing, support",PARIS,nan,nan,cdi,printemps
+2023-01-01,concepteur logiciel,"java, système",BAGNEUX,nan,nan,alternance,naval group
+2023-01-14,quity pricing library project manager,"support, outils, progiciel, si, sécurité",ILE-DE-FRANCE,nan,nan,cdi,natixis
+2023-01-02,ingénieur avant-vent,"communication, agile, si, réseau, securité",NANTERRE,nan,nan,cdi,vinci
+2023-01-02,technicien informatique,"support, sap, windows, communication, itil",SAINT-DENIS,nan,nan,cdi,vinci
+2023-01-05,assistant knowledge user experienc,"outils, design, si, marketing, illustrator",LA-DEFENSE,nan,nan,alternance,société générale
+2023-01-01,concepteur logiciel,"c++, c, java, système, support",BAGNEUX,nan,nan,cdi,naval group
+2023-01-13,chargé de sécurité et risque opérationnel infrastructure it reseau,"sécurité, securité, réseaux, infrastructure, firewall",FONTENAY-SOUS-BOIS,nan,nan,alternance,société générale
+2022-12-24,référent applicatif,"support, recette, sql, maintenance, outils",ILE-DE-FRANCE,nan,nan,cdi,natixis
+2022-12-30,developpeur agil,"agile, sql, support, python, bootstrap",COURBEVOIE,nan,nan,cdi,société générale
+2022-12-24,technical leader,"agile, sql, support, python, bootstrap",FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
+2022-12-25,auditeur interne,"sécurité, securité, communication, méthodologie",LA-DEFENSE,nan,nan,cdi,société générale
+2023-01-14,internship: root cause analysis in complex distributed systems,"cloud, réseaux, système, infrastructure, c++",NOZAY,nan,nan,cdi,nokia
+2023-01-02,developpeur agil,"agile, sql, support, python, bootstrap",LA-DEFENSE,nan,nan,cdi,société générale
+2022-12-24,developpeur agil,"agile, sql, support, python, bootstrap",LA-DEFENSE,nan,nan,cdi,société générale
+2022-12-15,ingénieur systèmes windows,"système, windows, microsoft, cloud, maintenance",NANTERRE,45000  , 55000  ,cdi,experteam
+2022-12-24,lead developer,"java, soa, json, si, git",ILE-DE-FRANCE,nan,nan,cdi,natixis
+2023-01-01,concepteur logiciel,"système, uml, outils, java, xml",BAGNEUX,nan,nan,alternance,naval group
+2022-12-24,concepteur développeur,"outils, .net, vba, c#, windows",ILE-DE-FRANCE,nan,nan,cdi,natixis
+2022-12-24,architecte techniqu,"si, securité, sécurité, big data, cloud",FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
+2022-12-25,chargé detudes et développement informatique java,"si, java, support, big data, agile",FONTENAY-SOUS-BOIS,nan,nan,alternance,société générale
+2022-12-23,consultant msbi,"sap, si, moa, informatica, maintenance",NANTERRE,nan,nan,cdd/intérim,aladium
+2023-01-01,architecte cybersécurité,"securité, sécurité, système, réseaux",BAGNEUX,nan,nan,cdi,naval group
+2022-12-24,développeur,"outils, web, si, sql, sql server",LA-DEFENSE,nan,nan,stage,société générale
+2023-01-01,concepteur logiciel,"c++, java, système, c, test",BAGNEUX,nan,nan,alternance,naval group
+2023-01-01,architecte logiciel,"système, support, validation, securité, outils",BAGNEUX,nan,nan,cdi,naval group
+2023-01-12,xpert infrastructures,"sécurité, si, support, securité, réseaux",FONTENAY-SOUS-BOIS,nan,nan,cdi,société générale
+2022-12-29,xpert infrastructures scheduling,"python, support, shell, sécurité, linux",LA-DEFENSE,nan,nan,cdi,société générale
+2022-12-29,référent applicatif business intelligence bi4,"sap, outils, système, si, business intelligence",ILE-DE-FRANCE,nan,nan,cdi,safran-group
+2023-01-01,concepteur logiciel,"système, outils, sécurité, support, securité",BAGNEUX,nan,nan,cdi,naval group
+2023-01-14,responsable de l’architecture & interopérabilité,"outils, si, sécurité, support, securité",PARIS,nan,nan,cdi,ramsay
+2023-01-02,chef de projet senior risque de crédit,"réseaux, securité, blockchain, sécurité, big data",ILE-DE-FRANCE,nan,nan,cdi,natixis
+2022-12-19,sap fiori developer,"sap, abap, progiciel, système, support",SAINT-OUEN,nan,nan,cdi,groupe engie
+2023-01-12,ngie digital,"digital, outils, securité, sécurité, t-sql",PARIS,nan,nan,cdi,groupe engie
+2023-01-14,quality assurance,"test, serveur, jquery, mobile, tdd",BOULOGNE-BILLANCOURT,nan,nan,cdi,francaise des jeux
+2022-12-30,data scientist,"nosql, unix, java, machine learning, linux",NEUILLYSURSEINE,38000  , 50000  ,cdi,beezen
+2023-01-12,datascientist,"big data, support, python, réseaux, securité",SAINT-OUEN,nan,nan,cdi,groupe engie
