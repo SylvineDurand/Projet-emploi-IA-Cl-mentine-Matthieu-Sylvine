@@ -36,7 +36,7 @@ def prepa_modele():
     
     # 2. Définition des x 
     global X
-    X = df_model.drop(columns=['Date_de_publication', 'Salaire_minimum','Salaire_maximum'])
+    X = df_model.drop(columns=['Date_de_publication','Salaire_minimum','Salaire_maximum'])
     
     # 3. Selection des variables categoriques sur lesquelles appliquer OneHot
     column_cat = X.select_dtypes(include=['object']).columns.drop(['Competences'])
@@ -89,7 +89,6 @@ def test_modele(target = "Minimum", seed = 42, modele = LinearRegression(), est 
      print(f"Estimateur {est}: {est(y_test, y_pred)}")
     
     return pipe_model
-
 
 def prediction_avec_input(input = ['','', '', '', ''], modele = LinearRegression(), seed = 42, est = r2_score):
     df_input = pd.DataFrame(np.array([input]),
