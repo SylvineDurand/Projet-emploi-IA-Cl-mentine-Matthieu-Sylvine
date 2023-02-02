@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Feb  1 09:40:36 2023
-
 @author: sylvine
 """
 
@@ -11,7 +10,8 @@ Created on Wed Feb  1 09:40:36 2023
 import pandas as pd
 # from datetime import timedelta
 # import numpy as np
-
+import pandas_profiling
+from streamlit_pandas_profiling import st_profile_report
 # # pour preprocessing
 # from sklearn.impute import SimpleImputer
 # from sklearn.compose import ColumnTransformer
@@ -36,12 +36,94 @@ from fonctions import prepa_modele, test_modele, prediction_avec_input
 
 #------------------------------------------------------------------------------
 # Importer le df clean
+df_complet = pd.read_csv("df_clean.csv")
+df_complet_sans_dup = pd.read_csv("df_clean.csv").drop_duplicates()
 df_model = pd.read_csv("df_clean.csv").dropna()
+df_model_sans_dup = pd.read_csv("df_clean.csv").dropna().drop_duplicates()
 st.title("Notre appli du feu de dieu 🔥")
-
 
 #------------------------------------------------------------------------------
 # Analyses exploratoires: les super graphes de Clémentine
+
+st.header('Choisissez sur quel jeu de données vous voulez voir les analyses')
+
+st.write ('Veux-tu toutes les données ou seulement les données non vides des salaires')
+
+données = st.radio(
+    "Sélectionnez les données dont vous voulez les analyses",
+    ('Données complètes', 'Données complètes sans duplicat', 'Données non vides','Données non vides sans duplicats'))
+
+
+st.subheader('`Streamlit profile report`')
+
+if données == 'Données complètes' :
+    pr = df_complet.profile_report()
+    st_profile_report(pr)
+
+if données == 'Données non vides' : 
+    pr = df_model.profile_report()
+    st_profile_report(pr)
+
+if données == 'Données complètes sans duplicat' :
+    pr = df_complet_sans_dup.profile_report()
+    st_profile_report(pr)
+
+if données == 'Données non vides sans duplicats' : 
+    pr = df_model_sans_dup.profile_report()
+    st_profile_report(pr)
+
+
+df_intitule_salaire = pd.read_csv("df_poste2.csv")
+
+
+data_intitule_min = pd.DataFrame({
+    'index': df_intitule_salaire["Intitule"],
+    'Salaire_minimum': df_intitule_salaire['Salaire_minimum'],
+}).set_index('index')
+
+st.bar_chart(data_intitule_min)
+
+
+data_intitule_max = pd.DataFrame({
+    'index': df_intitule_salaire["Intitule"],
+    'Salaire_maximum': df_intitule_salaire['Salaire_maximum'],
+}).set_index('index')
+
+st.bar_chart(data_intitule_max)
+
+df_cresults = pd.read_csv("df_cresults.csv")
+
+data_df_cresults_min = pd.DataFrame({
+    'index': df_cresults["Competence"],
+    'Salaire_minimum': df_intitule_salaire['Salaire_minimum'],
+}).set_index('index')
+
+st.bar_chart(data_df_cresults_min)
+
+data_df_cresults_max = pd.DataFrame({
+    'index': df_cresults["Competence"],
+    'Salaire_maximun': df_intitule_salaire['Salaire_maximum'],
+}).set_index('index')
+
+st.bar_chart(data_df_cresults_max)
+
+df_salaire_moyen_par_competences = pd.read_csv("df_salaire_moyen.csv")
+
+data_salaire_moyen_par_competences = pd.DataFrame({
+    'index': df_salaire_moyen_par_competences["Competence"],
+    'Salaire_moyen': df_salaire_moyen_par_competences['Salaire moyen'],
+}).set_index('index')
+
+st.bar_chart(data_salaire_moyen_par_competences)
+
+df_contrat = pd.read_csv("df_contrat.csv")
+
+data_contrat = pd.DataFrame({
+    'index': df_contrat["Type_poste"],
+    'Occurences': df_contrat['number of occurences'],
+}).set_index('index')
+
+st.bar_chart(data_contrat)
 
 
 #------------------------------------------------------------------------------
