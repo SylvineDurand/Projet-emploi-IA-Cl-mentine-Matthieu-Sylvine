@@ -125,9 +125,6 @@ data_contrat = pd.DataFrame({
 st.bar_chart(data_contrat)
 
 
-
-
-
 #------------------------------------------------------------------------------
 # Prédiction de salaire selon input de l'utilisateur
 df_model = pd.read_csv("df_clean.csv").dropna()
