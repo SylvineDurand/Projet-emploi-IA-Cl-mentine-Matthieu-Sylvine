@@ -27,7 +27,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score, mean_squared_error
 
 
-
+####################################################
 def prepa_modele():
     # 1. Drop les salaires NaN
     # probleme pour drop na sur le df_clean, on travaille en réimportant le csv

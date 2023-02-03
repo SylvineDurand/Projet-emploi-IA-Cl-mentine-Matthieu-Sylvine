@@ -3,8 +3,7 @@
 # Clémentine, Matthieu, Sylvine
 
 
-
-
+#--------------------------------------------------------------
 # Import librairies
 # pour nettoyage data
 import pandas as pd
@@ -17,6 +16,10 @@ from sklearn.compose import ColumnTransformer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.preprocessing import OneHotEncoder
 
+# visualisation data
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 # Pipeline and model
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
@@ -25,6 +28,216 @@ from sklearn.ensemble import RandomForestRegressor
 
 # Score of models
 from sklearn.metrics import r2_score, mean_squared_error
+
+
+#--------------------------------------------------------------
+# FONCTIONS
+
+## Nettoyage de données
+#colone intitule
+## Première fonction enlève les caractères sans utilité
+def Intitule_1(x):
+    x = x[0]
+    x = x.lower()
+    for i in to_remove:
+        x = x.replace(i,"")    
+    for i in debut_to_remove:
+        x = x.replace(i,"")      
+    x = x.strip(" \n-")
+    return x
+
+# 2e fonction récup l'info alternance pour utilisation ultérieure
+def Intitule_2(x):
+    y = ""
+    for i in contract:
+        if x.startswith(i):
+            y =  y + i
+    return y   
+
+# 3e fonction enlève info stage etc, enleve caractères restant au début, récup première partie
+def Intitule_3(x):
+    for i in contract:
+        x = x.replace(i,"") 
+    x = x.strip(" -–:e")
+    x = x.split(" - ")[0]
+    x = x.split(" – ")[0]
+    x = x.split(" / ")[0]
+    return x
+
+
+# Colone type de poste
+def type_contrat(x):
+    y = "raté"
+    if x[0] == '':
+        y = x[1][-1].split(" - ")[0],
+    elif x[0] == 'stage':
+        y = "Stage"
+    elif x[0] == 'stagiaire':
+        y = "Stage"
+    elif x[0] == 'alternant':
+        y = "Alternance"
+    elif x[0] == 'alternance':
+        y = "Alternance"
+    elif x[0] == 'apprenti':
+        y = "Apprentissage"
+    elif x[0] == 'cdi':
+        y = "cdi"
+    return y
+
+#colonne date
+#fonction pour la date et l'apply avec 
+def date(df):
+    df = df.strip("").strip("\n")
+    df = df.split(" ")
+    if df[-1] == "hier" or df[-1] == "heures":
+        df = pd.to_datetime("2023/01/14")
+    else:
+        df = df[-2:]
+        if df[-1] == "mois":
+            x= int(df[-2])
+            temps=x*31
+            df = pd.to_datetime("2023/01/15")-timedelta(days=temps)
+        else:
+            temps=int(df[-2])
+            df = pd.to_datetime("2023/01/15")-timedelta(days=temps)
+            
+    return df
+
+# colonne type de poste 
+# Conversion des tuples en str
+def convertTuple(tup):
+    st = ''.join(map(str, tup))
+    return st
+
+# colonne societe
+# fonction pour mise en minuscule pour les noms de sociétés
+def nom(df):
+    df = df[2].lower()
+    
+    return df
+
+# colonne salaire
+# fonction de salaire qui garde le salaire 
+def salaire(df):
+    if len(df) == 2:
+        df = df[1]
+        df = df.split("/ an")[0]
+        df = df.split("/an")[0]
+        df = df.replace("€","").replace(".","").replace(",00","").replace("\n","")
+
+    else:
+        df = np.nan
+    return df
+
+# fonctions qui font le salaire max et min en integer
+def salaire_min(df):
+    if not df :
+        df = df
+    else:
+        df = str(df)
+        df = df.split("-")[0]
+    return df
+def salaire_max(df):
+    if not df :
+        df = df
+    else:
+        df = str(df)
+        df = df.split("-")[-1]
+    return df
+
+
+# colonne competences
+#retire les retours à la ligne des compétences 
+def retour_a_la_ligne(value):
+    return ''.join(value.splitlines())
+
+
+## Modeles
+#Creation fonction pour préparer le modèle 
+def prepa_modele():
+    # 1. Drop les salaires NaN
+    # probleme pour drop na sur le df_clean, on travaille en réimportant le csv
+    global df_model
+    df_model = pd.read_csv("df_clean.csv").dropna()
+    
+    # 2. Définition des x 
+    global X
+    X = df_model.drop(columns=['Date_de_publication','Salaire_minimum','Salaire_maximum'])
+    
+    # 3. Selection des variables categoriques sur lesquelles appliquer OneHot
+    column_cat = X.select_dtypes(include=['object']).columns.drop(['Competences'])
+    
+    # 4. Creation des pipelines pour chaque type de variable
+    transfo_cat = Pipeline(steps=[
+        ('', SimpleImputer(strategy='most_frequent')),
+        ('onehot', OneHotEncoder(handle_unknown='ignore', sparse = False))
+    ])
+         
+    transfo_text = Pipeline(steps=[
+        ('bow', CountVectorizer(tokenizer=lambda x: x.split(', ')) )
+    ])
+    
+    # 5. Class ColumnTransformer: appliquer chacune des pipelines sur les bonnes colonnes en nommant chaque étape
+    global preparation
+    preparation = ColumnTransformer(
+        transformers=[
+            ('data_cat', transfo_cat , column_cat),
+            #('data_artist', transfo_text , 'artist_name'),
+            ('data_text', transfo_text , 'Competences')
+        ])
+
+# Creation d'une fonction pour automatiser les tests de modèle
+# avec possibilité de changer de seed, model, y (min ou max)
+def test_modele(target = "Minimum", seed = 42, modele = LinearRegression(), est = r2_score):
+    if target == "Minimum":
+        y = df_model['Salaire_minimum']
+    elif target == "Maximum":
+        y = df_model['Salaire_maximum']
+    
+    # Creation de la pipeline complète intégrant le modèle
+    pipe_model = Pipeline(steps=[('preparation', preparation),
+                            ('model',modele)])
+
+    # Train test split
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=seed)
+
+    # fit le model 
+    pipe_model.fit(X_train, y_train)
+
+    # predictions pour le model pré entrainé
+    y_pred = pipe_model.predict(X_test)
+         
+    # Evaluer le modele
+    print(f"Target = Salaire {target}, modèle = {modele}, seed = {seed}")
+    print(f"Score du modèle sur le training: {pipe_model.score(X_train, y_train)}") 
+    if est == mean_squared_error:
+        print(f"Estimateur {est}: {est(y_test, y_pred,squared = False)}")
+    else:
+        print(f"Estimateur {est}: {est(y_test, y_pred)}")
+    
+    return pipe_model
+
+# Fonction de prédiction
+def prediction_avec_input(input = ['','', '', '', ''], modele = LinearRegression(), seed = 42, est = r2_score):
+    df_input = pd.DataFrame(np.array([input]),
+                       columns=['Intitule', 'Competences', 'Lieu', 'Type_poste', 'Société'])
+    modele_min = test_modele("Minimum", modele = modele, seed = seed, est = est)
+    minimum_predit = modele_min.predict(df_input)[0]
+    print("---------------------")
+
+    modele_max = test_modele("Maximum", modele = modele, seed = seed, est = est)
+    maximum_predit = modele_max.predict(df_input)[0]
+    print("---------------------")
+    
+    print(f"Pour les caractéristiques suivantes : {input}")
+    print(f"Le salaire sera compris entre {round(minimum_predit,2)} € et {round(maximum_predit, 2)} €") 
+    
+    predicted_min_sal = round(minimum_predit,2)
+    predicted_max_sal = round(maximum_predit,2)
+    return predicted_min_sal, predicted_max_sal
+
+#--------------------------------------------------------------
+
 
 # Ouverture dataset
 df = pd.read_json("https://raw.githubusercontent.com/SylvineDurand/Projet-emploi-IA-Cl-mentine-Matthieu-Sylvine/main/data.json")
@@ -48,71 +261,21 @@ contract = ["stage",
             "alternant",
             "alternance"]               
 
-## Première fonction enlève les caractères sans utilité
-def Intitule_1(x):
-    x = x[0]
-    x = x.lower()
-    for i in to_remove:
-        x = x.replace(i,"")    
-    for i in debut_to_remove:
-        x = x.replace(i,"")      
-    x = x.strip(" \n-")
-    return x
 
 # créer colonne intermediaire
 df["Int1"] = df["Intitulé du poste"].apply(Intitule_1)  
 
-# 2e fonction récup l'info alternance pour utilisation ultérieure
-def Intitule_2(x):
-    y = ""
-    for i in contract:
-        if x.startswith(i):
-            y =  y + i
-    return y   
-
 # créer colonne intermediaire, sera utilisée plus tard
 df["Int2"] = df["Int1"].apply(Intitule_2)  
-
-# 3e fonction enlève info stage etc, enleve caractères restant au début, récup première partie
-def Intitule_3(x):
-    for i in contract:
-        x = x.replace(i,"") 
-    x = x.strip(" -–:e")
-    x = x.split(" - ")[0]
-    x = x.split(" – ")[0]
-    x = x.split(" / ")[0]
-    return x
 
 # Créer colonne finale    
 df["Intitule"] = df["Int1"].apply(Intitule_3)  
 
 
 # 2. Creation colonne Type_poste
-def type_contrat(x):
-    y = "raté"
-    if x[0] == '':
-        y = x[1][-1].split(" - ")[0],
-    elif x[0] == 'stage':
-        y = "Stage"
-    elif x[0] == 'stagiaire':
-        y = "Stage"
-    elif x[0] == 'alternant':
-        y = "Alternance"
-    elif x[0] == 'alternance':
-        y = "Alternance"
-    elif x[0] == 'apprenti':
-        y = "Apprentissage"
-    elif x[0] == 'cdi':
-        y = "cdi"
-    return y
-
 df['Type_poste'] = df[["Int2","Type de poste"]].apply(lambda x : type_contrat(x), axis = 1)
 type(df.Type_poste[0]) # est un tuple, il faut le convertir
 
-# Conversion des tuples en str
-def convertTuple(tup):
-    st = ''.join(map(str, tup))
-    return st
  
 df['Type_poste'] = df['Type_poste'].apply(lambda x : convertTuple(x))
 type(df.Type_poste)  # series
@@ -122,34 +285,9 @@ df['Type_poste'] = df['Type_poste'].apply(lambda x : x.strip("\n",).lower())
 
 
 # 3. Creation colonne date
-#fonction pour la date et l'apply avec 
-def date(df):
-    df = df.strip("").strip("\n")
-    df = df.split(" ")
-    if df[-1] == "hier" or df[-1] == "heures":
-        df = pd.to_datetime("2023/01/14")
-    else:
-        df = df[-2:]
-        if df[-1] == "mois":
-            x= int(df[-2])
-            temps=x*31
-            df = pd.to_datetime("2023/01/15")-timedelta(days=temps)
-        else:
-            temps=int(df[-2])
-            df = pd.to_datetime("2023/01/15")-timedelta(days=temps)
-    
-        
-    return df
-
 df["Date de publication"] = df["Date de publication"].apply(date)
 
 # 4. Creation colonne Société
-#fonction pour mise en miniscule pour les noms de sociétés
-def nom(df):
-    df = df[2].lower()
-    
-    return df
-
 df["Type de poste"] = df["Type de poste"].apply(nom)
 
 data = df['lieu']
@@ -183,53 +321,23 @@ for i in data :
 df['Lieu'] = LIEU2
 
 # 5. Creation colonnes salaire
-# fonction de salaire qui garde le salaire 
-def salaire(df):
-    if len(df) == 2:
-        df = df[1]
-        df = df.split("/ an")[0]
-        df = df.split("/an")[0]
-        df = df.replace("€","").replace(".","").replace(",00","").replace("\n","")
-
-    else:
-        df = np.nan
-    return df
-
 df["Salaire"] = df["lieu"].apply(salaire)
-
-
-#fonctions qui font le salaire max et min en integer
-def salaire_min(df):
-    if not df :
-        df = df
-    else:
-        df = str(df)
-        df = df.split("-")[0]
-    return df
-def salaire_max(df):
-    if not df :
-        df = df
-    else:
-        df = str(df)
-        df = df.split("-")[-1]
-    return df
 
 df["Salaire_minimum"] = df["Salaire"].apply(salaire_min)
 df["Salaire_maximum"] = df["Salaire"].apply(salaire_max)
 df=df.drop(["Salaire"],axis=1)
 
-
 # 6. Creation colonne compétences
-#join les éléments dans chaque liste de compétences en les changeant en string 
+# join les éléments dans chaque liste de compétences en les changeant en string 
 df['competences'] = [', '.join(map(str, l)) for l in df['competences']]
-
-
-#retire les retours à la ligne des compétences 
-def retour_a_la_ligne(value):
-    return ''.join(value.splitlines())
 
 df["competences"] = df["competences"].apply(retour_a_la_ligne)
 df['competences'] = df['competences'].apply([lambda row: row.replace("é","e")]) 
+
+# Creation d'un csv avec les données nettoyées
+df_clean = pd.DataFrame(list(zip(df["Date de publication"],df["Intitule"], df["competences"],df['Lieu'],df["Salaire_minimum"],df["Salaire_maximum"],df['Type_poste'],df["Type de poste"])),columns =['Date_de_publication', 'Intitule',"Competences","Lieu","Salaire_minimum","Salaire_maximum","Type_poste","Société"])
+df_clean.to_csv("df_clean.csv" , index=None)
+
 
 ############################################################
 # II. Préprocessing des données
@@ -242,33 +350,28 @@ vectorizer.get_feature_names_out()
 
 ############################################################
 # III. Analyse exploratoire
-# 1. Entreprises qui embauchent le plus
-#compte le nombre de valeurs d'entreprise dans la colonne type de poste
-pd.Series(df["Type de poste"]).value_counts()
 
-
-df_clean = pd.DataFrame(list(zip(df["Date de publication"],df["Intitule"], df["competences"],df['Lieu'],df["Salaire_minimum"],df["Salaire_maximum"],df['Type_poste'],df["Type de poste"])),columns =['Date_de_publication', 'Intitule',"Competences","Lieu","Salaire_minimum","Salaire_maximum","Type_poste","Société"])
-df_clean.to_csv("df_clean.csv" , index=None)
-
-# III. Analyse exploratoire
 # 1. Les compétences les plus recherchées
 #tableau des occurences de chaque competence à partir de la vectorisation
 count_array = X.toarray()
 df_competences = pd.DataFrame(data=count_array, columns = vectorizer.get_feature_names())
 print(df_competences)
 df_competences.shape
-#Selection de la somme des occurences pour chaque competence & sort des plus demandées
+
+# Selection de la somme des occurences pour chaque competence & sort des plus demandées
 df_competences2=df_competences.append(df_competences.sum(), ignore_index=True)
 print(df_competences2)
 df_competences3=df_competences2.loc[[230]].T
 df_competences3.reset_index(inplace=True)
 df_competences3.columns =['competences','number of occurences']
 df_competences3.sort_values(by='number of occurences', ascending=False, inplace=True)
-#Selection des competence qui aparaissent plus de 20 fois
+
+# Selection des competence qui aparaissent plus de 20 fois
 df_competencesfinal = df_competences3.loc[df_competences3['number of occurences'] > 20]
 df_competencesfinal.shape
-#creation du plot pour les competences demandées plus de 10 fois
-import matplotlib.pyplot as plt
+
+# creation du plot pour les competences demandées plus de 10 fois
+
 x = df_competencesfinal['competences']
 y = df_competencesfinal['number of occurences']
 xlabel = df_competencesfinal['competences']
@@ -281,7 +384,7 @@ plt.title('Competences recherchées')
 plt.show()
 
 # 2. Les entreprises qui recrutent le plus
-#nettoyage de la colonne entreprise
+# nettoyage de la colonne entreprise
 df_societe=pd.read_csv('df_clean.csv') 
 data = df_societe['Société']
 societe=[]
@@ -328,8 +431,6 @@ df_poste2
 
 df_poste2.to_csv("df_poste2.csv")
 
-
-
 # 4. Les compétences les mieux payés
 df_competence=pd.read_csv('df_clean.csv') 
 df_competence.columns
@@ -363,6 +464,44 @@ dfcresults_mean2=dfcresults_mean.to_frame(name = 'Salaire moyen')
 df_salairemoyen = pd.concat([df_cresults, dfcresults_mean2.reindex(df_cresults.index)], axis=1)
 df_salairemoyen.to_csv("df_salaire_moyen.csv")
 
+dfcresults_mean = df_cresults.mean(axis=1)
+dfcresults_mean2=dfcresults_mean.to_frame(name = 'Salaire moyen') 
+df_salairemoyen = pd.concat([df_cresults, dfcresults_mean2.reindex(df_cresults.index)], axis=1)
+
+# plot the figure
+
+# set edgecolor param (this is a global setting, so only set it once)
+plt.rcParams["patch.force_edgecolor"] = True
+
+# setup the dataframe
+Competence = df_salairemoyen['Competence']
+
+Salaire_moyen = df_salairemoyen['Salaire moyen']
+
+df = pd.DataFrame({'Competence':Competence,'Salaire_moyen':Salaire_moyen})
+
+# create a dict for the errors
+df_error = df_salairemoyen[['Salaire_minimum', 'Salaire_maximum']]
+
+df_errordict = df_error.T.to_dict()
+
+
+fig, ax = plt.subplots(figsize=(8, 6))
+sns.barplot(x='Competence', y='Salaire_moyen', data=df, ax=ax)
+
+# add the lines for the errors 
+mdr = 0
+for p in ax.patches:
+    x = p.get_x()  # get the bottom left x corner of the bar
+    w = p.get_width()  # get width of bar
+    h = p.get_height()  # get height of bar
+    min_y = df_errordict[df.index[mdr]]['Salaire_minimum']
+    max_y = df_errordict[df.index[mdr]]['Salaire_maximum'] 
+    plt.xticks(rotation=90)
+    plt.vlines(x+w/2, min_y, max_y, color='k')
+    mdr = mdr+1
+
+
 # 6. Les types de contrat
 df_contrat=pd.read_csv('df_clean.csv')
 
@@ -393,77 +532,11 @@ plt.ylabel('Number of occurence')
 plt.title('differents type de postes')
 plt.show()
 
-df_contrat4.to_csv("df_contrat.csv")
-
 
 ############################################################
 # IV. Creation de la pipeline et application des modèles
 
-#Creation fonction pour préparer le modèle 
-def prepa_modele():
-    # 1. Drop les salaires NaN
-    # probleme pour drop na sur le df_clean, on travaille en réimportant le csv
-    global df_model
-    df_model = pd.read_csv("df_clean.csv").dropna()
-    
-    # 2. Définition des x 
-    global X
-    X = df_model.drop(columns=['Date_de_publication','Salaire_minimum','Salaire_maximum'])
-    
-    # 3. Selection des variables categoriques sur lesquelles appliquer OneHot
-    column_cat = X.select_dtypes(include=['object']).columns.drop(['Competences'])
-    
-    # 4. Creation des pipelines pour chaque type de variable
-    transfo_cat = Pipeline(steps=[
-        ('', SimpleImputer(strategy='most_frequent')),
-        ('onehot', OneHotEncoder(handle_unknown='ignore', sparse = False))
-    ])
-         
-    transfo_text = Pipeline(steps=[
-        ('bow', CountVectorizer(tokenizer=lambda x: x.split(', ')) )
-    ])
-    
-    # 5. Class ColumnTransformer: appliquer chacune des pipelines sur les bonnes colonnes en nommant chaque étape
-    global preparation
-    preparation = ColumnTransformer(
-        transformers=[
-            ('data_cat', transfo_cat , column_cat),
-            #('data_artist', transfo_text , 'artist_name'),
-            ('data_text', transfo_text , 'Competences')
-        ])
-
 prepa_modele()
-
-# Creation d'une fonction pour automatiser les tests de modèle
-# avec possibilité de changer de seed, model, y (min ou max)
-def test_modele(target = "Minimum", seed = 42, modele = LinearRegression(), est = r2_score):
-    if target == "Minimum":
-        y = df_model['Salaire_minimum']
-    elif target == "Maximum":
-        y = df_model['Salaire_maximum']
-    
-    # Creation de la pipeline complète intégrant le modèle
-    pipe_model = Pipeline(steps=[('preparation', preparation),
-                            ('model',modele)])
-
-    # Train test split
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=seed)
-
-    # fit le model 
-    pipe_model.fit(X_train, y_train)
-
-    # predictions pour le model pré entrainé
-    y_pred = pipe_model.predict(X_test)
-         
-    # Evaluer le modele
-    print(f"Target = Salaire {target}, modèle = {modele}, seed = {seed}")
-    print(f"Score du modèle sur le training: {pipe_model.score(X_train, y_train)}") 
-    if est == mean_squared_error:
-        print(f"Estimateur {est}: {est(y_test, y_pred,squared = False)}")
-    else:
-        print(f"Estimateur {est}: {est(y_test, y_pred)}")
-    
-    return pipe_model
 
 # Appliquer la fonction pour différents types de modèles
 # reg lineaire classique
@@ -471,7 +544,6 @@ test_modele()
 test_modele(est = mean_squared_error, seed=1753)
 test_modele("Maximum")
 test_modele("Maximum", est = mean_squared_error, seed=1753)
-
 
 # reg regularisée
 # Ridge
@@ -512,25 +584,6 @@ Input_societe = 'selescope'
 
 # 2. Concaténation en une liste
 Input = [Input_intitule, Input_competences, Input_lieu, Input_contrat, Input_societe]
-
-# Fonction de prédiction
-def prediction_avec_input(input = ['','', '', '', ''], modele = LinearRegression(), seed = 42, est = r2_score):
-    df_input = pd.DataFrame(np.array([input]),
-                       columns=['Intitule', 'Competences', 'Lieu', 'Type_poste', 'Société'])
-    modele_min = test_modele("Minimum", modele = modele, seed = seed, est = est)
-    minimum_predit = modele_min.predict(df_input)[0]
-    print("---------------------")
-
-    modele_max = test_modele("Maximum", modele = modele, seed = seed, est = est)
-    maximum_predit = modele_max.predict(df_input)[0]
-    print("---------------------")
-    
-    print(f"Pour les caractéristiques suivantes : {input}")
-    print(f"Le salaire sera compris entre {round(minimum_predit,2)} € et {round(maximum_predit, 2)} €") 
-    
-    predicted_min_sal = round(minimum_predit,2)
-    predicted_max_sal = round(maximum_predit,2)
-    return predicted_min_sal, predicted_max_sal
     
 # 3. Lancement de la fonction de prediction    
 prediction_avec_input() # si pas d'input de l'utilisateur
@@ -540,14 +593,8 @@ predicted_min_sal, predicted_max_sal = prediction_avec_input(input = Input)
 
 
 
-# notes de fin:
-# si on poursuit la démarche sur du clustering, il suffit de modifier la pipeline pour que 
-# le modele s'entraine juste sur des features
-# difficulté sera surtout de comprendre où sont les variables dedans. 
-
-
 #############################################
-# 6. Bonus nuage de mots pour illustration
+# V. Bonus nuage de mots pour illustration
 # CHANTIER EN COURS !!!
 
 # from wordcloud import WordCloud
@@ -556,7 +603,7 @@ predicted_min_sal, predicted_max_sal = prediction_avec_input(input = Input)
 # from PIL import Image
 
 # vectorizer = CountVectorizer(tokenizer=lambda x: x.split(','))
-# X = vectorizer.fit_transform(df["competences"])
+# X = vectorizer.fit_transform(df_model["Competences"])
 # vectorizer.get_feature_names_out() 
 
 
@@ -564,7 +611,7 @@ predicted_min_sal, predicted_max_sal = prediction_avec_input(input = Input)
 
 
 
-# wordcloud = WordCloud(background_color = 'white', max_words = 50).generate(X)
+# wordcloud = WordCloud(background_color = 'white', max_words = 50).generate(corpus)
 # plt.imshow(wordcloud)
 # plt.axis("off")
 # plt.show();
