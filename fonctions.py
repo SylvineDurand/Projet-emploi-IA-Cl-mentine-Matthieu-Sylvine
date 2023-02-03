@@ -86,7 +86,7 @@ def test_modele(target = "Minimum", seed = 42, modele = LinearRegression(), est 
     if est == mean_squared_error:
         print(f"Estimateur {est}: {est(y_test, y_pred,squared = False)}")
     else:
-     print(f"Estimateur {est}: {est(y_test, y_pred)}")
+        print(f"Estimateur {est}: {est(y_test, y_pred)}")
     
     return pipe_model
 
